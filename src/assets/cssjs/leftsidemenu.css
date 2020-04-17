@@ -1,0 +1,89 @@
+/* Fixed sidenav, full height */
+.sidenav {
+  margin: 0px;
+  padding: 0px;
+  background-color: #F3F3FC;
+  font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
+  line-height: 0.8;
+  width: 95%;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  border-left: thick solid #337ab7;
+  padding: 1px 12px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #000;
+  background: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #337ab7;
+  border-top: 1px solid #337ab7;
+  border-right: 1px solid #337ab7;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+
+/* On mouse-over */
+.dropdown-btn:hover {
+  color: #fff;
+  background: #337ab7; /* Old browsers */
+  background: -moz-linear-gradient(top,  #729fcf 0%, #729fcf 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#729fcf), color-stop(100%,#729fcf)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* IE10+ */
+  background: linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#729fcf', endColorstr='#729fcf',GradientType=0 ); /* IE6-9 */
+}
+
+/* Add an active class to the active dropdown button */
+.sidenav active {
+  color: white;
+  background: #729fcf; /* Old browsers */
+  background: -moz-linear-gradient(top,  #729fcf 0%, #729fcf 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#729fcf), color-stop(100%,#729fcf)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* IE10+ */
+  background: linear-gradient(top,  #729fcf 0%,#729fcf 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#729fcf', endColorstr='#729fcf',GradientType=0 ); /* IE6-9 */
+}
+
+/* Dropdown container */
+.dropdown-container{
+  display: none; /*default (at start of opening the page) hidden. Clicked event will make it visible (display: block) in leftsidemenu.js*/
+}
+
+.dropdown-container a{
+  padding-left: 10px;
+  border-left: 1px solid #eee;
+  text-decoration: none;
+  width: 100%;
+  color: #555;
+  background: #fff;
+  border-top: 0px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+.dropdown-container a:hover {
+  background: #eee;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
