@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
-  title = 'avk-fe';
+export class AppComponent implements OnInit{
+  title = 'AVK';
   errormessage: string = null;
-  successmessage: string = "website is working";
+  successmessage: string = null;
+
+  constructor(private router:Router){ }
+
+  ngOnInit(){
+    this.router.navigateByUrl('home');
+  }
 
   onErrorMessageClick(){
     this.errormessage = null;

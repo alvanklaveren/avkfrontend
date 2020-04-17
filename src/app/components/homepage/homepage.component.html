@@ -1,0 +1,24 @@
+<body>
+	<div style="text-align:center">
+		<img id="hellogalaxy" src="../assets/images/logo_small.jpg" alt="" />
+	</div>
+
+	<br>
+
+	<li *ngFor="let message of messages; index as i">{{ message.code }} </li>
+
+   	<!-- <table class="table table-bordered" ngIf="messages" ngFor="let message of messages; index as i">
+		<tr>
+			<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
+				<p>  
+				<small>
+					<span class="float-right"></span>
+				</small>
+				<span style="font-family:Georgia;font-size:100%">{{ message.code }}</span>
+				</p>
+			</td>
+		</tr>
+		<br>
+	</table> -->
+	
+</body>
