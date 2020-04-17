@@ -12,7 +12,7 @@ import { Message } from 'src/app/models/message';
 export class HomePage implements OnInit{
   title = 'AVK - Home';
 
-  messages: Message[];
+  messages: Message[] = Array<Message>();
 
   constructor(private messageService: MessageService, private httpClient: HttpClient){ }
 
@@ -20,8 +20,7 @@ export class HomePage implements OnInit{
 
     this.messageService.getHomepageMessages().subscribe(res => {
       this.messages = res as Array<Message>;
-    });
-    
+    }); 
 
   }
 

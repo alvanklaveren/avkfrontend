@@ -5,20 +5,22 @@
 
 	<br>
 
-	<li *ngFor="let message of messages; index as i">{{ message.code }} </li>
+	<!-- Dit WERKT !! -->
+	<!-- <li *ngFor="let message of messages; index as i">{{ message.code }} </li> -->
 
-   	<!-- <table class="table table-bordered" ngIf="messages" ngFor="let message of messages; index as i">
-		<tr>
+	<table class="table table-bordered" *ngIf="messages.length > 0">
+		<!-- <tr ng-repeat="let m in messages"> -->
+		<tr *ngFor="let m of messages; index as i">
 			<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
-				<p>  
-				<small>
-					<span class="float-right"></span>
-				</small>
-				<span style="font-family:Georgia;font-size:100%">{{ message.code }}</span>
+				<p>
+					<small>
+						<span class="float-right">Alex {{ m.messagedate }}</span>
+					</small>
+					<span style="font-family:Georgia;font-size:100%">{{ m.messageText }}</span>
 				</p>
 			</td>
-		</tr>
-		<br>
-	</table> -->
+			<br>
+		</tr>		
+	</table>  
 	
 </body>
