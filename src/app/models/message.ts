@@ -4,10 +4,10 @@ import { ForumUser } from './forumuser';
 export class Message {
     code?: number;
     description: string;
-    messagetext: string;
-    messagedate: Date;
-    messagecategory: MessageCategory;
-    forumuser: ForumUser;
+    messageText: string;
+    messageDate: Date;
+    messageCategory: MessageCategory;
+    forumUser: ForumUser;
     message?: Message;
     version?: number;
   }

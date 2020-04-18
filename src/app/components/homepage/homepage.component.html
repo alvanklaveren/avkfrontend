@@ -8,17 +8,16 @@
 	<!-- Dit WERKT !! -->
 	<!-- <li *ngFor="let message of messages; index as i">{{ message.code }} </li> -->
 
-	<table class="table table-bordered" *ngIf="messages.length > 0">
+	<table class="table table-borderless" *ngIf="messages.length > 0">
 		<!-- <tr ng-repeat="let m in messages"> -->
 		<tr *ngFor="let m of messages; index as i">
-			<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
-				<p>
-					<small>
-						<span class="float-right">Alex {{ m.messagedate }}</span>
-					</small>
-					<span style="font-family:Georgia;font-size:100%">{{ m.messageText }}</span>
-				</p>
-			</td>
+				<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
+					<div class="d-flex flex-row-reverse">
+						<small><span>{{ m.messageDate | date: 'dd-MM-yyyy' }}</span></small>
+					</div>
+					
+					<span style="font-family:Georgia;font-size:100%" [innerHTML]="m.messageText"></span>
+				</td>
 			<br>
 		</tr>		
 	</table>  

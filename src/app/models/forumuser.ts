@@ -4,8 +4,9 @@ export class ForumUser {
     code?: number;
     username: string;
     password: string;
-    emailaddress: string;
-    displayname: string;
+    emailAddress: string;
+    displayName: string;
+    avatar: Blob;
     classification: Classification;
     version?: number;
   }

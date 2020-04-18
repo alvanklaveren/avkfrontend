@@ -4,7 +4,7 @@ import { Product } from './product';
 export class ProductRating {
     code?: number;
     rating: number;
-    ratingurl: RatingUrl;
+    ratingUrl: RatingUrl;
     product: Product;
     version?: number;
   }

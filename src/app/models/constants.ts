@@ -1,7 +1,7 @@
 export class Constants {
     code?: number;
     id: string;
-    stringvalue: string;
-    blobvalue: string;
+    stringValue: string;
+    blobValue: string;
     version?: number;
   }

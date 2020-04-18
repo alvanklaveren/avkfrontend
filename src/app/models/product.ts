@@ -7,8 +7,8 @@ export class Product {
     name: string;
     description: string;
     year: number;
-    gameconsole: GameConsole;
-    producttype: ProductType;
+    gameConsole: GameConsole;
+    productType: ProductType;
     company: Company;
     version?: number;
   }
