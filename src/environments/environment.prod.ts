@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  mailTo: 'info@alvanklaveren.com',
+  backendUrl: 'https://alvanklaveren.com/backend/'
+
 };

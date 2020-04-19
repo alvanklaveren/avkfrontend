@@ -90,11 +90,10 @@
 			<div class="col">
 				<div id="basepanelright" style="width:100%; text-align:justify;">
 					<h4>{{ about }}</h4>
-					<p>
-					<small>
-						<span innerHTML="{{ aboutWebsite }}"></span><a id="myemail"> ... </a>
-					</small>
-					</p>
+					<div id="abouttext" *ngIf="!loading">
+						<span innerHTML="{{ aboutWebsite }}"></span>
+						<a id="myemail" href="mailto:{{ mailTo }}">message</a>
+					</div>
 				</div>	  
 			</div>
 			

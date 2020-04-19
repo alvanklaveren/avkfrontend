@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  backendUrl: 'http://localhost:5000/'
+  mailTo: 'info@alvanklaveren.com',
+  backendUrl: 'http://localhost:5000/backend/'
 
 };
 

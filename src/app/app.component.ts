@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslationService } from './services/translation.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,15 @@ import { TranslationService } from './services/translation.service';
 
 export class AppComponent implements OnInit{
   title = 'AVK';
+  loading = true;
   errormessage: string = null;
   successmessage: string = null;
+
   about: string = 'About ...';
   aboutWebsite: string = '[aboutwebsite]';
+  mailTo: string = environment.mailTo;
   
+
   constructor(private router:Router, private translationService: TranslationService){ }
 
   ngOnInit(){
@@ -28,6 +33,7 @@ export class AppComponent implements OnInit{
       let response = res as any;
       console.log(response.result);
       this.aboutWebsite = response.result as string;
+      this.loading = false;
     });
 
     this.router.navigateByUrl('home');
