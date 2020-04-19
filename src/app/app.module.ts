@@ -6,16 +6,18 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HomePageModule } from './components/homepage/homepage.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     HomePageModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

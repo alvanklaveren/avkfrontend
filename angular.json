@@ -28,15 +28,16 @@
               "src/assets"
             ],
             "styles": [
-              { "input" : "src/styles.scss" },
-              { "input" : "src/assets/cssjs/bootstrap/dist/css/bootstrap.min.css" },
-              { "input" : "src/assets/cssjs/cookiealert.css" }
-            
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/cssjs/cookiealert.css",
+              "src/styles.scss",
+              "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
-              { "input" : "src/assets/cssjs/popper/dist/umd/popper.min.js" },
-              { "input" : "src/assets//cssjs/bootstrap/dist/js/bootstrap.min.js" },
-              { "input" : "src/assets/cssjs/cookiealert.js" }
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/popper.js/dist/umd/popper.min.js",
+              "src/assets/cssjs/cookiealert.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -99,16 +100,16 @@
               "src/assets"
             ],
             "styles": [
-              { "input" : "src/assets/cssjs/bootstrap/dist/css/bootstrap.min.css" },
-              { "input" : "src/assets/cssjs/cookiealert.css" },
-              { "input" : "src/styles.scss" }
-            
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/cssjs/cookiealert.css",
+              "src/styles.scss",
+              "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
-              { "input" : "src/assets/cssjs/jquery/dist/jquery.min.js" },
-              { "input" : "src/assets/cssjs/popper/dist/umd/popper.min.js" },
-              { "input" : "src/assets//cssjs/bootstrap/dist/js/bootstrap.min.js" },
-              { "input" : "src/assets/cssjs/cookiealert.js" }
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/popper.js/dist/umd/popper.min.js",
+              "src/assets/cssjs/cookiealert.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           }
         },

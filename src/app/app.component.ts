@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslationService } from './services/translation.service';
 import { environment } from 'src/environments/environment';
+//import { faBootstrap } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -10,30 +11,34 @@ import { environment } from 'src/environments/environment';
 })
 
 export class AppComponent implements OnInit{
+  @ViewChild('aboutDiv', { static: true }) aboutDiv: { nativeElement: { innerHTML: string; }; };
   title = 'AVK';
-  loading = true;
   errormessage: string = null;
   successmessage: string = null;
 
-  about: string = 'About ...';
-  aboutWebsite: string = '[aboutwebsite]';
-  mailTo: string = environment.mailTo;
-  
+  about: string = '';
+  aboutWebsite: string = '';
 
-  constructor(private router:Router, private translationService: TranslationService){ }
+  mailTo: string = environment.mailTo;
+
+  constructor(private router:Router, protected translationService: TranslationService){ }
+
+  ngAfterViewInit() {
+    this.translationService.translate('[aboutwebsite]', 'US').subscribe(res => {
+      let response = res as any;
+      this.aboutWebsite = response.result;
+
+      // doing it like this, allows the htmlsanitizer to skip this text, leaving things like <fa-icon class="" [..]
+      // in the HTML but unfortunately, it still does not display the bootstrap icon. 
+      // So for now, we use the bootstrap icon from bootstrap itself (using <svg>)
+      this.aboutDiv.nativeElement.innerHTML = this.aboutWebsite;
+    });
+  }
 
   ngOnInit(){
-    this.translationService.translate(this.about, "US").subscribe(res => {
+    this.translationService.translate('About ...', 'US').subscribe(res => {
       let response = res as any;
-      console.log(response.result);
       this.about = response.result as string;
-    });
-
-    this.translationService.translate(this.aboutWebsite, "US").subscribe(res => {
-      let response = res as any;
-      console.log(response.result);
-      this.aboutWebsite = response.result as string;
-      this.loading = false;
     });
 
     this.router.navigateByUrl('home');

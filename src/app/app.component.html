@@ -38,7 +38,7 @@
 		
   	</div>
   
-  	<br><br><br>
+	<br><br><br>
 
 	<div>
 		<div class="row">
@@ -90,8 +90,8 @@
 			<div class="col">
 				<div id="basepanelright" style="width:100%; text-align:justify;">
 					<h4>{{ about }}</h4>
-					<div id="abouttext" *ngIf="!loading">
-						<span innerHTML="{{ aboutWebsite }}"></span>
+					<div id="abouttext">
+						<div #aboutDiv></div>
 						<a id="myemail" href="mailto:{{ mailTo }}">message</a>
 					</div>
 				</div>	  

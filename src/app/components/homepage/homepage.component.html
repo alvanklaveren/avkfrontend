@@ -13,7 +13,7 @@
 						<small><span>{{ m.messageDate | date: 'yyyy-MM-dd' }}</span></small>
 					</div>
 					
-					<span id="messagetext" [innerHTML]="m.messageText"></span>
+					<span id="messagetext" [innerHTML]="m.messageText | safe: 'html'"></span>
 				</td>
 			<br>
 		</tr>		
