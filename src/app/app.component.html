@@ -58,13 +58,19 @@
 						<button type="button" class="btn btn-outline-secondary" style="cursor:pointer;" id="dark">Dark</button>
 					</div>  
 					
-					<div class="btn-group btn-group-sm dropleft" role="group" aria-label="Select Language" style="float:right;" data-toggle="tooltip" data-placement="top" title="Click to select language">
-					<span id="flag_selected" id="btnGroupDropLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-					<div class="dropdown-menu" aria-labelledby="btnGroupDropLanguage">
-						<button type="button" class="dropdown-item" id="flag_gb" style="cursor:pointer;">1</button>
-						<button type="button" class="dropdown-item" id="flag_nl" style="cursor:pointer;">2</button>
-					</div>
+					<div class="dropdown" role="group" aria-label="Select Language" style="float:right;" data-toggle="tooltip" data-placement="top" title="Click to select language">
+						<div class="btn-group dropleft">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Language <span id="flag_selected" id="btnGroupDropLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+						  	</button>
+						  
+							<div class="dropdown-menu" aria-labelledby="btnGroupDropLanguage">
+								<button type="button" class="dropdown-item" id="flag_gb" (click)="changeLanguage('us')" style="cursor:pointer;">English</button>
+								<button type="button" class="dropdown-item" id="flag_nl" (click)="changeLanguage('nl')" style="cursor:pointer;">Dutch</button>
+							</div>
+						</div>
 					</div>      	
+
 				</div>
 
 				<a style="font-size:2; text-align:center"><br></a>
@@ -89,7 +95,7 @@
 			
 			<div class="col">
 				<div id="basepanelright" style="width:100%; text-align:justify;">
-					<h4>{{ about }}</h4>
+					<h4>{{ aboutText | translate }}</h4>
 					<div id="abouttext">
 						<div #aboutDiv></div>
 						<a id="myemail" href="mailto:{{ mailTo }}">message</a>

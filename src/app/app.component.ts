@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslationService } from './services/translation.service';
+import { ContextService } from './services/context.service';
 import { environment } from 'src/environments/environment';
+import {TranslateService} from '@ngx-translate/core';
 //import { faBootstrap } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
@@ -12,19 +13,23 @@ import { environment } from 'src/environments/environment';
 
 export class AppComponent implements OnInit{
   @ViewChild('aboutDiv', { static: true }) aboutDiv: { nativeElement: { innerHTML: string; }; };
+
   title = 'AVK';
   errormessage: string = null;
   successmessage: string = null;
 
-  about: string = '';
+  aboutText = 'About ...';
   aboutWebsite: string = '';
+
+  activeLanguage = '';
 
   mailTo: string = environment.mailTo;
 
-  constructor(private router:Router, protected translationService: TranslationService){ }
+  constructor(private router:Router, protected contextService:ContextService, protected translateService: TranslateService){ 
+  }
 
   ngAfterViewInit() {
-    this.translationService.translate('[aboutwebsite]', 'US').subscribe(res => {
+    this.contextService.translate('[aboutwebsite]').subscribe(res => {
       let response = res as any;
       this.aboutWebsite = response.result;
 
@@ -36,18 +41,24 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.translationService.translate('About ...', 'US').subscribe(res => {
-      let response = res as any;
-      this.about = response.result as string;
-    });
+    this.translateService.setDefaultLang(this.contextService.isoA2);
 
+    // this.contextService.translate('About ...').subscribe(res => {
+    //   let response = res as any;
+    //   this.about = response.result as string;
+    // });
+    console.log("loading: " + this.activeLanguage);
     this.router.navigateByUrl('home');
+  }
+
+  changeLanguage(language){
+    console.log(language);
+    this.contextService.setIsoA2(language);
   }
 
   onErrorMessageClick(){
     this.errormessage = null;
   }
-
   onSuccesMessageClick(){
     this.successmessage = null;
   }
