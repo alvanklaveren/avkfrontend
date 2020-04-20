@@ -29,7 +29,6 @@
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/cssjs/cookiealert.css",
               "src/assets/cssjs/fontawesome/css/fontawesome.min.css",
               "src/assets/cssjs/fontawesome/css/all.css",
               "src/styles.scss"
@@ -38,8 +37,7 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/cssjs/fontawesome/js/all.js",
-              "src/assets/cssjs/cookiealert.js"
+              "src/assets/cssjs/fontawesome/js/all.js"
             ]
           },
           "configurations": {

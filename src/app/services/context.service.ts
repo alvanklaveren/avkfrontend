@@ -2,21 +2,48 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslationService } from './translation.service';
 
+const ISOA2 = 'isoA2';
+const AGREED_TO_COOKIE = 'agreedToCookie';
+
 @Injectable({ providedIn: 'root' })
 export class ContextService {
 
-  public isoA2 = 'us';
 
   constructor(private http: HttpClient, private translationService:TranslationService) { }
-  
-  translate(original: string){
-    console.log("translating using: " + this.isoA2);
-    return this.translationService.translate(original, this.isoA2);
+
+  public getIsoA2(): string {
+    return sessionStorage.getItem(ISOA2);
   }
 
-  setIsoA2(value){
-    this.isoA2 = value;
-    console.log("new IsoA2: " + this.isoA2);
+  public hasAgreedToCookies(): boolean {
+    console.log(sessionStorage.getItem(AGREED_TO_COOKIE));
+    if(sessionStorage.getItem(AGREED_TO_COOKIE) === 'y'){
+      return true;
+    } 
+    return false;
+  }
+
+  public setAgreedToCookies(): ContextService{
+    console.log("setting agreed to cookies");
+    this.setGlobal(AGREED_TO_COOKIE, 'y');
+    return this;
+  }
+
+  public setIsoA2(isoA2: string): ContextService {
+    this.setGlobal(ISOA2, isoA2);
+    return this;
+  }
+
+  public translate(original: string){
+    let isoA2 = sessionStorage.getItem(ISOA2);
+    if(!isoA2 || isoA2 === '') { this.setIsoA2('us'); }
+    return this.translationService.translate(original, isoA2);
+  }
+
+  private setGlobal(key, value){
+    sessionStorage.removeItem(key);
+    sessionStorage.setItem(key, value);  
+    // TODO: could add saving to backend here.. so the language is stored regardless of the browser. 
   }
 
 }

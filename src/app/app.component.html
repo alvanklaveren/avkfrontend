@@ -26,13 +26,11 @@
 		  
 		  
 			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-				 <ul class="navbar-nav align-items-end" id="menuItems">
-					<li class="nav-item"><a class="nav-link" href="/">{{ 'Home' }}</a></li>
-					<li class="nav-item"><a class="nav-link" href="/forum">{{ 'Forum' }}</a></li>
-					<li class="nav-item"><a class="nav-link" href="/gameshop">{{ 'My Game Collection' }}</a></li>		
-					<li class="nav-item"><a class="nav-link" href="/articles">{{ 'Articles' }}</a></li>		
-					<li class="nav-item"><a class="nav-link" href="/aboutme">{{ 'About Me' }}</a></li>		
-				 </ul>
+				<ul class="navbar-nav align-items-end" id="menuItems">
+					<li class="nav-item" *ngFor="let menuItem of menuItems">
+						 <a class="nav-link" href="{{ menuItem.url }}">{{ menuItem.description | translate }}</a>
+					</li>
+				</ul>
 			</div>
 		</nav>  
 		
@@ -60,13 +58,13 @@
 					
 					<div class="dropdown" role="group" aria-label="Select Language" style="float:right;" data-toggle="tooltip" data-placement="top" title="Click to select language">
 						<div class="btn-group dropleft">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Language <span id="flag_selected" id="btnGroupDropLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+							<button class="btn btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img src='{{ flagIcon }}' width=40px height=40px alt='English'>
 						  	</button>
 						  
 							<div class="dropdown-menu" aria-labelledby="btnGroupDropLanguage">
-								<button type="button" class="dropdown-item" id="flag_gb" (click)="changeLanguage('us')" style="cursor:pointer;">English</button>
-								<button type="button" class="dropdown-item" id="flag_nl" (click)="changeLanguage('nl')" style="cursor:pointer;">Dutch</button>
+								<button type="button" class="dropdown-item" id="flag_us" (click)="changeLanguage('us')" style="cursor:pointer;"><img src="../assets/fonts/flag_us.svg" width=35px height=35px alt=''> English</button>
+								<button type="button" class="dropdown-item" id="flag_nl" (click)="changeLanguage('nl')" style="cursor:pointer;"><img src="../assets/fonts/flag_nl.svg" width=35px height=35px alt=''> Dutch</button>
 							</div>
 						</div>
 					</div>      	
@@ -87,6 +85,12 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<div *ngIf="cookiemessage" class="alert alert-info alert-dismissible fade show" role="alert">
+					<a id="cookiemessage" innerHtml="{{ cookiemessage }}"></a>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="onCookieMessageClick()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 
 				<a style="font-size:4; text-align:center"><br></a>
 							
@@ -97,7 +101,7 @@
 				<div id="basepanelright" style="width:100%; text-align:justify;">
 					<h4>{{ aboutText | translate }}</h4>
 					<div id="abouttext">
-						<div #aboutDiv></div>
+						<span #aboutDiv></span>
 						<a id="myemail" href="mailto:{{ mailTo }}">message</a>
 					</div>
 				</div>	  
@@ -111,17 +115,5 @@
 	</div>
 
 	<div id="footer" id="footer"></div>
-
-	<div class="alert alert-dismissible text-center cookiealert" role="alert">
-	  <div class="cookiealert-container">
-    	<small>This site only uses technical cookies that are necessary for this site to function. By continuing to use this site   
-  		you consent to the use of cookies on your device. If you disabled cookies in your browser settings, this site may 
-  	 	not function properly.<a href="http://cookiesandyou.com/" target="_blank">Learn more about cookies.</a></small>
-  	 	<br>
-  	 	<div style="display: flex;justify-content: center;">
-	    	<button type="button" class="btn btn-primary btn-sm acceptcookies" aria-label="Close">Understood</button>
-	    </div>
-	  </div>
-	</div>
 
 </body>
