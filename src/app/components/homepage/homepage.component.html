@@ -1,9 +1,7 @@
 <body>
 
-	<div class="text-center" *ngIf="loading">
-		<br><br>
-		<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-		<br><br>
+	<div *ngIf="loading">
+		<avk-loading></avk-loading>
 	</div>
 
 	<div style="text-align:center" *ngIf="!loading">

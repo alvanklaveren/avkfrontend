@@ -12,7 +12,9 @@ export class ContextService {
   constructor(private http: HttpClient, private translationService:TranslationService) { }
 
   public getIsoA2(): string {
-    return sessionStorage.getItem(ISOA2);
+    let isoA2 = sessionStorage.getItem(ISOA2);
+    if(!isoA2 || isoA2 === ''){ isoA2 = 'us';}
+    return isoA2;
   }
 
   public hasAgreedToCookies(): boolean {
@@ -33,8 +35,7 @@ export class ContextService {
   }
 
   public translate(original: string){
-    let isoA2 = sessionStorage.getItem(ISOA2);
-    if(!isoA2 || isoA2 === '') { this.setIsoA2('us'); }
+    let isoA2 = this.getIsoA2();
     return this.translationService.translate(original, isoA2);
   }
 

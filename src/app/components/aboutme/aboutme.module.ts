@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { AboutMe } from './aboutme.component';
 import { SharedModule } from '../shared/shared.module';
-import { CommonModule } from '@angular/common';
+import { AboutMe } from './aboutme.component';
+
 
 @NgModule({
   declarations: [
