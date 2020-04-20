@@ -34,7 +34,7 @@ export class AppComponent implements OnInit{
     { description: 'About me', url: '/aboutme' },
   ]
 
-  constructor(private router:Router, protected contextService:ContextService, protected translateService: TranslateService){ 
+  constructor(private router:Router, private contextService:ContextService, private translateService: TranslateService){ 
     if(this.selectedIsoA2){
       if(this.selectedIsoA2.toUpperCase() === 'US') {
         this.flagIcon = '../assets/fonts/flag_us.svg';
@@ -75,8 +75,6 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.translateService.setDefaultLang(this.selectedIsoA2);
-
-    this.router.navigateByUrl('home');
   }
 
   changeLanguage(language){

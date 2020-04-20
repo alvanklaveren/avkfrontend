@@ -16,7 +16,6 @@ export class ContextService {
   }
 
   public hasAgreedToCookies(): boolean {
-    console.log(sessionStorage.getItem(AGREED_TO_COOKIE));
     if(sessionStorage.getItem(AGREED_TO_COOKIE) === 'y'){
       return true;
     } 
@@ -24,7 +23,6 @@ export class ContextService {
   }
 
   public setAgreedToCookies(): ContextService{
-    console.log("setting agreed to cookies");
     this.setGlobal(AGREED_TO_COOKIE, 'y');
     return this;
   }

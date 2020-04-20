@@ -1,12 +1,18 @@
 <body>
-	<div style="text-align:center">
+
+	<div class="text-center" *ngIf="loading">
+		<br><br>
+		<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+		<br><br>
+	</div>
+
+	<div style="text-align:center" *ngIf="!loading">
 		<img id="hellogalaxy" src="../assets/images/logo_small.jpg" alt="" />
 	</div>
 
 	<br>
 
-	<table class="table table-borderless" *ngIf="messages.length > 0">
-		<!-- <tr ng-repeat="let m in messages"> -->
+	<table class="table table-borderless" *ngIf="messages.length > 0 && !loading">
 		<tr *ngFor="let m of messages; index as i">
 				<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
 					<div class="d-flex flex-row-reverse">

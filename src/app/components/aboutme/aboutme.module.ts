@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import { HomePage } from './homepage.component';
+import { AboutMe } from './aboutme.component';
 import { SharedModule } from '../shared/shared.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    HomePage
+    AboutMe
   ],
   imports: [
     SharedModule,
   ],
   providers: []
 })
-export class HomePageModule { }
+export class AboutMeModule { }
