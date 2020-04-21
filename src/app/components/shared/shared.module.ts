@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { SafePipe } from 'src/app/pipes/safe.pipe';
 
 import { SpinnerComponent } from '../shared/spinner/spinner.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -11,9 +12,11 @@ import { SpinnerComponent } from '../shared/spinner/spinner.component';
     SafePipe,
   ],
   imports: [
+    TranslateModule,
     CommonModule,
   ],
   exports: [
+    TranslateModule,
     CommonModule,
     SpinnerComponent,
     SafePipe,
