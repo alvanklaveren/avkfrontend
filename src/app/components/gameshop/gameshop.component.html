@@ -4,13 +4,27 @@
 		<avk-loading></avk-loading>
 	</div>
 
-	<table class="d-flex flex-wrap bd-highlight mb-3">
-		<tr class="p-2" *ngFor="let product of products; index as i">
-			<td>
-				{{ product.name }}
-			</td>
-		</tr>
+	<div class="d-flex flex-wrap bd-highlight mb-3">
+		<div class="p-2" *ngFor="let product of products; index as i">
+			<div>
+				<table>
+					<tr>
+						<td>
+							<img src="../../../assets/images/me.jpg" alt="me" width="30%" class="rounded-circle"/>
+						</td>
+						<td>
+							<div><b>{{ product.name }}</b></div>
+							<div><small>{{ product.company.description }} ({{ product.year }})</small></div>
+							<div><small>{{ product.gameConsole.description }}</small></div>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+			<hr>
+			<div [innerHtml]="product.description | safe: 'html'"></div>
+		</div>
 	
-	</table>
+	</div>
 					
 </body>

@@ -24,6 +24,8 @@ export class GameShop implements OnInit{
 
   codeGameConsole: number;
   codeProductType: number;
+  productSort = 0;
+
   pageSize = 12;
   page = 0;
 
@@ -35,6 +37,11 @@ export class GameShop implements OnInit{
       this.codeProductType = 0;
     }
 
+    if(this.codeGameConsole == 0){
+      this.codeProductType == 0;
+      this.productSort = 3;
+    }
+
     if(!this.codeProductType){
       this.codeProductType = 0;
     }
@@ -43,7 +50,7 @@ export class GameShop implements OnInit{
   }
 
   getProductList(){
-    this.gameShopService.getProductList(this.codeGameConsole, this.codeProductType, this.page, this.pageSize).subscribe( response => {
+    this.gameShopService.getProductList(this.codeGameConsole, this.codeProductType, this.page, this.pageSize, this.productSort).subscribe( response => {
 
       if (scroll && this.products) {
         this.products = this.products.concat(response as Array<Product>);
