@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MessageService } from 'src/app/services/message.service';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Message } from 'src/app/models/message';
+
+import { Message } from '../../models/message';
 import { Title } from '@angular/platform-browser';
-import { TranslateCompiler } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/services/translation.service';
-import { ContextService } from 'src/app/services/context.service';
+
+import { ContextService } from '../../services/context.service';
+import { MessageService } from '../../services/message.service';
+
 
 @Component({
   selector: 'app-homepage',

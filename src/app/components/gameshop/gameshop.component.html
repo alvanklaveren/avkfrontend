@@ -1,0 +1,16 @@
+<body>
+
+	<div *ngIf="loading">
+		<avk-loading></avk-loading>
+	</div>
+
+	<table class="d-flex flex-wrap bd-highlight mb-3">
+		<tr class="p-2" *ngFor="let product of products; index as i">
+			<td>
+				{{ product.name }}
+			</td>
+		</tr>
+	
+	</table>
+					
+</body>

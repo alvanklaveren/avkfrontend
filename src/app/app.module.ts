@@ -14,6 +14,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from './components/shared/shared.module';
+import { GameShopModule } from './components/gameshop/gameshop.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -38,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     HomePageModule,
     AboutMeModule,
+    GameShopModule
   ],
   providers: [],
   bootstrap: [AppComponent] 

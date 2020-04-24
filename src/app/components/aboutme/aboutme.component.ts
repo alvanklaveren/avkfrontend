@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MessageService } from 'src/app/services/message.service';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
-import { ContextService } from 'src/app/services/context.service';
-import { SmartResponse } from 'src/app/models/smartresponse';
+
+import { SmartResponse } from '../../models/smartresponse';
+
+import { ContextService } from '../../services/context.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-aboutme',
