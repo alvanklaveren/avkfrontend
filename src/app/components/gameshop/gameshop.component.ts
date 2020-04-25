@@ -29,7 +29,11 @@ export class GameShop implements OnInit{
   pageSize = 12;
   page = 0;
 
+  imageUrl = '';
+
   ngOnInit(){
+    this.imageUrl = this.gameShopService.imageUrl;
+
     this.codeGameConsole = this.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
     this.codeProductType = this.toNumber(this.route.snapshot.paramMap.get('codeProductType'));
 
@@ -51,13 +55,12 @@ export class GameShop implements OnInit{
 
   getProductList(){
     this.gameShopService.getProductList(this.codeGameConsole, this.codeProductType, this.page, this.pageSize, this.productSort).subscribe( response => {
-
+    
       if (scroll && this.products) {
         this.products = this.products.concat(response as Array<Product>);
       } else {
         this.products = response as Array<Product>;
       }
-
       this.loading = false;
     });
   

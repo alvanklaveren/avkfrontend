@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class GameShopService {
+
+  imageUrl = environment.backendUrl + 'gameshop/getProductMainImage?codeProduct=';
 
   constructor(private http: HttpClient) {}
 
@@ -11,5 +14,9 @@ export class GameShopService {
      return this.http.post(environment.backendUrl + 'gameshop/getProductList', {codeGameConsole: codeGameConsole, codeProductType: codeProductType, page: page, pageSize: pageSize, sortId: sortId});
   }
 
+  getProductMainImage(codeProduct: number): Observable<Blob> {
+    let url = environment.backendUrl + 'gameshop/getProductMainImage?codeProduct=' + codeProduct;
+    return this.http.get(url, {responseType: 'blob'});
+  }
 
 }
