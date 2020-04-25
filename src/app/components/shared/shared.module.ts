@@ -19,6 +19,7 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
   ],
   exports: [
     TranslateModule,
+    InfiniteScrollModule,
     CommonModule,
     SpinnerComponent,
     SafePipe,

@@ -4,8 +4,7 @@
 		<avk-loading></avk-loading>
 	</div>
 
-	<!-- <div (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="12"> -->
-	<div class="d-flex align-content-stretch flex-wrap bd-highlight mb-3" (scrolled)="onScroll()" infiniteScroll>
+	<div class="d-flex align-content-stretch flex-wrap bd-highlight mb-3" (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
 		<div class="p-2 bd-highlight border" *ngFor="let product of products; index as i" style="box-shadow:2px 2px 2px #AAAAAA; margin-left:4px; margin-right:4px; margin-top:4px; margin-bottom:4px">
 			<div>
 				<div class="row">
