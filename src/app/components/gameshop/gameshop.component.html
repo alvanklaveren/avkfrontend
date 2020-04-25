@@ -4,7 +4,8 @@
 		<avk-loading></avk-loading>
 	</div>
 
-	<div class="d-flex align-content-stretch flex-wrap bd-highlight mb-3">
+	<!-- <div (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="12"> -->
+	<div class="d-flex align-content-stretch flex-wrap bd-highlight mb-3" (scrolled)="onScroll()" infiniteScroll>
 		<div class="p-2 bd-highlight border" *ngFor="let product of products; index as i" style="box-shadow:2px 2px 2px #AAAAAA; margin-left:4px; margin-right:4px; margin-top:4px; margin-bottom:4px">
 			<div>
 				<div class="row">
@@ -19,7 +20,8 @@
 						<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
 						<br>
 					  	<div *ngFor="let productRating of product.productRatings; index as i">
-							  {{ 'Rated' | translate }} {{ productRating.rating }} by {{ productRating.ratingUrl.url }}
+							  {{ 'Rated' | translate }} {{ productRating.rating }} by 
+							  <a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
 						</div>
 					</div>
 				</div>
