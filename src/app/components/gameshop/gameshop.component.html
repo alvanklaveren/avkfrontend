@@ -5,30 +5,25 @@
 	</div>
 
 	<div *ngIf="!loading">
-		<form>
-			<div class="form-row">
-				<div class="form-group col-md-2">
-					<label class="col-form-label" for="sortselect">{{ 'Sort By' | translate }}</label>
-					  <ng-select class="border" [items]="productSortList" formControlName="sortselect" placeholder="{{ 'Select ...' | translate }}" [clearable]="false" (change)="onSortChanged($event)" >
-						<ng-template ng-label-tmp let-item="item" let-clear="clear">                    
-							<span class="ng-value-label">{{ item.description | translate }}</span>
-						</ng-template>
-						<ng-template ng-option-tmp let-item="productSort" let-index="index" let-search="searchTerm">
-						  <span>{{ item.description | translate }}</span>
-						</ng-template>
-					  </ng-select>
-		
-
-				</div>
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="selectsort" class="col-sm col-form-label">{{ 'Sort by' | translate }}</label>
+				<ng-select id="selectsort" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" [(ngModel)]="productSort" [clearable]="false" [ngModelOptions]="{ standalone: true }" (change)="onSortChanged()">
+					<ng-option *ngFor="let productSort of productSortList" [value]="productSort.id">
+						<a class="dropdown-item" style="background: #FFFFFF;">{{productSort.description}}</a>
+					</ng-option>
+				</ng-select>
 			</div>
 		</form>
-
-		<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select layout">
-			<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>
-			<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('flex')"><i class="fas fa-th"></i></button>
-			<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('list')"><i class="fas fa-list"></i></button>
-			<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-th"></i></button>
-		</div>  
+		<br><br><br>
+		<div>
+			<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select layout">
+				<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>
+				<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('flex')"><i class="fas fa-th"></i></button>
+				<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('list')"><i class="fas fa-list"></i></button>
+				<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-th"></i></button>
+			</div>
+		</div>
 
 		<div *ngIf="listType==='list'"(scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
 			<div class="border" *ngFor="let product of products; index as i" style="box-shadow:2px 2px 2px #AAAAAA; margin-left:4px; margin-right:4px; margin-top:4px; margin-bottom:4px">

@@ -7,6 +7,7 @@ import { SpinnerComponent } from '../shared/spinner/spinner.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InfiniteScrollModule,
     CommonModule,
     NgSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     TranslateModule,
@@ -26,6 +29,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgSelectModule,
     SpinnerComponent,
     SafePipe,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule { }

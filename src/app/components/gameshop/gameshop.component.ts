@@ -19,6 +19,15 @@ export class GameShop implements OnInit{
 
   listType = this.contextService.getGameListType();
 
+  cities = [
+    {id: 1, name: 'Vilnius'},
+    {id: 2, name: 'Kaunas'},
+    {id: 3, name: 'Pavilnys', disabled: true},
+    {id: 4, name: 'Pabradė'},
+    {id: 5, name: 'Klaipėda'}
+];
+
+
   products: Array<Product>;
 
   codeGameConsole: number;
@@ -80,10 +89,10 @@ export class GameShop implements OnInit{
     this.contextService.setListType(listType);
   }
 
-  onSortChanged(event){
-    let sort = event.value as ProductSort;
-    console.log(sort);
-    this.productSort = sort.id;
+  onSortChanged(){
+    console.log(this.productSort);
+    this.products = [];
+    this.getProductList();
   }
 
   onScroll() {
