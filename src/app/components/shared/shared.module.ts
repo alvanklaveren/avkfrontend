@@ -5,7 +5,7 @@ import { SafePipe } from 'src/app/pipes/safe.pipe';
 
 import { SpinnerComponent } from '../shared/spinner/spinner.component';
 import { TranslateModule } from '@ngx-translate/core';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,6 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
     CommonModule,
     SpinnerComponent,
     SafePipe,
-  ]
+  ],
 })
 export class SharedModule { }

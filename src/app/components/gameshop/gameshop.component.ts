@@ -16,6 +16,8 @@ export class GameShop implements OnInit{
 
   loading = true;
 
+  listType = this.contextService.getGameListType();
+
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private title:Title,
               private contextService:ContextService, private gameShopService: GameShopService){ 
   }
@@ -64,6 +66,11 @@ export class GameShop implements OnInit{
       this.loading = false;
     });
   
+  }
+
+  setListType(listType: string){
+    this.listType = listType;
+    this.contextService.setListType(listType);
   }
 
   onScroll() {

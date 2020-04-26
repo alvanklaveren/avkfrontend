@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { TranslationService } from './translation.service';
 
 const ISOA2 = 'isoA2';
+const THEME = 'theme';
+const LIST_TYPE = 'listType';
 const AGREED_TO_COOKIE = 'agreedToCookie';
 
 @Injectable({ providedIn: 'root' })
@@ -11,27 +13,42 @@ export class ContextService {
 
   constructor(private http: HttpClient, private translationService:TranslationService) { }
 
+  public getGameListType(): string {
+    let listType = localStorage.getItem(LIST_TYPE);
+    if(!listType || listType === ''){ listType = 'flex';}
+    return listType;
+  }
+
+  public setListType(listType: string): ContextService {
+    return this.setLocalGlobal(LIST_TYPE, listType);
+  }
+
   public getIsoA2(): string {
-    let isoA2 = sessionStorage.getItem(ISOA2);
+    let isoA2 = localStorage.getItem(ISOA2);
     if(!isoA2 || isoA2 === ''){ isoA2 = 'us';}
     return isoA2;
   }
 
+  public setIsoA2(isoA2: string): ContextService {
+    return this.setLocalGlobal(ISOA2, isoA2);
+  }
+
+  public getTheme(): string {
+    let theme = localStorage.getItem(THEME);
+    if(!theme || theme === ''){ theme = 'light';}
+    return theme;
+  }
+
+  public setTheme(theme: string): ContextService {
+    return this.setLocalGlobal(THEME, theme);
+  }
+
   public hasAgreedToCookies(): boolean {
-    if(sessionStorage.getItem(AGREED_TO_COOKIE) === 'y'){
-      return true;
-    } 
-    return false;
+    return (sessionStorage.getItem(AGREED_TO_COOKIE) === 'y');
   }
 
   public setAgreedToCookies(): ContextService{
-    this.setGlobal(AGREED_TO_COOKIE, 'y');
-    return this;
-  }
-
-  public setIsoA2(isoA2: string): ContextService {
-    this.setGlobal(ISOA2, isoA2);
-    return this;
+    return this.setSessionGlobal(AGREED_TO_COOKIE, 'y');
   }
 
   public translate(original: string){
@@ -39,10 +56,16 @@ export class ContextService {
     return this.translationService.translate(original, isoA2);
   }
 
-  private setGlobal(key, value){
+  private setSessionGlobal(key, value){
     sessionStorage.removeItem(key);
     sessionStorage.setItem(key, value);  
-    // TODO: could add saving to backend here.. so the language is stored regardless of the browser. 
+    return this;
+  }
+
+  private setLocalGlobal(key, value){
+    localStorage.removeItem(key);
+    localStorage.setItem(key, value);  
+    return this;
   }
 
 }

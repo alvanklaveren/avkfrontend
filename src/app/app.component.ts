@@ -21,7 +21,9 @@ export class AppComponent implements OnInit{
   aboutText = 'About ...';
   aboutWebsite: string = '';
 
+  theme = this.contextService.getTheme();
   flagIcon = '';
+
   selectedIsoA2 = this.contextService.getIsoA2();
 
   mailTo: string = environment.mailTo;
@@ -34,7 +36,8 @@ export class AppComponent implements OnInit{
     { description: 'About me', url: '/aboutme' },
   ]
 
-  constructor(private router:Router, private contextService:ContextService, private translateService: TranslateService){ 
+  constructor(private router:Router, private contextService:ContextService, private translateService: TranslateService
+              ){ 
     if(this.selectedIsoA2){
       if(this.selectedIsoA2.toUpperCase() === 'US') {
         this.flagIcon = '../assets/fonts/flag_us.svg';
@@ -94,5 +97,10 @@ export class AppComponent implements OnInit{
   onCookieMessageClick(){
     this.cookiemessage = null;
     this.contextService.setAgreedToCookies();
+  }
+  
+  setTheme(theme:string){
+    this.theme = theme;
+    this.contextService.setTheme(theme);
   }
 }
