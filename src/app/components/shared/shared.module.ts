@@ -6,7 +6,7 @@ import { SafePipe } from 'src/app/pipes/safe.pipe';
 import { SpinnerComponent } from '../shared/spinner/spinner.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { SelectModule } from 'ng2-select';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -17,12 +17,13 @@ import { SelectModule } from 'ng2-select';
     TranslateModule,
     InfiniteScrollModule,
     CommonModule,
-    SelectModule,
+    NgSelectModule,
   ],
   exports: [
     TranslateModule,
     InfiniteScrollModule,
     CommonModule,
+    NgSelectModule,
     SpinnerComponent,
     SafePipe,
   ],
