@@ -5,6 +5,25 @@
 	</div>
 
 	<div *ngIf="!loading">
+		<form>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<label class="col-form-label" for="sortselect">{{ 'Sort By' | translate }}</label>
+
+
+					  <ng-select [items]="productSortList" formControlName="sortselect" placeholder="{{ 'Select ...' | translate }}" [clearable]="false" (change)="onSortChanged($event)" >
+						<ng-template ng-label-tmp let-item="productSort" let-clear="clear">                    
+							<span class="ng-value-label">{{ productSort.description | translate }}</span>
+						</ng-template>
+						<ng-template ng-option-tmp let-item="productSort" let-index="index" let-search="searchTerm">
+						  <span>{{ productSort.description | translate }}</span>
+						</ng-template>
+					  </ng-select>
+		
+
+				</div>
+			</div>
+		</form>
 
 		<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select layout">
 			<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>

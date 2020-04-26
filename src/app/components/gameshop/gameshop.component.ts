@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ProductSort } from 'src/app/models/productSort';
 
 @Component({
   selector: 'app-gameshop',
@@ -18,14 +19,12 @@ export class GameShop implements OnInit{
 
   listType = this.contextService.getGameListType();
 
-  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private title:Title,
-              private contextService:ContextService, private gameShopService: GameShopService){ 
-  }
-
   products: Array<Product>;
 
   codeGameConsole: number;
   codeProductType: number;
+ 
+  productSortList: [ProductSort];
   productSort = 0;
 
   pageSize = 24;
@@ -33,8 +32,17 @@ export class GameShop implements OnInit{
 
   imageUrl = '';
 
+  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private title:Title,
+              private contextService:ContextService, private gameShopService: GameShopService){ 
+  }
+
   ngOnInit(){
     this.imageUrl = this.gameShopService.imageUrl;
+
+    this.gameShopService.getProductSortList().subscribe(res => {
+        this.productSortList = res as [ProductSort];
+        console.log(this.productSortList);
+    });
 
     this.codeGameConsole = this.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
     this.codeProductType = this.toNumber(this.route.snapshot.paramMap.get('codeProductType'));
@@ -62,7 +70,6 @@ export class GameShop implements OnInit{
       } else {
         this.products = response as Array<Product>;
       }
-      console.log(this.products);
       this.loading = false;
     });
   
@@ -71,6 +78,12 @@ export class GameShop implements OnInit{
   setListType(listType: string){
     this.listType = listType;
     this.contextService.setListType(listType);
+  }
+
+  onSortChanged(event){
+    let sort = event.value as ProductSort;
+    console.log(sort);
+    this.productSort = sort.id;
   }
 
   onScroll() {
