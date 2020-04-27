@@ -1,26 +1,29 @@
 <body>
 
-	<div *ngIf="loading">
-		<avk-loading></avk-loading>
-	</div>
-
 	<div style="text-align:center" *ngIf="!loading">
 		<img id="hellogalaxy" src="../assets/images/logo_small.jpg" alt="" />
 	</div>
 
 	<br>
 
-	<table class="table table-borderless" *ngIf="messages.length > 0 && !loading">
-		<tr *ngFor="let m of messages; index as i">
-				<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
-					<div class="d-flex flex-row-reverse">
-						<small><span>{{ m.messageDate | date: 'yyyy-MM-dd' }}</span></small>
-					</div>
-					
-					<span id="messagetext" [innerHTML]="m.messageText | safe: 'html'"></span>
-				</td>
-			<br>
-		</tr>		
-	</table>  
+	<div (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
+		<table class="table table-borderless" *ngIf="messages.length > 0">
+			<tr *ngFor="let m of messages; index as i">
+					<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
+						<div class="d-flex flex-row-reverse">
+							<small><span>{{ m.messageDate | date: 'yyyy-MM-dd' }}</span></small>
+						</div>
+						
+						<span id="messagetext" [innerHTML]="m.messageText | safe: 'html'"></span>
+					</td>
+				<br>
+			</tr>		
+		</table>  
+	</div>
 	
+	<div *ngIf="loading">
+		<br>
+		<avk-loading></avk-loading>
+	</div>
+
 </body>

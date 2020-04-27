@@ -6,6 +6,8 @@ import { Title } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductSort } from 'src/app/models/productSort';
+import { GameConsole } from 'src/app/models/gameconsole';
+import { ProductType } from 'src/app/models/producttype';
 
 @Component({
   selector: 'app-gameshop',
@@ -19,19 +21,13 @@ export class GameShop implements OnInit{
 
   listType = this.contextService.getGameListType();
 
-  cities = [
-    {id: 1, name: 'Vilnius'},
-    {id: 2, name: 'Kaunas'},
-    {id: 3, name: 'Pavilnys', disabled: true},
-    {id: 4, name: 'Pabradė'},
-    {id: 5, name: 'Klaipėda'}
-];
-
-
   products: Array<Product>;
 
-  codeGameConsole: number;
-  codeProductType: number;
+  gameConsoleList: [GameConsole];
+  codeGameConsole: number = 0;
+  
+  productTypeList: [ProductType];
+  codeProductType: number = 0;
  
   productSortList: [ProductSort];
   productSort = 0;
@@ -50,7 +46,6 @@ export class GameShop implements OnInit{
 
     this.gameShopService.getProductSortList().subscribe(res => {
         this.productSortList = res as [ProductSort];
-        console.log(this.productSortList);
     });
 
     this.codeGameConsole = this.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
@@ -69,10 +64,19 @@ export class GameShop implements OnInit{
       this.codeProductType = 0;
     }
 
+    this.gameShopService.getGameConsoleList().subscribe(res => {
+      this.gameConsoleList = res as [GameConsole];
+    });
+
+    this.gameShopService.getProductTypeList().subscribe(res => {
+      this.productTypeList = res as [ProductType];
+    });
+
     this.getProductList();
   }
 
   getProductList(){
+
     this.gameShopService.getProductList(this.codeGameConsole, this.codeProductType, this.page, this.pageSize, this.productSort).subscribe( response => {
       if (scroll && this.products) {
         this.products = this.products.concat(response as Array<Product>);
@@ -90,14 +94,20 @@ export class GameShop implements OnInit{
   }
 
   onSortChanged(){
-    console.log(this.productSort);
     this.products = [];
     this.getProductList();
   }
 
+  onFilterChanged(){
+    // same page navigate will change the url but will not reload the page (this is exactly what we want)
+    this.router.navigateByUrl('gameshop/' + this.codeGameConsole + '/' + this.codeProductType);
+    // refresh the part of the page that matters.
+    this.products = [];
+    this.getProductList();    
+  }
+
   onScroll() {
     this.page++;
-    console.log("scrolling to page " + this.page);
     this.getProductList();
   }
 

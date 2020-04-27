@@ -23,4 +23,12 @@ export class GameShopService {
     return this.http.get(environment.backendUrl + 'gameshop/getProductSortList');
   }
 
+  getGameConsoleList(){
+    return this.http.get(environment.backendUrl + 'gameshop/getGameConsoleList');
+  }
+
+  getProductTypeList(){
+    return this.http.get(environment.backendUrl + 'gameshop/getProductTypeList');
+  }
+
 }

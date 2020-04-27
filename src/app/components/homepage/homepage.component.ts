@@ -16,9 +16,12 @@ import { ForumService } from '../../services/forum.service';
 
 export class HomePage implements OnInit{
 
-  messages: Message[] = Array<Message>();
+  messages: Message[] = [];
 
   loading = true;
+
+  page = 0;
+  pageSize = 10;
 
   constructor(private forumService: ForumService, private httpClient: HttpClient, 
               private title:Title, private contextService:ContextService){ 
@@ -31,11 +34,25 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit(){
+    this.getMessageList();
+  }
 
-    this.forumService.getHomepageMessages().subscribe(res => {
-      this.messages = res as Array<Message>;
-      this.loading = false;
+  getMessageList(){
+    this.loading = true;
+    this.forumService.getHomepageMessages(this.page, this.pageSize).subscribe(response => {
+      if (scroll && this.messages) {
+        this.messages = this.messages.concat(response as Array<Message>);
+      } else {
+        this.messages = response as Array<Message>;
+      }
+      this.loading = false;      
     }); 
   }
+
+  onScroll() {
+    this.page++;
+    this.getMessageList();
+  }
+
 
 }

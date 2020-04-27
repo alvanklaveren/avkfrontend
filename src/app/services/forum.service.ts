@@ -7,8 +7,8 @@ export class ForumService {
 
   constructor(private http: HttpClient) {}
 
-  getHomepageMessages() {
-    return this.http.post(environment.backendUrl + 'forum/homepage', {});
+  getHomepageMessages(page:number, pageSize:number) {
+    return this.http.post(environment.backendUrl + 'forum/getHomePageMessages', { page: page, pageSize: pageSize });
   }
 
 }
