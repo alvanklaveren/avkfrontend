@@ -8,6 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductSort } from 'src/app/models/productSort';
 import { GameConsole } from 'src/app/models/gameconsole';
 import { ProductType } from 'src/app/models/producttype';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GameModalComponent } from './details/gamemodal.component';
 
 @Component({
   selector: 'app-gameshop',
@@ -38,7 +40,7 @@ export class GameShop implements OnInit{
   imageUrl = '';
 
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private title:Title,
-              private contextService:ContextService, private gameShopService: GameShopService){ 
+              private modalService: NgbModal, private contextService:ContextService, private gameShopService: GameShopService){ 
   }
 
   ngOnInit(){
@@ -86,6 +88,16 @@ export class GameShop implements OnInit{
       this.loading = false;
     });
   
+  }
+
+  openModal(product){
+    let modal = this.modalService.open(GameModalComponent, {ariaLabelledBy: 'app-game-modal'});
+    modal.componentInstance.product = product;
+    modal.result.then((result) => {
+      let closeResult = 'Closed with: ${result}';
+    }, (reason) => {
+      let closeResult = 'Dismissed ${this.getDismissReason(reason)}';
+    });
   }
 
   setListType(listType: string){

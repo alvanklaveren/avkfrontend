@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule
   ],
   exports: [
     TranslateModule,
@@ -31,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SafePipe,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule
   ],
 })
 export class SharedModule { }

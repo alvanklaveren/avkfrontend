@@ -1,0 +1,68 @@
+<div class="modal-header">
+    <h4 *ngIf="!product" class="modal-title" id="modal-basic-title">{{ 'Add' | translate }}&nbsp;...</h4>
+    <h4 *ngIf="product" class="modal-title" id="modal-basic-title">{{ 'Edit' | translate }}&nbsp;...</h4>
+    <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+
+    <form [formGroup]="editForm">
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="productname"> {{ 'Name' | translate }}</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="productname" formControlName="name">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="productcompany">{{ 'Company' | translate }}</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="productcompany" formControlName="codeCompany">
+                    <option *ngFor="let c of companyList" [ngValue]="c.code">
+                        <a class="dropdown-item avkdropdown">{{ c.description }}</a>
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="productyear"> {{ 'Year' | translate }}</label>
+            <div class="col-sm-3">
+                <input class="form-control text-right" type="number" id="productyear" formControlName="year">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="productdescription"> {{ 'Description' | translate }}</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" type="text" id="productdescription" formControlName="description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="productgameconsole">{{ 'Game Console' | translate }}</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="productgameconsole" formControlName="codeGameConsole">
+                    <option *ngFor="let gc of gameConsoleList" [ngValue]="gc.code">
+                        <a class="dropdown-item avkdropdown">{{ gc.description }}</a>
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="productproducttype">{{ 'Product Type' | translate }}</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="productproducttype" formControlName="codeProductType">
+                    <option *ngFor="let pt of productTypeList" [ngValue]="pt.code">
+                        <a class="dropdown-item avkdropdown">{{ pt.description }}</a>
+                    </option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+</div>
+

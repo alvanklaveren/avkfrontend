@@ -31,4 +31,8 @@ export class GameShopService {
     return this.http.get(environment.backendUrl + 'gameshop/getProductTypeList');
   }
 
+  getCompanyList(){
+    return this.http.get(environment.backendUrl + 'gameshop/getCompanyList');
+  }
+
 }
