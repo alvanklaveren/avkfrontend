@@ -5,7 +5,7 @@ import { Message } from '../../models/message';
 import { Title } from '@angular/platform-browser';
 
 import { ContextService } from '../../services/context.service';
-import { MessageService } from '../../services/message.service';
+import { ForumService } from '../../services/forum.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class HomePage implements OnInit{
 
   loading = true;
 
-  constructor(private messageService: MessageService, private httpClient: HttpClient, 
+  constructor(private forumService: ForumService, private httpClient: HttpClient, 
               private title:Title, private contextService:ContextService){ 
 
     let home = 'Home';
@@ -32,7 +32,7 @@ export class HomePage implements OnInit{
 
   ngOnInit(){
 
-    this.messageService.getHomepageMessages().subscribe(res => {
+    this.forumService.getHomepageMessages().subscribe(res => {
       this.messages = res as Array<Message>;
       this.loading = false;
     }); 

@@ -5,7 +5,6 @@ import { Title } from '@angular/platform-browser';
 import { SmartResponse } from '../../models/smartresponse';
 
 import { ContextService } from '../../services/context.service';
-import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-aboutme',
@@ -21,9 +20,7 @@ export class AboutMe implements OnInit{
   aboutMeText: string = null;
   downloadCVText: string = null;
 
-  constructor(private messageService: MessageService, private httpClient: HttpClient, 
-              private title:Title, private contextService:ContextService){ 
-  }
+  constructor(private httpClient: HttpClient, private title:Title, private contextService:ContextService){ }
 
   ngAfterViewInit() {
     this.contextService.translate('[aboutme]').subscribe(res => {
