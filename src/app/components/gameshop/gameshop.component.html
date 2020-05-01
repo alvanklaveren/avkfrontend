@@ -3,6 +3,7 @@
 	<!-- Filter, sort and display selection -->
 	<div *ngIf="!loading">
 		<form class="form-inline" [formGroup]="searchForm">
+			<!-- Sortorder -->
 			<div class="form-group">
 				<label for="selectsort" class="col-sm col-form-label">{{ 'Sort by' | translate }}</label>
 				<ng-select id="selectsort" class="dropdown-menu" formControlName="productSortId" [editableSearchTerm]="false" [multiple]="false" [clearable]="false" (change)="onSortChanged()">
@@ -11,6 +12,8 @@
 					</ng-option>
 				</ng-select>
 			</div>
+
+			<!-- Game Console Filter -->
 			<div class="form-group">
 				<label for="selectconsole" class="col-sm col-form-label">{{ 'Game Console' | translate }}</label>
 				<ng-select id="selectconsole" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" formControlName="codeGameConsole" [clearable]="false" (change)="onFilterChanged()">
@@ -19,6 +22,8 @@
 					</ng-option>
 				</ng-select>
 			</div>
+
+			<!-- Product Type Filter -->
 			<div class="form-group">
 				<label for="selectproducttype" class="col-sm col-form-label">{{ 'Product Type' | translate }}</label>
 				<ng-select id="selectproducttype" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" formControlName="codeProductType" [clearable]="false" (change)="onFilterChanged()">
@@ -27,8 +32,26 @@
 					</ng-option>
 				</ng-select>
 			</div>
+
 		</form>
+
+		<!-- Search by Product Name -->
+		<div class="container">
+			<br>
+			<div class="row justify-content-start">
+				<div class="col-md-4">
+					<div class="input-group">
+						<input type="text" class="form-control search" [(ngModel)]="searchProductName" id="productName" placeholder="{{ 'Search title' | translate }}">
+						<div class="input-group-append btn-group search">
+							<button class="btn btn-outline-primary h-100" (click)="search()"><i class="fas fa-search"> </i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<br>
+
 		<div>
 			<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select layout">
 				<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>

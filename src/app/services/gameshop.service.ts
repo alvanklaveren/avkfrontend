@@ -14,6 +14,10 @@ export class GameShopService {
      return this.http.post(environment.backendUrl + 'gameshop/getProductList', {codeGameConsole: codeGameConsole, codeProductType: codeProductType, page: page, pageSize: pageSize, sortId: sortId});
   }
 
+  searchProductList(productName: string, page: number, pageSize: number) {
+    return this.http.post(environment.backendUrl + 'gameshop/searchProductList', {productName:productName, page: page, pageSize: pageSize});
+ }
+
   getProductMainImage(codeProduct: number): Observable<Blob> {
     let url = environment.backendUrl + 'gameshop/getProductMainImage?codeProduct=' + codeProduct;
     return this.http.get(url, {responseType: 'blob'});

@@ -23,6 +23,7 @@ export class GameShop implements OnInit{
   loading = true;
 
   searchForm: FormGroup;
+  searchProductName: string = '';
 
   listType = this.contextService.getGameListType();
 
@@ -49,7 +50,6 @@ export class GameShop implements OnInit{
       codeGameConsole: [null],
       codeProductType: [null],
     });
-
 
     this.imageUrl = this.gameShopService.imageUrl;
 
@@ -91,15 +91,26 @@ export class GameShop implements OnInit{
   getProductList(){
     let sf = this.searchForm.value;
 
-    this.gameShopService.getProductList(sf.codeGameConsole, sf.codeProductType, this.page, this.pageSize, sf.productSortId).subscribe( response => {
-      if (scroll && this.products) {
-        this.products = this.products.concat(response as Array<Product>);
-      } else {
-        this.products = response as Array<Product>;
-      }
-      this.loading = false;
-    });
-  
+    if(this.searchProductName && this.searchProductName.length > 0) {
+      this.gameShopService.searchProductList(this.searchProductName, this.page, this.pageSize).subscribe( response => {
+        if (scroll && this.products) {
+          this.products = this.products.concat(response as Array<Product>);
+        } else {
+          this.products = response as Array<Product>;
+        }
+        this.loading = false;
+      });
+    } else {
+      this.gameShopService.getProductList(sf.codeGameConsole, sf.codeProductType, this.page, this.pageSize, sf.productSortId).subscribe( response => {
+        if (scroll && this.products) {
+          this.products = this.products.concat(response as Array<Product>);
+        } else {
+          this.products = response as Array<Product>;
+        }
+        this.loading = false;
+      });
+    }  
+
   }
 
   openModal(product){
@@ -117,14 +128,28 @@ export class GameShop implements OnInit{
     this.contextService.setListType(listType);
   }
 
+  search(){
+    // this.searchForm.patchValue({
+    //   productSort: 0,
+    //   codeGameConsole: 0,
+    //   codeProductType: 0
+    // });
+
+    this.products = [];
+    this.page = 0;   
+    this.getProductList();    
+  }
+
   onSortChanged(){
+    this.searchProductName = '';
     this.products = [];
     this.getProductList();
   }
 
   onFilterChanged(){
-    let sf = this.searchForm.value;
+    this.searchProductName = '';
 
+    let sf = this.searchForm.value;
     // same page navigate will change the url but will not reload the page (this is exactly what we want)
     this.router.navigateByUrl('gameshop/' + sf.codeGameConsole + '/' + sf.codeProductType);
     // refresh the part of the page that matters.
