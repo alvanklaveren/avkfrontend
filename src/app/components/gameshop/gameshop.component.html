@@ -2,10 +2,10 @@
 
 	<!-- Filter, sort and display selection -->
 	<div *ngIf="!loading">
-		<form class="form-inline">
+		<form class="form-inline" [formGroup]="searchForm">
 			<div class="form-group">
 				<label for="selectsort" class="col-sm col-form-label">{{ 'Sort by' | translate }}</label>
-				<ng-select id="selectsort" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" [(ngModel)]="productSort" [clearable]="false" [ngModelOptions]="{ standalone: true }" (change)="onSortChanged()">
+				<ng-select id="selectsort" class="dropdown-menu" formControlName="productSortId" [editableSearchTerm]="false" [multiple]="false" [clearable]="false" (change)="onSortChanged()">
 					<ng-option *ngFor="let productSort of productSortList" [value]="productSort.id">
 						<a class="dropdown-item avkdropdown">{{ productSort.description }}</a>
 					</ng-option>
@@ -13,7 +13,7 @@
 			</div>
 			<div class="form-group">
 				<label for="selectconsole" class="col-sm col-form-label">{{ 'Game Console' | translate }}</label>
-				<ng-select id="selectconsole" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" [(ngModel)]="codeGameConsole" [clearable]="false" [ngModelOptions]="{ standalone: true }" (change)="onFilterChanged()">
+				<ng-select id="selectconsole" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" formControlName="codeGameConsole" [clearable]="false" (change)="onFilterChanged()">
 					<ng-option *ngFor="let gameConsole of gameConsoleList" [value]="gameConsole.code">
 						<a class="dropdown-item avkdropdown">{{ gameConsole.description }}</a>
 					</ng-option>
@@ -21,7 +21,7 @@
 			</div>
 			<div class="form-group">
 				<label for="selectproducttype" class="col-sm col-form-label">{{ 'Product Type' | translate }}</label>
-				<ng-select id="selectproducttype" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" [(ngModel)]="codeProductType" [clearable]="false" [ngModelOptions]="{ standalone: true }" (change)="onFilterChanged()">
+				<ng-select id="selectproducttype" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" formControlName="codeProductType" [clearable]="false" (change)="onFilterChanged()">
 					<ng-option *ngFor="let productType of productTypeList" [value]="productType.code">
 						<a class="dropdown-item avkdropdown">{{ productType.description }}</a>
 					</ng-option>
