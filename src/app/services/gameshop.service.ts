@@ -16,7 +16,12 @@ export class GameShopService {
 
   searchProductList(productName: string, page: number, pageSize: number) {
     return this.http.post(environment.backendUrl + 'gameshop/searchProductList', {productName:productName, page: page, pageSize: pageSize});
- }
+  }
+
+  simpleSearch(productName: string, page: number, pageSize: number) {
+    console.log("Searching for " + productName);
+    return this.http.post(environment.backendUrl + 'gameshop/simpleSearch', {productName:productName, page: page, pageSize: pageSize});
+  }
 
   getProductMainImage(codeProduct: number): Observable<Blob> {
     let url = environment.backendUrl + 'gameshop/getProductMainImage?codeProduct=' + codeProduct;

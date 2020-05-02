@@ -11,6 +11,8 @@ import { ProductType } from 'src/app/models/producttype';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GameModalComponent } from './details/gamemodal.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-gameshop',
@@ -24,6 +26,8 @@ export class GameShop implements OnInit{
 
   searchForm: FormGroup;
   searchProductName: string = '';
+  searchProductNames: Array<String> = [];
+  searchSubject: Subject<string> = new Subject<string>();
 
   listType = this.contextService.getGameListType();
 
@@ -44,6 +48,16 @@ export class GameShop implements OnInit{
   }
 
   ngOnInit(){
+
+    this.searchSubject.pipe(debounceTime(200), distinctUntilChanged()).subscribe((searchString) => {
+      console.log(searchString);
+      if (searchString && searchString.length > 2) {
+        this.gameShopService.simpleSearch(searchString, 0, 10).subscribe((response) => {
+          this.searchProductNames = response as Array<String>;
+          console.log(this.searchProductNames);
+        });
+      }
+    });
 
     this.searchForm = this.formBuilder.group({
       productSortId: [null],
@@ -138,6 +152,10 @@ export class GameShop implements OnInit{
     this.products = [];
     this.page = 0;   
     this.getProductList();    
+  }
+
+  searchTypeAhead(){
+    console.log("typing");
   }
 
   onSortChanged(){
