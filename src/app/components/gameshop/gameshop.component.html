@@ -1,5 +1,7 @@
 <body>
 
+	<button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="openEditModal()">{{ "Add Product" | translate }}</button>    
+
 	<!-- Filter, sort and display selection -->
 	<div *ngIf="!loading">
 		<form class="form-inline" [formGroup]="searchForm">
@@ -73,38 +75,38 @@
 	<!-- The product list -->
 	<div *ngIf="!loading">
 		<div *ngIf="listType==='list'" (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
-			<div class="border" *ngFor="let product of products; index as i" style="box-shadow:2px 2px 2px #AAAAAA; margin-left:4px; margin-right:4px; margin-top:4px; margin-bottom:4px" (click)="openModal(product)">
-					<div class="row">
-						<div class="col-2" data-toggle="tooltip" data-placement="top" title="Click to enlarge image" style="cursor:zoom-in;">
-							<img class="col" onerror="this.style.display='none'" [src]="imageUrl + product.code" alt="missing picture" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>
+			<div class="border" *ngFor="let product of products; index as i" style="box-shadow:2px 2px 2px #AAAAAA; margin-left:4px; margin-right:4px; margin-top:4px; margin-bottom:4px" (click)="openEditModal(product)">
+				<div class="row">
+					<div class="col-2" data-toggle="tooltip" data-placement="top" title="Click to enlarge image" style="cursor:zoom-in;">
+						<img class="col" [src]="imageUrl + product.code" alt="missing picture" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>
+					</div>
+					<div class="col-4 text-wrap" style="width:30px">
+						<div class="col text-wrap"><b>{{ product.name }}</b></div>
+						<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
+						<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
+					</div>
+					<div class="col">
+						<div class="col text-wrap" [innerHtml]="product.description | safe: 'html'"></div>
+						<br>
+						<div class="col text-wrap" *ngFor="let productRating of product.productRatings; index as i">
+							{{ 'Rated' | translate }} {{ productRating.rating }} by 
+							<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
 						</div>
-						<div class="col-4 text-wrap" style="width:30px">
-							<div class="col text-wrap"><b>{{ product.name }}</b></div>
-							<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
-							<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
-						</div>
-						<div class="col">
-							<div class="col text-wrap" [innerHtml]="product.description | safe: 'html'"></div>
-							<br>
-							<div class="col text-wrap" *ngFor="let productRating of product.productRatings; index as i">
-								{{ 'Rated' | translate }} {{ productRating.rating }} by 
-								<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
-							</div>
-						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<div *ngIf="listType==='flex'" class="d-flex align-content-stretch flex-wrap bd-highlight mb-3" (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
-			<div class="p-2 bd-highlight border avkflex" *ngFor="let product of products; index as i" (click)="openModal(product)">
+			<div class="p-2 bd-highlight border avkflex" *ngFor="let product of products; index as i">
 				<div>
 					<div class="row">
-						<div style="width:40%">
-							<div data-toggle="tooltip" data-placement="top" title="Click to enlarge image" style="cursor:zoom-in;">
-								<img class="col avkfleximg" onerror="this.style.display='none'" [src]="imageUrl + product.code" alt="missing picture"/>
+						<div style="width:40%" (click)="openUploadImageModal(product)">
+							<div data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
+								<img class="col avkfleximg" onerror="this.style.display='block'" [src]="imageUrl + product.code" alt="missing picture"/>
 							</div>
 						</div>
-						<div class="col text-wrap" style="width:30px">
+						<div class="col text-wrap" style="width:30px" (click)="openEditModal(product)">
 							<div class="col text-wrap"><b>{{ product.name }}</b></div>
 							<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
 							<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>

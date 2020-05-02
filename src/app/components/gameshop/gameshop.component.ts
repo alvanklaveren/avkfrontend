@@ -13,6 +13,7 @@ import { GameModalComponent } from './details/gamemodal.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UploadImageModalComponent } from './details/uploadimagemodal.component';
 
 @Component({
   selector: 'app-gameshop',
@@ -127,13 +128,30 @@ export class GameShop implements OnInit{
 
   }
 
-  openModal(product){
+  openEditModal(product?){   
     let modal = this.modalService.open(GameModalComponent, {ariaLabelledBy: 'app-game-modal'});
-    modal.componentInstance.product = product;
+
+    if(product) {
+      modal.componentInstance.product = product;
+    }
+
     modal.result.then((result) => {
       let closeResult = 'Closed with: ${result}';
     }, (reason) => {
       let closeResult = 'Dismissed ${this.getDismissReason(reason)}';
+    });
+  }
+
+  openUploadImageModal(product){   
+    let modal = this.modalService.open(UploadImageModalComponent, {ariaLabelledBy: 'app-uploadimage-modal'});
+
+    if(product) {
+      modal.componentInstance.product = product;
+    }
+
+    modal.result.then((result) => {
+      product = result;
+    }, (reason) => {
     });
   }
 

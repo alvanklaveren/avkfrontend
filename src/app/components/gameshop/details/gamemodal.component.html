@@ -63,6 +63,14 @@
             </div>
         </div>
     </form>
-
 </div>
 
+<div class="modal-footer">
+    <button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="onClose()">{{ "Cancel" | translate }}</button>
+
+    <div class="btn-group btn-group-toggle" role="group" style="width: auto">
+      <button [disabled]="!editForm.valid" class="btn btn-primary" type="button" (click)="onSave()">
+        <span> {{ "Save" | translate }} </span>
+      </button>
+    </div>
+</div>

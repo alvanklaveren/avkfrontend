@@ -43,7 +43,7 @@ export class GameModalComponent implements OnInit{
         this.editForm = this.formBuilder.group({
             name: [null, Validators.required],
             year: [null],
-            description: [null],
+            description: [null, Validators.required],
             codeGameConsole: [null, Validators.required],
             codeProductType: [null, Validators.required],
             codeCompany: [null, Validators.required],
@@ -60,6 +60,38 @@ export class GameModalComponent implements OnInit{
             });
         } else {
         }
+    }
+
+    onSave(){
+        let ef = this.editForm.value;
+
+        let gameConsole = this.gameConsoleList.find(obj => obj.code === ef.codeGameConsole);
+        let productType = this.productTypeList.find(obj => obj.code === ef.codeProductType);
+        let company = this.companyList.find(obj => obj.code === ef.codeCompany);
+
+        let product;
+        if(this.product){
+            product = this.product;
+        } else {
+            product = new Product();
+        }
+        
+        product.name = ef.name;
+        product.year = ef.year;
+        product.description = ef.description;
+        product.gameConsole = gameConsole;
+        product.productType = productType;
+        product.company = company;
+
+        this.gameShopService.save(product).subscribe(res => {
+            this.product = res as Product;
+            this.activeModal.dismiss('Saved!');
+        },
+        (err => {
+            console.log("Saving failed");
+        }
+        ));
+
     }
 
     onDismiss() {
