@@ -41,14 +41,18 @@
 			<div class="row justify-content-start">
 				<div class="col-md-4">
 					<div class="input-group">
-						<ng-select id="productName" class="dropdown-menu" [typeahead]="searchSubject" [(ngModel)]="searchProductName" [editableSearchTerm]="false" [multiple]="false" [clearable]="false">
+						<input type="text" class="form-control search" [(ngModel)]="searchProductName" id="productName" placeholder="{{ 'Search title' | translate }}">
+						<div class="input-group-append btn-group search">
+							<button class="btn btn-sm btn-outline-primary" (click)="search()"><i class="fas fa-search"> </i></button>
+						</div>
+						<!-- <ng-select id="productName" class="dropdown-menu" [typeahead]="searchSubject" [(ngModel)]="searchProductName" [editableSearchTerm]="true" [multiple]="false" [clearable]="true">
 							<ng-option *ngFor="let item of searchProductNames" [value]="item">
 								<a class="dropdown-item avkdropdown">{{ item }}</a>
 							</ng-option>
 						</ng-select>	
 						<div class="input-group-append btn-group searchbutton">
 							<button class="btn btn-sm btn-outline-primary" (click)="search()"><i class="fas fa-search"> </i></button>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
