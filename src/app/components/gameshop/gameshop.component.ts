@@ -145,12 +145,10 @@ export class GameShop implements OnInit{
   openUploadImageModal(product){   
     let modal = this.modalService.open(UploadImageModalComponent, {ariaLabelledBy: 'app-uploadimage-modal'});
 
-    if(product) {
-      modal.componentInstance.product = product;
-    }
+    modal.componentInstance.product = product;
 
     modal.result.then((result) => {
-      product = result;
+      window.location.reload();
     }, (reason) => {
     });
   }

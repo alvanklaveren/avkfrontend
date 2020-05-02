@@ -35,8 +35,7 @@ export class UploadImageModalComponent implements OnInit {
         }
 
         this.gameShopService.uploadImage(this.product.code, this.selectedFile).subscribe(res => {
-            this.product = res as Product;
-            this.activeModal.dismiss('Saved!');
+            this.activeModal.close();
         },
         (err => {
             console.log("Saving failed");
@@ -46,7 +45,7 @@ export class UploadImageModalComponent implements OnInit {
     }
 
     onFileChanged(event){
-        this.selectedFile = event.target.files[0];
+        this.selectedFile = event.target.files.item(0);
     }
 
     onDismiss() {
@@ -54,6 +53,6 @@ export class UploadImageModalComponent implements OnInit {
     }
   
     onClose() {
-        this.activeModal.dismiss('Closed!');
+        this.activeModal.close();
     }
   }

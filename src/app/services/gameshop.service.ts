@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
@@ -48,9 +48,17 @@ export class GameShopService {
     return this.http.post(environment.backendUrl + 'gameshop/save', product); 
   }
 
-  uploadImage(codeProduct: Number, imageFile: File) {
-    console.log(imageFile);
-    return this.http.post(environment.backendUrl + 'gameshop/uploadImage', { codeProduct: codeProduct, imageFile: imageFile }); 
-  }
+  uploadImage(codeProduct: any, file: File): Observable<HttpEvent<{}>> {
+    const formdata: FormData = new FormData();
 
+    formdata.append('imageFile', file);
+    formdata.append('codeProduct', codeProduct);
+    
+    const req = new HttpRequest('POST', environment.backendUrl + 'gameshop/uploadImage', formdata, {
+      reportProgress: false,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
 }
