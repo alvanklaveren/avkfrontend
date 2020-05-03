@@ -42,6 +42,8 @@ export class GameShop implements OnInit{
   page = 0;
 
   imageUrl = '';
+  addingCompany = false;
+  newCompanyDescription = '';
 
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
@@ -157,18 +159,19 @@ export class GameShop implements OnInit{
     });
   }
 
+  addCompany(){
+    this.gameShopService.addCompany(this.newCompanyDescription).subscribe(res => {
+      this.addingCompany = false;
+      this.newCompanyDescription = '';
+    });
+  }
+
   setListType(listType: string){
     this.listType = listType;
     this.contextService.setListType(listType);
   }
 
   search(){
-    // this.searchForm.patchValue({
-    //   productSort: 0,
-    //   codeGameConsole: 0,
-    //   codeProductType: 0
-    // });
-
     this.products = [];
     this.page = 0;   
     this.getProductList();    

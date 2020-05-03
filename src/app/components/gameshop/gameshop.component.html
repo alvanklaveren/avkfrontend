@@ -1,9 +1,33 @@
 <body>
 
-	<button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="openEditModal()">{{ "Add Product" | translate }}</button>    
-
 	<!-- Filter, sort and display selection -->
 	<div *ngIf="!loading">
+		<div *ngIf="!addingCompany">
+			<div class="d-flex flex-row bd-highlight mb-3">
+				<div class="p-2 bd-highlight">
+					<button class="btn btn-outline-secondary" type="button" (click)="openEditModal()">{{ "Add Product" | translate }}</button>
+				</div>
+				<div class="p-2 bd-highlight">
+					<button class="btn btn-outline-secondary" type="button" (click)="addingCompany=true">{{ "Add Company" | translate }}</button>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="addingCompany">
+			<div class="d-flex flex-row bd-highlight mb-3 border">
+				<div class="p-2 bd-highlight">
+					<label for="addcompany" class="col-sm col-form-label">{{ 'Company Name' | translate }}</label>
+				</div>
+				<div class="p-2 bd-highlight">
+					<input class="form-control" type="text" id="addcompany" [(ngModel)]="newCompanyDescription">
+				</div>
+				<div class="p-2 bd-highlight">
+					<button class="btn btn-primary" type="button" (click)="addCompany()">{{ "Add" | translate }}</button>
+					<button class="btn btn-outline-secondary" type="button" (click)="newCompanyDescription=''; addingCompany=false">{{ "Cancel" | translate }}</button>
+				</div>
+			</div>
+		</div>
+	
 		<form class="form-inline" [formGroup]="searchForm">
 			<!-- Sortorder -->
 			<div class="form-group">

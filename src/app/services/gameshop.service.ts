@@ -44,6 +44,10 @@ export class GameShopService {
     return this.http.get(environment.backendUrl + 'gameshop/getCompanyList');
   }
 
+  addCompany(description: string) {
+    return this.http.post(environment.backendUrl + 'gameshop/addCompany', description); 
+  }
+
   save(product: Product){
     return this.http.post(environment.backendUrl + 'gameshop/save', product); 
   }
