@@ -66,11 +66,37 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="onClose()">{{ "Cancel" | translate }}</button>
 
-    <div class="btn-group btn-group-toggle" role="group" style="width: auto">
-      <button [disabled]="!editForm.valid" class="btn btn-primary" type="button" (click)="onSave()">
-        <span> {{ "Save" | translate }} </span>
-      </button>
+    <div class="container">
+        <div class="row" *ngIf="!askDelete">
+            <div class="col text-left">
+                <button [hidden]="!product" class="btn btn-danger" type="button" (click)="askDelete=true">
+                    <span> {{ "Delete" | translate }} </span>
+                </button>
+            </div>
+
+            <div class="col text-right">
+                <button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="onDismiss()">{{ "Cancel" | translate }}</button>
+
+                <div class="btn-group btn-group-toggle" role="group" style="width: auto">
+                    <button [disabled]="!editForm.valid" class="btn btn-primary" type="button" (click)="onSave()">
+                        <span> {{ "Save" | translate }} </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="askDelete">
+            <div class="col text-right">
+                <span>{{ 'About to delete' | translate }} </span>
+                <div class="btn-group btn-group-toggle" role="group" style="width: auto">
+                    <button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="askDelete=false">{{ "Cancel" | translate }}</button>
+                    <button class="btn btn-success" id="booking-add-cancel" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    
 </div>

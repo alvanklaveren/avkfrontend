@@ -136,9 +136,12 @@ export class GameShop implements OnInit{
     }
 
     modal.result.then((result) => {
-      let closeResult = 'Closed with: ${result}';
+      window.location.reload();
+      
     }, (reason) => {
-      let closeResult = 'Dismissed ${this.getDismissReason(reason)}';
+      if(reason === 'Deleted') {
+        window.location.reload();
+      }
     });
   }
 
@@ -150,6 +153,7 @@ export class GameShop implements OnInit{
     modal.result.then((result) => {
       window.location.reload();
     }, (reason) => {
+      window.location.reload();
     });
   }
 

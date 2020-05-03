@@ -24,6 +24,9 @@ export class GameModalComponent implements OnInit{
     productTypeList: [ProductType];
     companyList: [Company];
 
+    askDelete = false;
+
+
     constructor(private modalService: NgbModal, private activeModal: NgbActiveModal,
                 private formBuilder: FormBuilder, private gameShopService: GameShopService) { }
 
@@ -62,6 +65,20 @@ export class GameModalComponent implements OnInit{
         }
     }
 
+    onDelete(){       
+        if(!this.product || !this.product.code) { 
+            return;
+        }
+
+        this.askDelete =  false;
+        
+        this.gameShopService.delete(this.product.code).subscribe(res => {
+            this.activeModal.close("Deleted")
+         }, (err) => {
+            console.log("Delete failed");
+         });
+    }
+
     onSave(){
         let ef = this.editForm.value;
 
@@ -85,7 +102,7 @@ export class GameModalComponent implements OnInit{
 
         this.gameShopService.save(product).subscribe(res => {
             this.product = res as Product;
-            this.activeModal.dismiss('Saved!');
+            this.activeModal.close();
         },
         (err => {
             console.log("Saving failed");
@@ -99,6 +116,6 @@ export class GameModalComponent implements OnInit{
     }
   
     onClose() {
-        this.activeModal.dismiss('Closed!');
+        this.activeModal.dismiss();
     }
   }

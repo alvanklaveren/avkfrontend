@@ -48,6 +48,10 @@ export class GameShopService {
     return this.http.post(environment.backendUrl + 'gameshop/save', product); 
   }
 
+  delete(codeProduct: Number){
+    return this.http.post(environment.backendUrl + 'gameshop/delete', codeProduct); 
+  }
+
   uploadImage(codeProduct: any, file: File): Observable<HttpEvent<{}>> {
     const formdata: FormData = new FormData();
 
