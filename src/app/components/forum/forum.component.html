@@ -1,0 +1,71 @@
+<body>
+	<H1>AVK Forum</H1>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item" (click)="goHome()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
+			<a>{{ 'Home' | translate }}</a>
+		</li>
+		<li *ngIf="!codeMessageCategory" class="breadcrumb-item">
+			<a style="color:darkgray"><i>{{ 'Categories' | translate }}</i></a>
+		</li>
+		<li *ngIf="codeMessageCategory" class="breadcrumb-item" (click)="goForum()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
+			<a>{{ 'Categories' | translate }}</a>
+		</li>
+		<li *ngIf="codeMessageCategory" class="breadcrumb-item">
+			<a style="color:darkgray"><i>{{ messageCategory.description }}</i></a>
+		</li>
+	</ol>
+	<div *ngIf="!codeMessageCategory">
+		<table class="table table-striped table-borderless">
+			<thead>
+				<tr>
+					<th style="width:90%;">
+						<b><span>{{ 'Category' | translate }}</span></b>
+					</th>
+					<th style="width:10%; text-align: center;">
+						<b><span>{{ '# Messages' | translate }}</span></b>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<ng-container *ngFor="let messageCategory of messageCategories">
+					<tr (click)="onSelectCategory(messageCategory)">
+						<td> {{ messageCategory.description }} </td>
+						<td style="text-align: center;"><span class="badge badge-primary">{{ messageCategory.messageCount }}</span></td>
+					</tr>
+				</ng-container>
+			</tbody>
+		</table>
+	</div>
+	<div *ngIf="codeMessageCategory">
+		<table *ngIf="!messages || messages.length > 0" class="table table-striped table-borderless">
+			<thead>
+				<tr class="row">
+					<th class="col-2">
+						<b><span>{{ 'Date' | translate }}</span></b>
+					</th>
+					<th class="col-2">
+						<b><span>{{ 'User' | translate }}</span></b>
+					</th>
+					<th class="col-8">
+						<b><span>{{ 'Description' | translate }}</span></b>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<ng-container *ngFor="let message of messages">
+					<tr class="row">
+						<td class="col-2">
+							<small> 
+								{{ message.messageDate | date: 'yyyy/MM/dd' }}
+								<br>  
+								<small> {{ message.messageDate | date: 'hh:mm:ss' }} </small>
+							</small>
+						</td>
+						<td class="col-2"><small> {{ message.forumUser.displayName }} </small></td>
+						<td class="col-8"> {{ message.description }} </td>
+					</tr>
+				</ng-container>
+			</tbody>
+		</table>
+	</div>
+</body>

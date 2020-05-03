@@ -68,4 +68,11 @@ export class ContextService {
     return this;
   }
 
+  public toNumber(text: string){
+    if(isNaN(Number(text))){
+      return undefined;
+    } 
+    return Number(text);
+  }
+
 }

@@ -79,8 +79,8 @@ export class GameShop implements OnInit{
           this.gameShopService.getProductTypeList().subscribe(res => {
             this.productTypeList = res as [ProductType];
 
-            let codeGameConsole = this.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
-            let codeProductType = this.toNumber(this.route.snapshot.paramMap.get('codeProductType'));
+            let codeGameConsole = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
+            let codeProductType = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeProductType'));
             let productSortId = 0;
         
             if(!codeGameConsole){ codeProductType = 0; }
@@ -201,13 +201,6 @@ export class GameShop implements OnInit{
   onScroll() {
     this.page++;
     this.getProductList();
-  }
-
-  toNumber(text: string){
-    if(isNaN(Number(text))){
-      return undefined;
-    } 
-    return Number(text);
   }
 
 }
