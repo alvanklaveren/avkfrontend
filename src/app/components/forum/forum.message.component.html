@@ -16,13 +16,58 @@
 	<div *ngIf="message" class="container">
 		<div class="row">
 			<div class="col"></div>
-
 			<div class="col-8">
-				<h3>{{ message.description }}</h3>
-				<hr>
-				<p [innerHTML]="message.preparedMessageText | safe:'html'"></p>
+				<!-- Show primary message -->
+				<div *ngIf="!editMessage">
+					<div class="row">
+						<h3 class="col">{{ message.description }}</h3>
+						<span class="col text-right" ><span (click)="onEditMessage(message)"><i class="far fa-2x fa-edit text-primary"></i></span></span>
+					</div>
+					<hr>
+					<p [innerHTML]="message.preparedMessageText | safe:'html'"></p>
+				</div>
 
-				<div class="container" *ngIf="message">
+				<!-- Edit primary message -->
+				<div *ngIf="editMessage">
+					<div class="row">
+						<div class="col"><input class="form-control font-weight-bold" type="text" [(ngModel)]="message.description"></div>
+					</div>
+					<hr>
+					<textarea rows="10" class="form-control" type="text" [(ngModel)]="message.messageText"></textarea>
+
+				</div>
+				<div *ngIf="editMessage" class="container">
+					<br>
+					<div class="row" *ngIf="!askDelete">
+						<div class="col text-left">
+							<button [hidden]="!message" class="btn btn-danger" type="button" (click)="askDelete=true">
+								<span> {{ "Delete" | translate }} </span>
+							</button>
+						</div>
+			
+						<div class="col text-right">			
+							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
+								<button class="btn btn-outline-secondary" type="button" (click)="onCancel()">{{ "Cancel" | translate }}</button>
+								<button class="btn btn-primary" type="button" (click)="onSave()">
+									<span> {{ "Save" | translate }} </span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="askDelete">
+						<div class="col text-right">
+							<span>{{ 'About to delete' | translate }} </span>
+							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
+								<button class="btn btn-outline-secondary" type="button" (click)="askDelete=false">{{ "Cancel" | translate }}</button>
+								<button class="btn btn-success" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
+							</div>
+						</div>
+					</div>		
+				</div>
+				<br>
+
+				<!-- User info primary message-->
+				<div class="container">
 					<div class="row">
 						<div class="col-8"></div>
 						<div class="col">
@@ -31,14 +76,14 @@
 								<br>
 								<img class="userimg" [src]="avatarUrl + message.forumUser.code" alt="no"/>
 								<span class="username"> {{ message.forumUser.displayName }} </span>
-
 							</div>
 						</div>	
 					</div>
-				</div>
-			
+				</div>				
+					
 				<hr>
 
+				<!-- Reply Messages -->
 				<div *ngIf="replyMessages">
 					<br>
 					<h4 *ngIf="replyMessages.length == 1">{{ replyMessages.length }} Answer</h4>
@@ -47,7 +92,17 @@
 
 				<div *ngFor="let reply of replyMessages">
 					<hr>
-					<p [innerHTML]="reply.preparedMessageText | safe:'html'"></p>
+
+					<div *ngIf="editReplyMessage != reply">
+						<div class="row">
+						<p class="col" [innerHTML]="reply.preparedMessageText | safe:'html'"></p>
+						<span class="col text-right" ><span (click)="onEditReplyMessage(reply)"><i class="far fa-1x fa-edit text-primary"></i></span></span>
+						</div>
+					</div>
+
+					<div *ngIf="editReplyMessage == reply">
+						<textarea rows="10" class="form-control" type="text" [(ngModel)]="reply.messageText"></textarea>
+					</div>
 
 					<div class="container">
 						<div class="row">
@@ -62,6 +117,33 @@
 							</div>	
 						</div>
 					</div>	
+
+					<div class="row" *ngIf="editReplyMessage == reply">
+						<div class="col text-left" *ngIf="!askReplyDelete">
+							<button class="btn btn-danger" type="button" (click)="askReplyDelete=true">
+								<span> {{ "Delete" | translate }} </span>
+							</button>
+						</div>
+			
+						<div class="col text-right">			
+							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
+								<button class="btn btn-outline-secondary" type="button" (click)="onCancelEditReplyMessage()">{{ "Cancel" | translate }}</button>
+								<button class="btn btn-primary" type="button" (click)="onReplySave(reply)">
+									<span> {{ "Save" | translate }} </span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="askReplyDelete">
+						<div class="col text-right">
+							<span>{{ 'About to delete' | translate }} </span>
+							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
+								<button class="btn btn-outline-secondary" type="button" (click)="askReplyDelete=false">{{ "Cancel" | translate }}</button>
+								<button class="btn btn-success" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
+							</div>
+						</div>
+					</div>		
+
 				</div>
 			</div>
 

@@ -21,10 +21,13 @@ export class ForumMessage implements OnInit{
 
   codeMessage: number;
   message: Message;
-  
+  editMessage: Message;
+  editReplyMessage: Message;
   replyMessages: Array<Message> = [];
 
   avatarUrl = ''; 
+  askDelete = false;
+  askReplyDelete = false;
   
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal, 
@@ -34,6 +37,8 @@ export class ForumMessage implements OnInit{
   ngOnInit(){
 
     this.avatarUrl = this.forumService.avatarUrl;
+    this.editMessage = null;
+    this.editReplyMessage = null;
 
     if(this.route.snapshot.paramMap.get('codeMessage')) {
       this.codeMessage = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeMessage'));
@@ -63,6 +68,10 @@ export class ForumMessage implements OnInit{
 
   }
 
+  onEditMessage(message: Message) {
+    this.editMessage = message;
+  }
+
   goHome(){
     this.router.navigateByUrl("home");
   }
@@ -76,6 +85,52 @@ export class ForumMessage implements OnInit{
       let codeMessageCategory = this.message.messageCategory.code as number;
       this.router.navigateByUrl("forum/" + codeMessageCategory);
     }
+  }
+
+  onCancel(){
+    this.editMessage = null;
+  }
+
+  onSave(){
+    this.forumService.prepareMessage(this.editMessage.messageText).subscribe(resp => {
+      this.forumService.save(this.editMessage).subscribe(res =>{
+        this.editMessage.preparedMessageText = (resp as SmartResponse).result as string;
+        this.message = this.editMessage;
+        this.editMessage = null; 
+      });
+    });   
+  }
+
+  onDelete() {
+    let codeMessageCategory = this.message.messageCategory.code as number;
+
+    this.forumService.delete(this.message).subscribe( res => {
+      this.router.navigateByUrl("forum/" + codeMessageCategory);
+    });
+  }
+
+  onEditReplyMessage(message: Message) {
+    this.editReplyMessage = message;
+  }
+
+  onReplySave(reply: Message) {
+    this.forumService.prepareMessage(this.editReplyMessage.messageText).subscribe(resp => {
+      this.forumService.save(this.editReplyMessage).subscribe(res =>{
+        this.editReplyMessage.preparedMessageText = (resp as SmartResponse).result as string;
+        reply = this.editReplyMessage;
+        this.editReplyMessage = null; 
+      });
+    });   
+  }
+
+  onCancelEditReplyMessage(){
+    this.editReplyMessage = null;
+  }
+
+  onReplyDelete(replyMessage: Message) {
+    this.forumService.delete(replyMessage).subscribe( res => {
+      this.ngOnInit();
+    });
   }
 
 }

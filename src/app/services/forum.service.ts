@@ -48,7 +48,7 @@ export class ForumService {
   }
 
   delete(message: Message){
-    return this.http.post(environment.backendUrl + 'forum/delete', message);
+    return this.http.post(environment.backendUrl + 'forum/delete', message.code);
   }
 
 }
