@@ -13,7 +13,7 @@ const routes: Routes = [
 
   { path: 'forum', component: Forum },
   { path: 'forum/:codeMessageCategory', component: Forum },
-  { path: 'forum/message/:codeMessage', component: ForumMessage },
+  { path: 'forum/message/:codeMessageCategory/:codeMessage', component: ForumMessage },
 
   { path: 'gameshop', redirectTo: 'gameshop/0/0', pathMatch: 'full' },
   { path: 'gameshop/:codeGameConsole', redirectTo: 'gameshop/:codeGameConsole/0', pathMatch: 'full' },

@@ -68,12 +68,17 @@ export class Forum implements OnInit{
 
   onSelectCategory(messageCategory){
     let codeMessageCategory = messageCategory.code as number;
-    this.router.navigateByUrl("forum/"+codeMessageCategory);
+    this.router.navigateByUrl("forum/" + codeMessageCategory);
+  }
+
+  onAddMessage(){
+    this.router.navigateByUrl("forum/message/" + this.codeMessageCategory + "/0" );
   }
 
   onSelectMessage(message) {
+    let codeCategory = message.messageCategory.code;
     let codeMessage = message.code as number;
-    this.router.navigateByUrl("forum/message/" + codeMessage);
+    this.router.navigateByUrl("forum/message/" + codeCategory + "/" + codeMessage);
   }
 
 }

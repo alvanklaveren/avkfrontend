@@ -8,7 +8,7 @@
 		<li class="breadcrumb-item" (click)="goForum()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
 			<a>{{ 'Categories' | translate }}</a>
 		</li>
-		<li *ngIf="message" class="breadcrumb-item" (click)="goCategory(message.messageCategory)" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
+		<li *ngIf="message?.messageCategory" class="breadcrumb-item" (click)="goCategory()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
 			<a>{{ message.messageCategory.description }}</a>
 		</li>
 	</ol>
@@ -39,13 +39,13 @@
 				<div *ngIf="editMessage" class="container">
 					<br>
 					<div class="row" *ngIf="!askDelete">
-						<div class="col text-left">
+						<div class="col text-left" *ngIf="message?.code">
 							<button [hidden]="!message" class="btn btn-danger" type="button" (click)="askDelete=true">
 								<span> {{ "Delete" | translate }} </span>
 							</button>
 						</div>
 			
-						<div class="col text-right">			
+						<div class="col text-right">
 							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
 								<button class="btn btn-outline-secondary" type="button" (click)="onCancel()">{{ "Cancel" | translate }}</button>
 								<button class="btn btn-primary" type="button" (click)="onSave()">
@@ -67,7 +67,7 @@
 				<br>
 
 				<!-- User info primary message-->
-				<div class="container">
+				<div *ngIf="message?.code" class="container">
 					<div class="row">
 						<div class="col-8"></div>
 						<div class="col">
