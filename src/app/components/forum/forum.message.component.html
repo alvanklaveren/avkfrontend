@@ -1,0 +1,47 @@
+<body>
+	<H1>AVK Forum</H1>
+
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item" (click)="goHome()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
+			<a>{{ 'Home' | translate }}</a>
+		</li>
+		<li class="breadcrumb-item" (click)="goForum()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
+			<a>{{ 'Categories' | translate }}</a>
+		</li>
+		<li *ngIf="message" class="breadcrumb-item" (click)="goCategory(message.messageCategory)" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
+			<a>{{ message.messageCategory.description }}</a>
+		</li>
+	</ol>
+
+	<div *ngIf="message" class="container">
+		<div class="row">
+			<div class="col"></div>
+
+			<div class="col-8">
+				<h3>{{ message.description }}</h3>
+				<hr>
+				<p [innerHTML]="preparedText | safe:'html'"></p>
+
+				<div class="container" *ngIf="message">
+					<div class="row">
+						<div class="col-8"></div>
+						<div class="col">
+							<div class="userdiv">
+								Asked {{ message.messageDate | date: 'yyyy/MM/dd' }}
+								<br>
+								<img class="userimg" [src]="avatarUrl + message.forumUser.code" alt="no"/>
+								<span class="username"> {{ message.forumUser.displayName }} </span>
+
+							</div>
+						</div>	
+					</div>
+				</div>
+			
+				<hr>
+			</div>
+
+			<div class="col"></div>
+		</div>
+	</div>
+
+</body>

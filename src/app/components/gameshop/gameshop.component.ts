@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { GameShopService } from '../../services/gameshop.service';
-import { ContextService } from '../../services/context.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GameModalComponent } from './modals/gamemodal.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
+
 import { Product } from 'src/app/models/product';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ProductSort } from 'src/app/models/productSort';
 import { GameConsole } from 'src/app/models/gameconsole';
 import { ProductType } from 'src/app/models/producttype';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GameModalComponent } from './details/gamemodal.component';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { UploadImageModalComponent } from './details/uploadimagemodal.component';
+
+import { GameShopService } from '../../services/gameshop.service';
+import { ContextService } from '../../services/context.service';
+
+import { UploadImageModalComponent } from './modals/uploadimagemodal.component';
 
 @Component({
   selector: 'app-gameshop',

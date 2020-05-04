@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Message } from '../models/message';
 
 @Injectable({ providedIn: 'root' })
 export class ForumService {
+
+
+  avatarUrl = environment.backendUrl + 'forum/getAvatar/?codeForumUser=';
 
   constructor(private http: HttpClient) {}
 
@@ -26,5 +30,21 @@ export class ForumService {
   getMessagesByCategory(codeMessageCategory: number){
     return this.http.post(environment.backendUrl + 'forum/getMessagesByCategory', codeMessageCategory);
   }
-  
+
+  getMessage(codeMessage: number){
+    return this.http.post(environment.backendUrl + 'forum/getMessage', codeMessage);
+  }
+
+  prepareMessage(messageText: string){
+    return this.http.post(environment.backendUrl + 'forum/prepareMessage', messageText);
+  }
+
+  save(message: Message){
+    return this.http.post(environment.backendUrl + 'forum/save', message);
+  }
+
+  delete(message: Message){
+    return this.http.post(environment.backendUrl + 'forum/delete', message);
+  }
+
 }

@@ -1,0 +1,26 @@
+
+.breadcrumb>li+li:before { 
+    color: #666; content: "›"; 
+    vertical-align: top;
+    font-size: 40px;
+    padding-top: 3px;
+    line-height: 10px;
+}
+
+.userdiv {
+    min-width: 160px;
+    max-width: 160px;
+    background-color: #E1ECF4;
+    color: #777777;
+    font-size: small;
+}
+
+.userimg {
+    width:40px;
+    height:40px;
+}
+
+.username {
+    color: #317AD4;
+    font-size: small;
+}

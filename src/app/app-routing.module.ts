@@ -4,6 +4,7 @@ import { HomePage } from './components/homepage/homepage.component';
 import { AboutMe } from './components/aboutme/aboutme.component';
 import { Forum } from './components/forum/forum.component';
 import { GameShop } from './components/gameshop/gameshop.component';
+import { ForumMessage } from './components/forum/forum.message.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
 
   { path: 'forum', component: Forum },
   { path: 'forum/:codeMessageCategory', component: Forum },
+  { path: 'forum/message/:codeMessage', component: ForumMessage },
 
   { path: 'gameshop', redirectTo: 'gameshop/0/0', pathMatch: 'full' },
   { path: 'gameshop/:codeGameConsole', redirectTo: 'gameshop/:codeGameConsole/0', pathMatch: 'full' },

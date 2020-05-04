@@ -71,4 +71,9 @@ export class Forum implements OnInit{
     this.router.navigateByUrl("forum/"+codeMessageCategory);
   }
 
+  onSelectMessage(message) {
+    let codeMessage = message.code as number;
+    this.router.navigateByUrl("forum/message/" + codeMessage);
+  }
+
 }

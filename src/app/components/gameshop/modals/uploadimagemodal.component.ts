@@ -1,11 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-
 import {NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { Product } from 'src/app/models/product';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GameConsole } from 'src/app/models/gameconsole';
-import { Company } from 'src/app/models/company';
-import { ProductType } from 'src/app/models/producttype';
+
 import { GameShopService } from 'src/app/services/gameshop.service';
 
 @Component({
@@ -21,7 +18,7 @@ export class UploadImageModalComponent implements OnInit {
     selectedFile: File;
 
     constructor(private modalService: NgbModal, private activeModal: NgbActiveModal,
-                private formBuilder: FormBuilder, private gameShopService: GameShopService) { }
+                private gameShopService: GameShopService) { }
 
                 
     ngOnInit(){
