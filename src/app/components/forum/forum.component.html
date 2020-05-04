@@ -10,7 +10,7 @@
 		<li *ngIf="codeMessageCategory" class="breadcrumb-item" (click)="goForum()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
 			<a>{{ 'Categories' | translate }}</a>
 		</li>
-		<li *ngIf="codeMessageCategory" class="breadcrumb-item">
+		<li *ngIf="messageCategory" class="breadcrumb-item">
 			<a style="color:darkgray"><i>{{ messageCategory.description }}</i></a>
 		</li>
 	</ol>
