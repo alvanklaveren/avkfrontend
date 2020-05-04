@@ -24,7 +24,6 @@ export class ForumMessage implements OnInit{
   
   replyMessages: Array<Message> = [];
 
-  preparedText: string;
   avatarUrl = ''; 
   
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
@@ -43,11 +42,17 @@ export class ForumMessage implements OnInit{
         this.message = res as Message;
 
         this.forumService.prepareMessage(this.message.messageText).subscribe(resp => {
-          this.preparedText = (resp as SmartResponse).result as string;
+          this.message.preparedMessageText = (resp as SmartResponse).result as string;
         });
 
         this.forumService.getReplyMessages(this.message.code).subscribe(replies => {
           this.replyMessages = replies as Array<Message>;
+          for(let replyMessage of this.replyMessages) {
+            this.forumService.prepareMessage(replyMessage.messageText).subscribe(resp => {
+              replyMessage.preparedMessageText = (resp as SmartResponse).result as string;
+            });
+    
+          }
         });
 
        });

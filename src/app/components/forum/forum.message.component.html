@@ -20,7 +20,7 @@
 			<div class="col-8">
 				<h3>{{ message.description }}</h3>
 				<hr>
-				<p [innerHTML]="preparedText | safe:'html'"></p>
+				<p [innerHTML]="message.preparedMessageText | safe:'html'"></p>
 
 				<div class="container" *ngIf="message">
 					<div class="row">
@@ -47,7 +47,7 @@
 
 				<div *ngFor="let reply of replyMessages">
 					<hr>
-					<p [innerHTML]="reply.messageText | safe:'html'"></p>
+					<p [innerHTML]="reply.preparedMessageText | safe:'html'"></p>
 
 					<div class="container">
 						<div class="row">
@@ -56,7 +56,7 @@
 								<div class="replydiv">
 									{{ 'Answered' | translate }} {{ reply.messageDate | date: 'yyyy/MM/dd' }}
 									<br>
-									<img class="userimg" [src]="avatarUrl + reply.forumUser.code" alt="no"/>
+									<img class="replyuserimg" [src]="avatarUrl + reply.forumUser.code" alt="no"/>
 									<span class="username"> {{ reply.forumUser.displayName }} </span>
 								</div>
 							</div>	

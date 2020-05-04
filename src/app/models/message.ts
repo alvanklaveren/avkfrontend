@@ -10,4 +10,6 @@ export class Message {
     forumUser: ForumUser;
     message?: Message;
     version?: number;
+
+    preparedMessageText: string;
   }
