@@ -22,6 +22,8 @@ export class ForumMessage implements OnInit{
   codeMessage: number;
   message: Message;
   
+  replyMessages: Array<Message> = [];
+
   preparedText: string;
   avatarUrl = ''; 
   
@@ -39,9 +41,15 @@ export class ForumMessage implements OnInit{
       this.forumService.getMessage(this.codeMessage).subscribe(res => {
              
         this.message = res as Message;
+
         this.forumService.prepareMessage(this.message.messageText).subscribe(resp => {
           this.preparedText = (resp as SmartResponse).result as string;
         });
+
+        this.forumService.getReplyMessages(this.message.code).subscribe(replies => {
+          this.replyMessages = replies as Array<Message>;
+        });
+
        });
 
     } else {

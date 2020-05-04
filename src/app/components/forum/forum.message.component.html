@@ -27,7 +27,7 @@
 						<div class="col-8"></div>
 						<div class="col">
 							<div class="userdiv">
-								Asked {{ message.messageDate | date: 'yyyy/MM/dd' }}
+								{{ 'Asked' | translate }} {{ message.messageDate | date: 'yyyy/MM/dd' }}
 								<br>
 								<img class="userimg" [src]="avatarUrl + message.forumUser.code" alt="no"/>
 								<span class="username"> {{ message.forumUser.displayName }} </span>
@@ -38,6 +38,31 @@
 				</div>
 			
 				<hr>
+
+				<div *ngIf="replyMessages">
+					<br>
+					<h4 *ngIf="replyMessages.length == 1">{{ replyMessages.length }} Answer</h4>
+					<h4 *ngIf="replyMessages.length > 1">{{ replyMessages.length }} Answers</h4>
+				</div>
+
+				<div *ngFor="let reply of replyMessages">
+					<hr>
+					<p [innerHTML]="reply.messageText | safe:'html'"></p>
+
+					<div class="container">
+						<div class="row">
+							<div class="col-8"></div>
+							<div class="col">
+								<div class="replydiv">
+									{{ 'Answered' | translate }} {{ reply.messageDate | date: 'yyyy/MM/dd' }}
+									<br>
+									<img class="userimg" [src]="avatarUrl + reply.forumUser.code" alt="no"/>
+									<span class="username"> {{ reply.forumUser.displayName }} </span>
+								</div>
+							</div>	
+						</div>
+					</div>	
+				</div>
 			</div>
 
 			<div class="col"></div>

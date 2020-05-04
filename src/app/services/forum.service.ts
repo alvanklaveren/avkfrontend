@@ -35,6 +35,10 @@ export class ForumService {
     return this.http.post(environment.backendUrl + 'forum/getMessage', codeMessage);
   }
 
+  getReplyMessages(codeMessage: number){
+    return this.http.post(environment.backendUrl + 'forum/getReplyMessages', codeMessage);
+  }
+
   prepareMessage(messageText: string){
     return this.http.post(environment.backendUrl + 'forum/prepareMessage', messageText);
   }
