@@ -150,6 +150,7 @@ export class ForumMessage implements OnInit{
   }
 
   onReplyDelete(replyMessage: Message) {
+    console.log(replyMessage);
     this.forumService.delete(replyMessage).subscribe( res => {
       this.ngOnInit();
     });

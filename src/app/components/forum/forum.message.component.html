@@ -142,7 +142,7 @@
 							</button>
 						</div>
 			
-						<div class="col text-right">			
+						<div class="col text-right" *ngIf="!askReplyDelete">			
 							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
 								<button class="btn btn-outline-secondary" type="button" (click)="onCancelEditReplyMessage()">{{ "Cancel" | translate }}</button>
 								<button class="btn btn-primary" type="button" (click)="onReplySave(reply)">
@@ -150,16 +150,17 @@
 								</button>
 							</div>
 						</div>
-					</div>
-					<div class="row" *ngIf="askReplyDelete">
-						<div class="col text-right">
-							<span>{{ 'About to delete' | translate }} </span>
-							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
-								<button class="btn btn-outline-secondary" type="button" (click)="askReplyDelete=false">{{ "Cancel" | translate }}</button>
-								<button class="btn btn-success" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
+
+						<div class="row" *ngIf="askReplyDelete">
+							<div class="col text-right">
+								<span>{{ 'About to delete' | translate }} </span>
+								<div class="btn-group btn-group-toggle" role="group" style="width: auto">
+									<button class="btn btn-outline-secondary" type="button" (click)="askReplyDelete=false">{{ "Cancel" | translate }}</button>
+									<button class="btn btn-success" type="button" (click)="onReplyDelete(reply)">{{ "Delete" | translate }}</button>
+								</div>
 							</div>
-						</div>
-					</div>		
+						</div>		
+					</div>
 
 				</div>
 			</div>
