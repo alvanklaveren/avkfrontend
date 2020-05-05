@@ -11,6 +11,9 @@
 		<li *ngIf="message?.messageCategory" class="breadcrumb-item" (click)="goCategory()" data-toggle="tooltip" data-placement="top" title="{{ 'Click to navigate' | translate }}" style="cursor:pointer;">
 			<a>{{ message.messageCategory.description }}</a>
 		</li>
+		<li *ngIf="message?.description" class="breadcrumb-item">
+			<a style="color:darkgray"><i>{{ message.description }}</i></a>
+		</li>
 	</ol>
 
 	<div *ngIf="message" class="container">
@@ -29,6 +32,10 @@
 
 				<!-- Edit primary message -->
 				<div *ngIf="editMessage">
+					<div>
+						Styles **text**: <b>text</b> *text*: <i>text</i> `text`: <span style="background:#DDD">text</span>
+						[h:https://www.alvanklaveren.com;my website] = <a href="https://www.alvanklaveren.com">my website</a>
+					</div>
 					<div class="row">
 						<div class="col"><input class="form-control font-weight-bold" type="text" [(ngModel)]="message.description"></div>
 					</div>
@@ -80,8 +87,13 @@
 						</div>	
 					</div>
 				</div>				
-					
+
 				<hr>
+
+				<button class="btn btn-sm btn-outline-primary" type="button" (click)="onAddReplyMessage()">
+					<i class="far fa-comment"></i>
+					<span> {{ "Add Comment" | translate }} </span>
+				</button>
 
 				<!-- Reply Messages -->
 				<div *ngIf="replyMessages">
@@ -92,6 +104,11 @@
 
 				<div *ngFor="let reply of replyMessages">
 					<hr>
+
+					<div *ngIf="editReplyMessage == reply">
+						Styles **text**: <b>text</b> *text*: <i>text</i> `text`: <span style="background:#DDD">text</span>
+						[h:https://www.alvanklaveren.com;my website] = <a href="https://www.alvanklaveren.com">my website</a>
+					</div>
 
 					<div *ngIf="editReplyMessage != reply">
 						<div class="row">
@@ -120,7 +137,7 @@
 
 					<div class="row" *ngIf="editReplyMessage == reply">
 						<div class="col text-left" *ngIf="!askReplyDelete">
-							<button class="btn btn-danger" type="button" (click)="askReplyDelete=true">
+							<button *ngIf="editReplyMessage.code" class="btn btn-danger" type="button" (click)="askReplyDelete=true">
 								<span> {{ "Delete" | translate }} </span>
 							</button>
 						</div>

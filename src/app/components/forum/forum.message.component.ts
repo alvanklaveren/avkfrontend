@@ -7,8 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ForumService } from 'src/app/services/forum.service';
 import { Message } from 'src/app/models/message';
 import { SmartResponse } from 'src/app/models/smartresponse';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MessageCategory } from 'src/app/models/messagecategory';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-forum',
@@ -133,7 +133,7 @@ export class ForumMessage implements OnInit{
 
   onReplySave(reply: Message) {
     this.forumService.prepareMessage(this.editReplyMessage.messageText).subscribe(resp => {
-      this.forumService.save(this.editReplyMessage).subscribe(res =>{
+      this.forumService.save(reply).subscribe(res =>{
         this.editReplyMessage.preparedMessageText = (resp as SmartResponse).result as string;
         reply = this.editReplyMessage;
         this.editReplyMessage = null; 
@@ -142,6 +142,10 @@ export class ForumMessage implements OnInit{
   }
 
   onCancelEditReplyMessage(){
+    if(!this.editReplyMessage.code) {
+      this.replyMessages.pop();
+    }
+
     this.editReplyMessage = null;
   }
 
@@ -149,6 +153,22 @@ export class ForumMessage implements OnInit{
     this.forumService.delete(replyMessage).subscribe( res => {
       this.ngOnInit();
     });
+  }
+
+  onAddReplyMessage() {
+    let newReplyMessage = new Message();
+    newReplyMessage.messageDate = moment().toDate();
+    newReplyMessage.description = '';
+    newReplyMessage.messageText = '';
+    newReplyMessage.preparedMessageText = '';  
+    newReplyMessage.messageCategory = this.message.messageCategory;
+    newReplyMessage.message = this.message;
+
+    // TODO: this has to be replaced by logged in user
+    newReplyMessage.forumUser = this.message.forumUser;
+
+    this.replyMessages.push(newReplyMessage);
+    this.editReplyMessage = newReplyMessage;
   }
 
 }
