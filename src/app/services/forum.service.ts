@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Message } from '../models/message';
 import { MessageCategory } from '../models/messagecategory';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ForumService {
 
 
   avatarUrl = environment.backendUrl + 'forum/getAvatar/?codeForumUser=';
+  messageImageUrl = environment.backendUrl + 'forum/getMessageImage?codeMessageImage=';
 
   constructor(private http: HttpClient) {}
 
@@ -58,6 +60,26 @@ export class ForumService {
 
   deleteMessageCategory(messageCategory: MessageCategory){
     return this.http.post(environment.backendUrl + 'forum/deleteMessageCategory', messageCategory.code);
+  }
+
+  uploadImage(file: File, codeMessage?: any): Observable<HttpEvent<{}>> {
+    const formdata: FormData = new FormData();
+
+    formdata.append('imageFile', file);
+    if(codeMessage) {
+      formdata.append('codeMessage', codeMessage);
+    }
+    
+    const req = new HttpRequest('POST', environment.backendUrl + 'forum/uploadImage', formdata, {
+      reportProgress: false,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
+
+  getImages() {
+    return this.http.post(environment.backendUrl + 'forum/getImages', {});
   }
 
 }

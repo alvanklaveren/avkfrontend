@@ -65,6 +65,7 @@
 					<textarea rows="10" class="form-control" type="text" [(ngModel)]="message.messageText"></textarea>
 
 				</div>
+
 				<div *ngIf="editMessage" class="container">
 					<br>
 					<div class="row" *ngIf="!askDelete">
@@ -73,7 +74,11 @@
 								<i class="far fa-trash-alt"></i>
 							</button>
 						</div>
-			
+
+						<div class="col">
+							<button class="btn btn-outline-primary" type="button" (click)="onSelectImage()">{{ "Select Image" | translate }}</button>
+						</div>
+
 						<div class="col text-right">
 							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
 								<button class="btn btn-outline-secondary" type="button" (click)="onCancel()">{{ "Cancel" | translate }}</button>
@@ -84,7 +89,7 @@
 						</div>
 					</div>
 					<div class="row" *ngIf="askDelete">
-						<div class="col text-right">
+						<div class="col text-left">
 							<span>{{ 'About to delete' | translate }} </span>
 							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
 								<button class="btn btn-outline-secondary" type="button" (click)="askDelete=false">{{ "Cancel" | translate }}</button>
@@ -103,7 +108,7 @@
 							<div class="userdiv">
 								{{ 'Asked' | translate }} {{ message.messageDate | date: 'yyyy/MM/dd' }}
 								<br>
-								<img class="userimg" [src]="avatarUrl + message.forumUser.code" alt="no"/>
+								<img class="userimg" [src]="avatarUrl + message.forumUser.code" alt=""/>
 								<span class="username"> {{ message.forumUser.displayName }} </span>
 							</div>
 						</div>	
@@ -174,7 +179,7 @@
 						</div>
 
 						<div class="row" *ngIf="askReplyDelete">
-							<div class="col text-right">
+							<div class="col text-left">
 								<span>{{ 'About to delete' | translate }} </span>
 								<div class="btn-group btn-group-toggle" role="group" style="width: auto">
 									<button class="btn btn-outline-secondary" type="button" (click)="askReplyDelete=false">{{ "Cancel" | translate }}</button>

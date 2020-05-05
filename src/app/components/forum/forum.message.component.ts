@@ -9,6 +9,7 @@ import { Message } from 'src/app/models/message';
 import { SmartResponse } from 'src/app/models/smartresponse';
 import { MessageCategory } from 'src/app/models/messagecategory';
 import * as moment from 'moment';
+import { ImageModalComponent } from './modals/image.modal.component';
 
 @Component({
   selector: 'app-forum',
@@ -188,6 +189,15 @@ export class ForumMessage implements OnInit{
     this.forumService.save(this.message).subscribe(res => {
       this.message = res as Message;
       window.location.reload();
+    });
+  }
+
+  onSelectImage(){
+    let modal = this.modalService.open(ImageModalComponent, {ariaLabelledBy: 'app-uploadimage-modal'});
+    modal.componentInstance.message = this.message;
+
+    modal.result.then((result) => {
+    }, (reason) => {
     });
   }
 

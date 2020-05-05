@@ -76,7 +76,7 @@
             </div>
 
             <div class="col text-right">
-                <button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="onDismiss()">{{ "Cancel" | translate }}</button>
+                <button class="btn btn-outline-secondary" type="button" (click)="onDismiss()">{{ "Cancel" | translate }}</button>
 
                 <div class="btn-group btn-group-toggle" role="group" style="width: auto">
                     <button [disabled]="!editForm.valid" class="btn btn-primary" type="button" (click)="onSave()">
@@ -90,8 +90,8 @@
             <div class="col text-right">
                 <span>{{ 'About to delete' | translate }} </span>
                 <div class="btn-group btn-group-toggle" role="group" style="width: auto">
-                    <button class="btn btn-outline-secondary" id="booking-add-cancel" type="button" (click)="askDelete=false">{{ "Cancel" | translate }}</button>
-                    <button class="btn btn-success" id="booking-add-cancel" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
+                    <button class="btn btn-outline-secondary" type="button" (click)="askDelete=false">{{ "Cancel" | translate }}</button>
+                    <button class="btn btn-success" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
                 </div>
             </div>
         </div>
