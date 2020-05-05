@@ -24,12 +24,16 @@ export class Forum implements OnInit{
   messageCategories: Array<MessageCategory>;
   messages: Array<Message>;
 
+  editMessageCategory: MessageCategory;
+
    constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal,
               private contextService:ContextService, private forumService: ForumService){ 
   }
 
   ngOnInit(){
+
+    this.editMessageCategory = null;
 
     if(this.route.snapshot.paramMap.get('codeMessageCategory')) {
       this.codeMessageCategory = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeMessageCategory'));
@@ -75,10 +79,34 @@ export class Forum implements OnInit{
     this.router.navigateByUrl("forum/message/" + this.codeMessageCategory + "/0" );
   }
 
+  onAddMessageCategory() {
+    let newMessageCategory = new MessageCategory();
+    newMessageCategory.description = '<new category>';
+    newMessageCategory.messageCount = 0;
+    this.forumService.saveMessageCategory(newMessageCategory).subscribe(res => {
+      newMessageCategory = res as MessageCategory;
+      this.messageCategories.push(newMessageCategory);
+    });
+  }
+
   onSelectMessage(message) {
     let codeCategory = message.messageCategory.code;
     let codeMessage = message.code as number;
     this.router.navigateByUrl("forum/message/" + codeCategory + "/" + codeMessage);
+  }
+
+  renameCategory(messageCategory: MessageCategory) {
+    this.forumService.saveMessageCategory(messageCategory).subscribe(res => {
+      this.messageCategory = res as MessageCategory;
+      this.editMessageCategory = null;
+    });
+  }
+
+  deleteCategory(messageCategory: MessageCategory) {
+    this.forumService.deleteMessageCategory(messageCategory).subscribe(res => {
+      this.messageCategories.splice(this.messageCategories.indexOf(messageCategory), 1)
+      this.editMessageCategory = null;
+    });   
   }
 
 }

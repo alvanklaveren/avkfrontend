@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Message } from '../models/message';
+import { MessageCategory } from '../models/messagecategory';
 
 @Injectable({ providedIn: 'root' })
 export class ForumService {
@@ -47,8 +48,16 @@ export class ForumService {
     return this.http.post(environment.backendUrl + 'forum/save', message);
   }
 
+  saveMessageCategory(messageCategory: MessageCategory){
+    return this.http.post(environment.backendUrl + 'forum/saveMessageCategory', messageCategory);
+  }
+
   delete(message: Message){
     return this.http.post(environment.backendUrl + 'forum/delete', message.code);
+  }
+
+  deleteMessageCategory(messageCategory: MessageCategory){
+    return this.http.post(environment.backendUrl + 'forum/deleteMessageCategory', messageCategory.code);
   }
 
 }

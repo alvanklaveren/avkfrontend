@@ -47,8 +47,8 @@
 					<br>
 					<div class="row" *ngIf="!askDelete">
 						<div class="col text-left" *ngIf="message?.code">
-							<button [hidden]="!message" class="btn btn-danger" type="button" (click)="askDelete=true">
-								<span> {{ "Delete" | translate }} </span>
+							<button [hidden]="!message" class="btn btn-outline-danger" type="button" (click)="askDelete=true">
+								<i class="far fa-trash-alt"></i>
 							</button>
 						</div>
 			
@@ -137,8 +137,8 @@
 
 					<div class="row" *ngIf="editReplyMessage == reply">
 						<div class="col text-left" *ngIf="!askReplyDelete">
-							<button *ngIf="editReplyMessage.code" class="btn btn-danger" type="button" (click)="askReplyDelete=true">
-								<span> {{ "Delete" | translate }} </span>
+							<button *ngIf="editReplyMessage.code" class="btn btn-outline-danger" type="button" (click)="askReplyDelete=true">
+								<i class="far fa-trash-alt"></i>
 							</button>
 						</div>
 			
