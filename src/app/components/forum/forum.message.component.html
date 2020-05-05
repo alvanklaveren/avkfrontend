@@ -17,6 +17,28 @@
 	</ol>
 
 	<div *ngIf="message" class="container">
+		<div class="col" *ngIf="!askChangeCategory">
+			<button class="btn btn-sm btn-primary" type="button" (click)="askChangeCategory = true">
+				<span> {{ 'Change Category' | translate }} </span>
+			</button>
+		</div>
+
+		<div class="row" *ngIf="askChangeCategory">
+			<div class="col">
+				<ng-select class="form-control" [items]="messageCategories" bindLabel="description" [(ngModel)]="newMessageCategory" [editableSearchTerm]="false" [multiple]="false" [clearable]="false">
+				</ng-select>
+			</div>
+			<div class="col">
+				<button class="btn btn-sm btn-outline-secondary" type="button" (click)="askChangeCategory = false">
+					<span> {{ 'Cancel' | translate }} </span>
+				</button>
+				<button class="btn btn-sm btn-outline-primary" type="button" (click)="onMoveMessage()">
+					<span> {{ 'Change' | translate }} </span>
+				</button>
+			</div>
+			<br>
+		</div>
+
 		<div class="row">
 			<div class="col"></div>
 			<div class="col-8">

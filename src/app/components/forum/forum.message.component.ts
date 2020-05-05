@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver } from '@angular/core';
 import { ContextService } from '../../services/context.service';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
@@ -28,10 +28,15 @@ export class ForumMessage implements OnInit{
   editReplyMessage: Message;
   replyMessages: Array<Message> = [];
 
+  newMessageCategory: MessageCategory;
+  messageCategories: Array<MessageCategory> = [];
+  testList = ['a', 'b'];
+
   avatarUrl = ''; 
   askDelete = false;
   askReplyDelete = false;
-  
+  askChangeCategory = false;
+
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal, 
               private contextService:ContextService, private forumService: ForumService){ 
@@ -42,6 +47,10 @@ export class ForumMessage implements OnInit{
     this.avatarUrl = this.forumService.avatarUrl;
     this.editMessage = null;
     this.editReplyMessage = null;
+
+    this.forumService.getMessageCategories().subscribe(res => {
+      this.messageCategories = res as Array<MessageCategory>;
+    });
 
     if(this.route.snapshot.paramMap.get('codeMessage') === '0') {
       this.message = new Message();
@@ -58,6 +67,8 @@ export class ForumMessage implements OnInit{
         this.forumService.getMessage(this.codeMessage).subscribe(res => {
               
           this.message = res as Message;
+
+          this.newMessageCategory = this.message.messageCategory;
 
           this.forumService.prepareMessage(this.message.messageText).subscribe(resp => {
             this.message.preparedMessageText = (resp as SmartResponse).result as string;
@@ -170,6 +181,14 @@ export class ForumMessage implements OnInit{
 
     this.replyMessages.push(newReplyMessage);
     this.editReplyMessage = newReplyMessage;
+  }
+
+  onMoveMessage(){
+    this.message.messageCategory = this.newMessageCategory;
+    this.forumService.save(this.message).subscribe(res => {
+      this.message = res as Message;
+      window.location.reload();
+    });
   }
 
 }

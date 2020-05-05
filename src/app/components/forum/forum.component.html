@@ -15,7 +15,7 @@
 		</li>
 	</ol>
 	<div *ngIf="!codeMessageCategory">
-		<button class="btn btn-primary" type="button" (click)="onAddMessageCategory()">
+		<button class="btn btn-sm btn-primary" type="button" (click)="onAddMessageCategory()">
 			<span> {{ 'Add Category' | translate }} </span>
 		</button>
 
@@ -62,7 +62,7 @@
 		</table>
 	</div>
 	<div *ngIf="codeMessageCategory">
-		<button class="btn btn-primary" type="button" (click)="onAddMessage()">
+		<button class="btn btn-sm btn-primary" type="button" (click)="onAddMessage()">
 			<span> {{ 'Add Message' | translate }} </span>
 		</button>
 
