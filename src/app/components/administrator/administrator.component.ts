@@ -9,6 +9,8 @@ import { Title } from '@angular/platform-browser';
 import { ContextService } from '../../services/context.service';
 import { AdministratorService } from '../../services/administrator.service';
 import { Constants } from 'src/app/models/constants';
+import { ForumUser } from 'src/app/models/forumuser';
+import { UserModalComponent } from './modals/usermodal.component';
 
 @Component({
   selector: 'app-administratorpage',
@@ -21,6 +23,9 @@ export class AdministratorPage implements OnInit{
   CONSTANTS: number = 0;
   USERS: number = 1;
   CODETABLES: number = 2;
+
+  ADMINTABPAGE = 'adminTabPage';
+
   tabpage: number = 0;
   tabpages = [
     {id: 0, menutitle: 'Configuration', title: 'Configuration'},
@@ -39,17 +44,23 @@ export class AdministratorPage implements OnInit{
   acmeAddressConstants: Constants;
   acmeConstants: Constants;
 
+  users: ForumUser[];
 
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
     private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
     private contextService:ContextService, private administratorService: AdministratorService){ }
   
   ngOnInit(){
+
     this.contextService.setPageTitle(this, 'Administrator');
+    this.tabpage = this.contextService.toNumber(this.contextService.getSessionGlobal(this.ADMINTABPAGE));
+    if(!this.tabpage){ 
+      this.setTabPage(0);
+    }
 
-    this.tabpage = this.contextService.toNumber(this.route.snapshot.paramMap.get('tabpage'));
-
-    this.refreshImages();
+    this.administratorService.getUsers().subscribe(res => {
+      this.users = res as Array<ForumUser>;
+    });
 
     this.constantsForm = this.formBuilder.group({
       acmeAddress: [null],
@@ -68,6 +79,12 @@ export class AdministratorPage implements OnInit{
       this.constantsForm.patchValue({ acme: this.acmeConstants.stringValue as string } );
     });
 
+    this.refreshImages();
+  }
+
+  setTabPage(tabpage: number){
+    this.tabpage = tabpage;
+    this.contextService.setSessionGlobal(this.ADMINTABPAGE, this.tabpage);
   }
 
   refreshImages(){
@@ -118,6 +135,23 @@ export class AdministratorPage implements OnInit{
       });
     });
 
+  }
+
+  openEditModal(forumUser?){   
+    let modal = this.modalService.open(UserModalComponent, {ariaLabelledBy: 'app-user-modal'});
+
+    if(forumUser) {
+      modal.componentInstance.forumUser = forumUser;
+    }
+
+    modal.result.then((result) => {
+      window.location.reload();
+      
+    }, (reason) => {
+      if(reason === 'Deleted') {
+        window.location.reload();
+      }
+    });
   }
 
 }

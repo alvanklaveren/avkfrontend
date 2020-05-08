@@ -5,14 +5,14 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		  <div class="navbar-nav">
-			<a *ngIf="tabpage == CONSTANTS" class="nav-item nav-link active" href="administrator/0">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
-			<a *ngIf="tabpage !== CONSTANTS" class="nav-item nav-link" href="administrator/0">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
+			<a *ngIf="tabpage == CONSTANTS" class="nav-item nav-link active">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
+			<a *ngIf="tabpage !== CONSTANTS" class="nav-item nav-link" (click)="setTabPage(0)">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
 			
-			<a *ngIf="tabpage == USERS" class="nav-item nav-link active" href="administrator/1">{{ tabpages[USERS].menutitle | translate }}</a>
-			<a *ngIf="tabpage !== USERS" class="nav-item nav-link" href="administrator/1">{{ tabpages[USERS].menutitle | translate }}</a>
+			<a *ngIf="tabpage == USERS" class="nav-item nav-link active">{{ tabpages[USERS].menutitle | translate }}</a>
+			<a *ngIf="tabpage !== USERS" class="nav-item nav-link" (click)="setTabPage(1)">{{ tabpages[USERS].menutitle | translate }}</a>
 			
-			<a *ngIf="tabpage == CODETABLES" class="nav-item nav-link active" href="administrator/2">{{ tabpages[CODETABLES].menutitle | translate }}</a>
-			<a *ngIf="tabpage !== CODETABLES" class="nav-item nav-link" href="administrator/2">{{ tabpages[CODETABLES].menutitle | translate }}</a>
+			<a *ngIf="tabpage == CODETABLES" class="nav-item nav-link active">{{ tabpages[CODETABLES].menutitle | translate }}</a>
+			<a *ngIf="tabpage !== CODETABLES" class="nav-item nav-link" (click)="setTabPage(2)">{{ tabpages[CODETABLES].menutitle | translate }}</a>
 		  </div>
 		</div>
 	</nav>
@@ -20,6 +20,8 @@
 	<br>
 
 	<div *ngIf="tabpage == CONSTANTS">
+		<h2>{{ tabpages[CONSTANTS].title | translate }}</h2>
+		<br>
 		<form [formGroup]="constantsForm">
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label" for="guestAvatar"> {{ 'Guest Avatar' | translate }}</label>
@@ -63,6 +65,28 @@
 
 	<div *ngIf="tabpage == USERS">
 		<h2>{{ tabpages[USERS].title | translate }}</h2>
+
+		<table class="table table-hover table-striped">
+			<thead>
+				<th>{{ 'Full Name'| translate }}</th>
+				<th>{{ 'Username'| translate }}</th>
+				<th>{{ 'Email Address'| translate }}</th>
+				<th>{{ 'Role'| translate }}</th>
+			</thead>
+			<tbody>
+			    <tr *ngFor="let user of users" (click)="openEditModal(user)">
+					<td>{{ user.displayName }}</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.emailAddress }}</td>
+					<td>{{ user.classification?.description }}</td>
+			    </tr>
+			</tbody>
+			<tfoot>
+				<tr class="text-secondary small">
+					{{ 'Total number of users' }}: {{ users?.length }}
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 
 	<div *ngIf="tabpage == CODETABLES">

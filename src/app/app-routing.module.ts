@@ -12,8 +12,7 @@ const routes: Routes = [
   { path: 'home', component: HomePage },
   { path: 'aboutme', component: AboutMe },
 
-  { path: 'administrator', redirectTo: 'administrator/0', pathMatch: 'full' },
-  { path: 'administrator/:tabpage', component: AdministratorPage },
+  { path: 'administrator', component: AdministratorPage },
 
   { path: 'forum', component: Forum },
   { path: 'forum/:codeMessageCategory', component: Forum },

@@ -56,16 +56,24 @@ export class ContextService {
     return this.translationService.translate(original, isoA2);
   }
 
-  private setSessionGlobal(key, value){
+  public setSessionGlobal(key, value){
     sessionStorage.removeItem(key);
     sessionStorage.setItem(key, value);  
     return this;
   }
 
-  private setLocalGlobal(key, value){
+  public getSessionGlobal(key){
+    return sessionStorage.getItem(key);
+  }
+
+  public setLocalGlobal(key, value){
     localStorage.removeItem(key);
     localStorage.setItem(key, value);  
     return this;
+  }
+
+  public getLocalGlobal(key){
+    return localStorage.getItem(key);
   }
 
   public toNumber(text: string){

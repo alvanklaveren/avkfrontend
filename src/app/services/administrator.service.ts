@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Constants } from '../models/constants';
+import { ForumUser } from '../models/forumuser';
 
 @Injectable({ providedIn: 'root' })
 export class AdministratorService {
@@ -38,6 +39,22 @@ export class AdministratorService {
     });
 
     return this.http.request(req);
+  }
+
+  getUsers(){
+    return this.http.post(environment.backendUrl + 'administrator/getUsers', {});
+  }
+
+  getClassifications(){
+    return this.http.post(environment.backendUrl + 'administrator/getClassifications', {});
+  }
+
+  saveUser(forumUser: ForumUser){
+    return this.http.post(environment.backendUrl + 'administrator/saveUser', forumUser);
+  }
+
+  deleteUser(codeForumUser: number){
+    return this.http.post(environment.backendUrl + 'administrator/deleteUser', codeForumUser);
   }
 
 }

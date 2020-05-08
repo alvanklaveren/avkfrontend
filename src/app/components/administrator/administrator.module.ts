@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { AdministratorPage } from './administrator.component';
 import { SharedModule } from '../shared/shared.module';
+import { UserModalComponent } from './modals/usermodal.component';
 
 @NgModule({
   declarations: [
-    AdministratorPage
+    AdministratorPage,
+    UserModalComponent,
   ],
   imports: [
     SharedModule,
   ],
-  providers: []
+  providers: [],
+  bootstrap: [UserModalComponent]
+
 })
 
 export class AdministratorPageModule { }
