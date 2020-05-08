@@ -20,9 +20,9 @@ export class GameModalComponent implements OnInit{
 
     editForm: FormGroup;
 
-    gameConsoleList: [GameConsole];
-    productTypeList: [ProductType];
-    companyList: [Company];
+    gameConsoleList: GameConsole[];
+    productTypeList: ProductType[];
+    companyList: Company[];
 
     askDelete = false;
 
@@ -32,15 +32,17 @@ export class GameModalComponent implements OnInit{
 
     ngOnInit(){
         this.gameShopService.getGameConsoleList().subscribe(res => {
-            this.gameConsoleList = res as [GameConsole];
+            this.gameConsoleList = res as GameConsole[];
+            this.gameConsoleList = this.gameConsoleList.filter(gameConsole => gameConsole.code > 0);
           });
       
         this.gameShopService.getProductTypeList().subscribe(res => {
-        this.productTypeList = res as [ProductType];
+            this.productTypeList = res as ProductType[];
+            this.productTypeList = this.productTypeList.filter(productType => productType.code > 0);
         });
 
         this.gameShopService.getCompanyList().subscribe(res => {
-        this.companyList = res as [Company];
+        this.companyList = res as Company[];
         });
 
         this.editForm = this.formBuilder.group({
