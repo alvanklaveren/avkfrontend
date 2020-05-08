@@ -55,6 +55,8 @@ export class GameShop implements OnInit{
 
   ngOnInit(){
 
+    this.contextService.setPageTitle(this, 'My Game Collection');
+
     this.searchSubject.pipe(debounceTime(200), distinctUntilChanged()).subscribe((searchString) => {
       console.log(searchString);
       if (searchString && searchString.length > 2) {

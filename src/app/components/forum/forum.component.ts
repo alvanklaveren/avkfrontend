@@ -33,6 +33,8 @@ export class Forum implements OnInit{
 
   ngOnInit(){
 
+    this.contextService.setPageTitle(this, 'Forum');
+
     this.editMessageCategory = null;
 
     if(this.route.snapshot.paramMap.get('codeMessageCategory')) {

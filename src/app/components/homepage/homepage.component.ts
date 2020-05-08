@@ -24,17 +24,12 @@ export class HomePage implements OnInit{
   pageSize = 10;
 
   constructor(private forumService: ForumService, private httpClient: HttpClient, 
-              private title:Title, private contextService:ContextService){ 
-
-    let home = 'Home';
-    contextService.translate(home).subscribe(res => {
-      let response = res as any;
-      this.title.setTitle("AVK - " + response.result);
-    });
-  }
+              private title:Title, private contextService:ContextService){ }
 
   ngOnInit(){
     this.getMessageList();
+    this.contextService.setPageTitle(this, 'Home');
+
   }
 
   getMessageList(){

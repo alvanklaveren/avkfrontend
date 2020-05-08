@@ -15,6 +15,7 @@ import { HomePageModule } from './components/homepage/homepage.module';
 import { SharedModule } from './components/shared/shared.module';
 import { GameShopModule } from './components/gameshop/gameshop.module';
 import { ForumModule } from './components/forum/forum.module';
+import { AdministratorPageModule } from './components/administrator/administrator.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AboutMeModule,
     GameShopModule,
     ForumModule,
+    AdministratorPageModule,
   ],
   providers: [],
   bootstrap: [AppComponent] 

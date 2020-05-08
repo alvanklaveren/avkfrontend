@@ -75,4 +75,11 @@ export class ContextService {
     return Number(text);
   }
 
+  public setPageTitle(page: any, title: string) {
+    this.translate(title).subscribe(res => {
+      let response = res as any;
+      page.title.setTitle("AVK - " + response.result);
+    });
+  }
+
 }

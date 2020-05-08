@@ -29,6 +29,7 @@ export class AppComponent implements OnInit{
   mailTo: string = environment.mailTo;
 
   menuItems = [
+    { description: 'Administrator', url: '/administrator' },
     { description: 'Home', url: '/' },
     { description: 'Forum', url: '/forum' },
     { description: 'My Game Collection', url: '/gameshop' },

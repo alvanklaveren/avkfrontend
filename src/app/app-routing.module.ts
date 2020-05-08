@@ -5,11 +5,15 @@ import { AboutMe } from './components/aboutme/aboutme.component';
 import { Forum } from './components/forum/forum.component';
 import { GameShop } from './components/gameshop/gameshop.component';
 import { ForumMessage } from './components/forum/forum.message.component';
+import { AdministratorPage } from './components/administrator/administrator.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomePage },
   { path: 'aboutme', component: AboutMe },
+
+  { path: 'administrator', redirectTo: 'administrator/0', pathMatch: 'full' },
+  { path: 'administrator/:tabpage', component: AdministratorPage },
 
   { path: 'forum', component: Forum },
   { path: 'forum/:codeMessageCategory', component: Forum },
