@@ -55,9 +55,8 @@
             </div>
 
             <div class="col text-right">
-                <button class="btn btn-outline-secondary" type="button" (click)="onDismiss()">{{ "Cancel" | translate }}</button>
-
                 <div class="btn-group btn-group-toggle" role="group" style="width: auto">
+                    <button class="btn btn-outline-secondary" type="button" (click)="onDismiss()">{{ "Cancel" | translate }}</button>
                     <button [disabled]="!editForm.valid" class="btn btn-primary" type="button" (click)="onSave()">
                         <span> {{ "Save" | translate }} </span>
                     </button>
