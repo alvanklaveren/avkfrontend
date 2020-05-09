@@ -40,6 +40,10 @@ export class GameShopService {
     return this.http.get(environment.backendUrl + 'gameshop/getProductTypeList');
   }
 
+  getRatingUrls(){
+    return this.http.get(environment.backendUrl + 'gameshop/getRatingUrls');
+  }
+
   getCompanyList(){
     return this.http.get(environment.backendUrl + 'gameshop/getCompanyList');
   }

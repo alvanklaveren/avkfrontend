@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h4 *ngIf="!codeTableRow" class="modal-title" id="modal-basic-title">{{ 'Add' | translate }}&nbsp;...</h4>
+    <h4 *ngIf="codeTableRow" class="modal-title" id="modal-basic-title">{{ 'Edit' | translate }}&nbsp;...</h4>
+    <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+
+    <form [formGroup]="editForm">
+        <div class="form-group row" *ngIf="codeTableRow.description">
+            <label class="col-sm-4 col-form-label" for="description"> {{ 'Description' | translate }}</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="description" formControlName="description">
+            </div>
+        </div>
+
+        <div class="form-group row" *ngIf="codeTableRow.url">
+            <label class="col-sm-4 col-form-label" for="url"> {{ 'URL' | translate }}</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="url" formControlName="url">
+            </div>
+        </div>
+
+        <div class="form-group row" *ngIf="codeTableRow.sortorder">
+            <label class="col-sm-4 col-form-label" for="sortorder"> {{ 'Sort Order' | translate }}</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="sortorder" formControlName="sortorder">
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+
+    <div class="container">
+        <div class="row" *ngIf="!askDelete">
+            <div class="col text-left">
+                <button [hidden]="!codeTableRow" class="btn btn-danger" type="button" (click)="askDelete=true">
+                    <span> {{ "Delete" | translate }} </span>
+                </button>
+            </div>
+
+            <div class="col text-right">
+                <div class="btn-group btn-group-toggle" role="group" style="width: auto">
+                    <button class="btn btn-outline-secondary" type="button" (click)="onDismiss()">{{ "Cancel" | translate }}</button>
+                    <button [disabled]="!editForm.valid" class="btn btn-primary" type="button" (click)="onSave()">
+                        <span> {{ "Save" | translate }} </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="askDelete">
+            <div class="col text-right">
+                <span>{{ 'About to delete' | translate }} </span>
+                <div class="btn-group btn-group-toggle" role="group" style="width: auto">
+                    <button class="btn btn-outline-secondary" type="button" (click)="askDelete=false">{{ "Cancel" | translate }}</button>
+                    <button class="btn btn-success" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+</div>

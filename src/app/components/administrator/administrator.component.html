@@ -6,13 +6,13 @@
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		  <div class="navbar-nav">
 			<a *ngIf="tabpage == CONSTANTS" class="nav-item nav-link active">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
-			<a *ngIf="tabpage !== CONSTANTS" class="nav-item nav-link" (click)="setTabPage(0)">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
+			<a *ngIf="tabpage !== CONSTANTS" class="nav-item nav-link" (click)="setTabPage(CONSTANTS)">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
 			
 			<a *ngIf="tabpage == USERS" class="nav-item nav-link active">{{ tabpages[USERS].menutitle | translate }}</a>
-			<a *ngIf="tabpage !== USERS" class="nav-item nav-link" (click)="setTabPage(1)">{{ tabpages[USERS].menutitle | translate }}</a>
+			<a *ngIf="tabpage !== USERS" class="nav-item nav-link" (click)="setTabPage(USERS)">{{ tabpages[USERS].menutitle | translate }}</a>
 			
 			<a *ngIf="tabpage == CODETABLES" class="nav-item nav-link active">{{ tabpages[CODETABLES].menutitle | translate }}</a>
-			<a *ngIf="tabpage !== CODETABLES" class="nav-item nav-link" (click)="setTabPage(2)">{{ tabpages[CODETABLES].menutitle | translate }}</a>
+			<a *ngIf="tabpage !== CODETABLES" class="nav-item nav-link" (click)="setTabPage(CODETABLES)">{{ tabpages[CODETABLES].menutitle | translate }}</a>
 		  </div>
 		</div>
 	</nav>
@@ -61,6 +61,7 @@
 
 			<button type="button" class="btn btn-primary" (click)="onSaveConstants()">{{ 'Apply Changes' | translate }}</button> 
 		</form>
+		<br><br><br><br><br>
 	</div>
 
 	<div *ngIf="tabpage == USERS">
@@ -94,10 +95,64 @@
 				</tr>
 			</tfoot>
 		</table>
+		<br><br><br><br>
 	</div>
 
 	<div *ngIf="tabpage == CODETABLES">
 		<h2>{{ tabpages[CODETABLES].title | translate }}</h2>
+		<div>
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			  <ul class="navbar-nav">
+				<li *ngIf="codetable == COMPANIES" class="nav-item nav-link active">{{ codeTables[COMPANIES].menutitle | translate }}</li>
+				<li *ngIf="codetable !== COMPANIES" class="nav-item nav-link" (click)="selectCodeTable(COMPANIES)">{{ codeTables[COMPANIES].menutitle | translate }}</li>
+
+				<li *ngIf="codetable == GAMECONSOLES" class="nav-item nav-link active">{{ codeTables[GAMECONSOLES].menutitle | translate }}</li>
+				<li *ngIf="codetable !== GAMECONSOLES" class="nav-item nav-link" (click)="selectCodeTable(GAMECONSOLES)">{{ codeTables[GAMECONSOLES].menutitle | translate }}</li>
+
+				<li *ngIf="codetable == PRODUCTTYPES" class="nav-item nav-link active">{{ codeTables[PRODUCTTYPES].menutitle | translate }}</li>
+				<li *ngIf="codetable !== PRODUCTTYPES" class="nav-item nav-link" (click)="selectCodeTable(PRODUCTTYPES)">{{ codeTables[PRODUCTTYPES].menutitle | translate }}</li>
+
+				<li *ngIf="codetable == RATINGURLS" class="nav-item nav-link active">{{ codeTables[RATINGURLS].menutitle | translate }}</li>
+				<li *ngIf="codetable !== RATINGURLS" class="nav-item nav-link" (click)="selectCodeTable(RATINGURLS)">{{ codeTables[RATINGURLS].menutitle | translate }}</li>
+			  </ul>		  
+			</div>
+		</nav>
+		<br>
+		<div *ngIf="selectedCodeTable && selectedCodeTable.length > 0">
+			<ngb-pagination *ngIf="!disablePaging" [(page)]="page" [pageSize]="pageSize" [collectionSize]="selectedCodeTable.length"></ngb-pagination>		
+
+			<div class="text-secondary small"> {{ 'Number of rows' | translate }}: {{ selectedCodeTable.length }} </div>
+			<table class="table table-hover table-striped">
+				<thead>
+					<th style="width:10%;">{{ 'Code'| translate }}</th>
+					<th *ngIf="codetable != RATINGURLS" style="width:80%;">{{ 'Description'| translate }}</th>
+					<th *ngIf="codetable == RATINGURLS" style="width:80%;">{{ 'URL'| translate }}</th>
+					<th *ngIf="codetable == GAMECONSOLES" style="width:10%;">{{ 'Sortorder'| translate }}</th>
+				</thead>
+				<tbody *ngIf="disablePaging">
+					<tr *ngFor="let ct of selectedCodeTable" (click)="onCodeTableRowClicked(ct)">
+						<td>{{ ct.code }}</td>
+						<td *ngIf="ct.description">{{ ct.description }}</td>
+						<td *ngIf="ct.url">{{ ct.url }}</td>
+						<td>{{ ct.sortorder }}</td>
+					</tr>
+				</tbody>
+				<tbody *ngIf="!disablePaging">
+					<tr *ngFor="let ct of selectedCodeTable | slice: (page) * pageSize : (page) * pageSize + pageSize" (click)="onCodeTableRowClicked(ct)">
+						<td>{{ ct.code }}</td>
+						<td>{{ ct.description }}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<ngb-pagination *ngIf="!disablePaging" [(page)]="page" [pageSize]="pageSize" [collectionSize]="selectedCodeTable.length"></ngb-pagination>		
+		</div>
+
 	</div>
 
 </body>

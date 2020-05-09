@@ -21,9 +21,9 @@
 				<div class="p-2 bd-highlight">
 					<input class="form-control" type="text" id="addcompany" [(ngModel)]="newCompanyDescription">
 				</div>
-				<div class="p-2 bd-highlight">
-					<button class="btn btn-primary" type="button" (click)="addCompany()">{{ "Add" | translate }}</button>
+				<div class="p-2 bd-highlight btn-group btn-group-toggle" role="group" style="width: auto">
 					<button class="btn btn-outline-secondary" type="button" (click)="newCompanyDescription=''; addingCompany=false">{{ "Cancel" | translate }}</button>
+					<button class="btn btn-primary" type="button" (click)="addCompany()">{{ "Add" | translate }}</button>
 				</div>
 			</div>
 		</div>
