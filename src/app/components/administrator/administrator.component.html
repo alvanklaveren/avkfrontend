@@ -122,8 +122,17 @@
 			  </ul>		  
 			</div>
 		</nav>
+
 		<br>
+
 		<div *ngIf="selectedCodeTable && selectedCodeTable.length > 0">
+			<div>
+				<button class="btn btn-sm btn-primary" type="button" (click)="onNewCodeTableRow()">
+					<span> {{ 'Add' | translate }} {{ codeTables[codetable].class | translate }} </span>
+				</button>
+				<br><br>
+			</div>
+
 			<ngb-pagination *ngIf="!disablePaging" [(page)]="page" [pageSize]="pageSize" [collectionSize]="selectedCodeTable.length"></ngb-pagination>		
 
 			<div class="text-secondary small"> {{ 'Number of rows' | translate }}: {{ selectedCodeTable.length }} </div>
@@ -143,7 +152,7 @@
 					</tr>
 				</tbody>
 				<tbody *ngIf="!disablePaging">
-					<tr *ngFor="let ct of selectedCodeTable | slice: (page) * pageSize : (page) * pageSize + pageSize" (click)="onCodeTableRowClicked(ct)">
+					<tr *ngFor="let ct of selectedCodeTable | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" (click)="onCodeTableRowClicked(ct)">
 						<td>{{ ct.code }}</td>
 						<td>{{ ct.description }}</td>
 					</tr>

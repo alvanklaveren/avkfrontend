@@ -57,4 +57,15 @@ export class AdministratorService {
     return this.http.post(environment.backendUrl + 'administrator/deleteUser', codeForumUser);
   }
 
+  saveCodeTableRow(codetable: number, codeTableRow: any){
+    return this.http.post(environment.backendUrl + 'administrator/saveCodeTableRow', {codeTable: codetable, codeTableRow: codeTableRow});
+  }
+
+  deleteCodeTableRow(codetable: number, code: number){
+    console.log(codetable);
+    console.log(code);
+
+    return this.http.post(environment.backendUrl + 'administrator/deleteCodeTableRow', {codeTable: codetable, code: code});
+  }
+
 }

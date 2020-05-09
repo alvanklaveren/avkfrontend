@@ -29,6 +29,7 @@ import { CodeTableModalComponent } from './modals/codetablemodal.component';
 export class AdministratorPage implements OnInit{
 
   ADMINTABPAGE = 'adminTabPage';
+  CODETABLESELECT = 'codeTableSelect';
 
   CONSTANTS: number = 0;
   USERS: number = 1;
@@ -52,10 +53,10 @@ export class AdministratorPage implements OnInit{
   RATINGURLS: number = 3;
   codetable: number = this.COMPANIES;
   codeTables = [
-    {id: 0, menutitle: 'Companies', title: 'Companies'},
-    {id: 1, menutitle: 'Game Consoles', title: 'Game Consoles'},
-    {id: 2, menutitle: 'Product Types', title: 'Product Types'},
-    {id: 3, menutitle: 'Rating Site Urls', title: 'Rating Site URLs'},
+    {id: 0, menutitle: 'Companies', class: 'Company'},
+    {id: 1, menutitle: 'Game Consoles', class: 'Game Console'},
+    {id: 2, menutitle: 'Product Types', class: 'Product Type'},
+    {id: 3, menutitle: 'Rating Site Urls', class: 'Rating URL'},
   ]
 
   selectedCodeTable: any;
@@ -90,22 +91,7 @@ export class AdministratorPage implements OnInit{
       this.setTabPage(0);
     }
 
-    this.gameShopService.getCompanyList().subscribe(res => {
-      this.companies = res as Company[];
-      this.selectCodeTable(0);
-    });
-
-    this.gameShopService.getGameConsoleList().subscribe(res => {
-      this.gameConsoles = res as GameConsole[];
-    });
-
-    this.gameShopService.getProductTypeList().subscribe(res => {
-      this.productTypes = res as ProductType[];
-    });
-
-    this.gameShopService.getRatingUrls().subscribe(res => {
-      this.ratingUrls = res as RatingUrl[];
-    });
+    this.fetchCodeTables();
 
     this.administratorService.getUsers().subscribe(res => {
       this.users = res as Array<ForumUser>;
@@ -136,9 +122,46 @@ export class AdministratorPage implements OnInit{
     this.contextService.setSessionGlobal(this.ADMINTABPAGE, this.tabpage);
   }
 
+  fetchCodeTables(){
+    this.codetable = this.contextService.toNumber(this.contextService.getSessionGlobal(this.CODETABLESELECT));
+    if(!this.codetable){ 
+      this.codetable = 0;
+    }
+
+    this.gameShopService.getCompanyList().subscribe(res => {
+      this.companies = res as Company[];
+      this.companies.sort((a,b) => a.description.localeCompare(b.description));
+      if(this.codetable == this.COMPANIES){
+        this.selectCodeTable(this.codetable);
+      }
+    });
+    this.gameShopService.getGameConsoleList().subscribe(res => {
+      this.gameConsoles = res as GameConsole[];
+      this.gameConsoles.sort((a,b) => a.description.localeCompare(b.description));
+      if(this.codetable == this.GAMECONSOLES){
+        this.selectCodeTable(this.codetable);
+      }
+    });
+    this.gameShopService.getProductTypeList().subscribe(res => {
+      this.productTypes = res as ProductType[];
+      this.productTypes.sort((a,b) => a.description.localeCompare(b.description));
+      if(this.codetable == this.PRODUCTTYPES){
+        this.selectCodeTable(this.codetable);
+      }
+    });
+    this.gameShopService.getRatingUrls().subscribe(res => {
+      this.ratingUrls = res as RatingUrl[];
+      this.ratingUrls.sort((a,b) => a.url.localeCompare(b.url));
+      if(this.codetable == this.RATINGURLS){
+        this.selectCodeTable(this.codetable);
+      }
+    });
+  }
+
   selectCodeTable(codetable: number) {
-    
+        
     this.codetable = codetable;
+    this.contextService.setSessionGlobal(this.CODETABLESELECT, this.codetable);
     this.page = 0;
 
     switch(codetable){
@@ -218,7 +241,7 @@ export class AdministratorPage implements OnInit{
     });
   }
 
-  onCodeTableRowClicked(codeTableRow){
+  openEditCodeTableRow(codeTableRow){
     let modal = this.modalService.open(CodeTableModalComponent, {ariaLabelledBy: 'app-codetable-modal'});
 
     modal.componentInstance.codetable = this.codetable;
@@ -226,13 +249,19 @@ export class AdministratorPage implements OnInit{
 
     modal.result.then((result) => {
       window.location.reload();
-      
     }, (reason) => {
       if(reason === 'Deleted') {
         window.location.reload();
       }
     });
+  }
 
+  onCodeTableRowClicked(codeTableRow){
+    this.openEditCodeTableRow(codeTableRow);
+  }
+
+  onNewCodeTableRow(){
+    this.openEditCodeTableRow(null);
   }
 
 }
