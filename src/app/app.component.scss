@@ -13,11 +13,6 @@ body::-webkit-scrollbar {
 //  Light(1, "Light", "body{ background:#F3F3FC; color:#303030; } #centerpanel{background:#FFFFFF;} ")
 //  , Dark(2, "Dark", "body{ background:#000000; color:#F3F3FC } #centerpanel{ background:#303030; color:#F3F3FC } #gamelistitem{background:#202020; color:#F3F3FC} td {background:#202020; color:#F3F3FC} .breadcrumb { background:#202020; } code{ background:#404040 } pre{background:#303030; color:#F3F3FC}")
 
-body{ 
-    background:#F3F3FC; 
-    color:#303030;
-}
-
 #topmenu{
     background-color: #0072C6;
 }
@@ -45,10 +40,9 @@ body{
 }
 
 #centerpanel{
-    background:#FFFFFF; 
     min-height: 100%; 
     border: thin solid white; 
-    box-shadow:5px 5px 20px grey;
+    box-shadow:5px 5px 10px grey;
 }
 
 #basepanelright {
@@ -57,7 +51,6 @@ body{
     top:75px;
     position: -webkit-sticky;
     position: sticky;
-    width:100%; 
     text-align:justify;
 }
 

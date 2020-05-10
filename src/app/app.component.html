@@ -1,4 +1,4 @@
-<body id="avkTheme">
+<body id="myapproot">
 	<div class="fixed-top">
 		<nav class="navbar navbar-expand-lg navbar-dark" id="topmenu">
 
@@ -39,7 +39,7 @@
   
 	<br><br><br>
 	
-	<div>
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-2" id="basepanelleft">
 				<div id="mypicture">
@@ -49,7 +49,7 @@
 			
 			<div class="col" id="centerpanel">
 
-				<small><br/></small>
+				<div><small><br/></small></div>
 	
 				<div>
 					<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select theme">
@@ -74,7 +74,7 @@
 
 				</div>
 
-				<a style="font-size:2; text-align:center"><br></a>
+				<div><a style="font-size:2; text-align:center"><br></a></div>
 
 				<div *ngIf="errormessage" class="alert alert-warning alert-dismissible fade show" role="alert">
 					<a id="errormessage">{{ errormessage }}</a>
@@ -95,7 +95,7 @@
 					</button>
 				</div>
 
-				<a style="font-size:4; text-align:center"><br></a>
+				<div><a style="font-size:4; text-align:center"><br></a></div>
 							
 				<router-outlet></router-outlet>
 			</div>
@@ -111,7 +111,7 @@
 			<div style="clear:both"> </div>
 		
 			<br><hr>
-			
+		
 		</div>
 	</div>
 

@@ -123,7 +123,7 @@
 
 		<div *ngIf="listType==='flex'" class="d-flex align-content-stretch flex-wrap bd-highlight mb-3" (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
 			<div class="p-2 bd-highlight border avkflex" *ngFor="let product of products; index as i">
-				<div>
+				<div class="container">
 					<div class="row">
 						<div style="width:40%" (click)="openUploadImageModal(product)">
 							<div data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
