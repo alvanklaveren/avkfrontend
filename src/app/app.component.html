@@ -41,7 +41,7 @@
 	
 	<div>
 		<div class="row">
-			<div class="col">    
+			<div class="col-2" id="basepanelleft">
 				<div id="mypicture">
 					<img src="./assets/images/me.jpg" alt="me" width="85%" class="rounded-circle"/>
 				</div>
@@ -100,8 +100,8 @@
 				<router-outlet></router-outlet>
 			</div>
 			
-			<div class="col">
-				<div id="basepanelright" style="width:100%; text-align:justify;">
+			<div class="col-2">
+				<div id="basepanelright">
 					<h4>{{ aboutText | translate }}</h4>
 					<div id="abouttext">
 						<span #aboutDiv></span>

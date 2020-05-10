@@ -28,9 +28,20 @@ body{
 }
 
 #basepanelleft {
-    min-height: 100%; 
     padding-left: 10px;
+    padding-right: 10px;
     top:75px;
+    position: -webkit-sticky;
+    position: sticky;
+    width:100%; 
+    text-align:justify;
+}
+
+#mypicture {
+    padding-left: 40px;
+    top:75px;
+    position: -webkit-sticky;
+    position: sticky;
 }
 
 #centerpanel{
@@ -44,6 +55,10 @@ body{
     padding-left: 10px; 
     padding-right: 10px;
     top:75px;
+    position: -webkit-sticky;
+    position: sticky;
+    width:100%; 
+    text-align:justify;
 }
 
 /* Small devices and up (tablets, 768px and up) */
