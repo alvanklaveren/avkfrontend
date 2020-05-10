@@ -1,0 +1,18 @@
+<body>
+	<div>
+		{{ '[' }}
+		<a *ngFor="let product of products">
+			{{ '{' }} 
+				{{ '"code":' }}{{ product.code }},
+				{{ '"name":' }}{{ '"' }}{{ product.name }}{{ '"' }},
+				{{ '"description":' }}{{ '"' }}{{ product.description }}{{ '"' }},
+				{{ '"gameConsole":' }}{{ '"' }}{{ product.gameConsole }}{{ '"' }},
+				{{ '"productType":' }}{{ '"' }}{{ product.productType }}{{ '"' }},
+				{{ '"company":' }}{{ '"'}}{{ product.company }}{{ '"' }},
+				{{ '"productImage":' }}{{ '[' }}{{ '' }}{{ ']'}}
+			{{ '},' }}
+		</a>
+		{{ ']' }}
+	</div>
+</body>
+

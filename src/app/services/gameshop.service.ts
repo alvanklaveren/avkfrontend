@@ -60,6 +60,14 @@ export class GameShopService {
     return this.http.post(environment.backendUrl + 'gameshop/delete', codeProduct); 
   }
 
+  getGameShopMobile(codeGameConsole: number, codeProductType: number, description?: string){
+    if(!description){
+      return this.http.get(environment.backendUrl + 'gameshop/gameshopmobile/' + codeGameConsole + '/' + codeProductType); 
+    } else {
+      return this.http.get(environment.backendUrl + 'gameshop/gameshopmobile/' + codeGameConsole + '/' + codeProductType + '/' + description); 
+    }
+  }
+
   uploadImage(codeProduct: any, file: File): Observable<HttpEvent<{}>> {
     const formdata: FormData = new FormData();
 
