@@ -35,9 +35,13 @@ export class Articles implements OnInit{
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private title:Title, 
               private contextService:ContextService){ }
 
-  ngAfterViewInit() {
 
+  ngOnInit(){
+    this.contextService.setPageTitle(this, 'Articles'); 
     this.articleId = this.route.snapshot.paramMap.get('articleId');
+  }
+
+  ngAfterViewInit() {
 
     if(this.articleId === this.INDEX){
       this.backToIndex();
@@ -88,8 +92,6 @@ export class Articles implements OnInit{
 
   getSelectedArticle(){
     this.selectedArticle = this.javaArticles.find(article => article.id === this.articleId);
-    console.log("selected article: ");
-    console.log(this.selectedArticle);
     if(!this.selectedArticle) {
       this.selectedArticle = this.webhostingArticles.find(article => article.id === this.articleId);
     } 
@@ -98,7 +100,6 @@ export class Articles implements OnInit{
 
   getArticleByOrder(order: number){
     let article = this.javaArticles.find(article => article.order === order);
-    console.log(article);
     if(!article) {
       article = this.webhostingArticles.find(article => article.order === order);
     } 
@@ -109,17 +110,12 @@ export class Articles implements OnInit{
     this.articleId = this.INDEX;
     this.articleText = '';
     this.articleDiv.nativeElement.innerHTML = this.articleText;
+    this.router.navigateByUrl('articles/' + this.articleId);
   }
 
   goToArticle(articleId){
     this.articleId = articleId;
     this.replaceArticleDiv(this.articleId);
-  }
-
-  ngOnInit(){
-    
-    this.contextService.setPageTitle(this, 'Articles'); 
-
   }
 
 }
