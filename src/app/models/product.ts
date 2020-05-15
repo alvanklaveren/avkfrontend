@@ -14,5 +14,6 @@ export class Product {
     company: Company;
     product: any;
     productRatings: [ProductRating];
+    imageHTML: string;
     version?: number;
   }

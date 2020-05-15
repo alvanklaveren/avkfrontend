@@ -27,6 +27,11 @@ export class ImageModalComponent implements OnInit {
 
         this.forumService.getImages().subscribe(res => {
             this.messageImages = res as Array<MessageImage>;
+
+            for(let messageImage of this.messageImages) {
+                let rawImage = messageImage.image;
+                messageImage.imageHTML = '<img width=100px class="messageimage" src="data:image/jpg;base64,' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture"/>';
+            }
         });
     }
 

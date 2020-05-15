@@ -102,7 +102,7 @@
 			<div class="border" *ngFor="let product of products; index as i" style="box-shadow:2px 2px 2px #AAAAAA; margin-left:4px; margin-right:4px; margin-top:4px; margin-bottom:4px" (click)="openEditModal(product)">
 				<div class="row">
 					<div class="col-2" data-toggle="tooltip" data-placement="top" title="Click to enlarge image" style="cursor:zoom-in;">
-						<img class="col" [src]="imageUrl + product.code" alt="missing picture" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>
+						<div [innerHTML]="product.imageHTML | safe:'html'"></div>
 					</div>
 					<div class="col-4 text-wrap" style="width:30px">
 						<div class="col text-wrap"><b>{{ product.name }}</b></div>
@@ -127,7 +127,7 @@
 					<div class="row">
 						<div style="width:40%" (click)="openUploadImageModal(product)">
 							<div data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
-								<img class="col avkfleximg" onerror="this.style.display='block'" [src]="imageUrl + product.code" alt="missing picture"/>
+								<div [innerHTML]="product.imageHTML | safe:'html'"></div>
 							</div>
 						</div>
 						<div class="col text-wrap" style="width:30px" (click)="openEditModal(product)">

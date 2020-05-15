@@ -16,7 +16,8 @@
     <div class="d-flex align-content-stretch flex-wrap bd-highlight mb-3">
         <div class="row p-2 bd-highlight border">
             <div class="border" *ngFor="let mi of messageImages" (click)="onSelectImage(mi.code)" data-toggle="tooltip" data-placement="top" title="Click to select image" style="cursor:pointer;">
-                <img class="messageimage" [src]="messageImageUrl + mi.code" alt=""/>
+                <div [innerHTML]="mi.imageHTML | safe:'html'"></div>
+                <!-- <img class="messageimage" [src]="messageImageUrl + mi.code" alt=""/> -->
                 <br>
                 <div class="text-center">
                     <small><b>{{ mi.code }}</b></small>
