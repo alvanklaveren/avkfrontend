@@ -7,11 +7,15 @@ import { GameShop } from './components/gameshop/gameshop.component';
 import { ForumMessage } from './components/forum/forum.message.component';
 import { AdministratorPage } from './components/administrator/administrator.component';
 import { GameShopMobile } from './components/gameshop/gameshopmobile.component';
+import { Articles } from './components/articles/articles.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomePage },
   { path: 'aboutme', component: AboutMe },
+
+  { path: 'articles', redirectTo: 'articles/index', pathMatch: 'full' },
+  { path: 'articles/:articleId', component: Articles },
 
   { path: 'administrator', component: AdministratorPage },
 

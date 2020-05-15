@@ -1,0 +1,59 @@
+<body>
+
+	<div class="container" *ngIf="articleId !== INDEX">
+		<div class="row justify-content-between">
+			<div class="col-2">
+				<button class="btn btn-sm btn-outline-primary" (click)="previousArticle()">{{ 'Previous' | translate }}</button>
+			</div>
+			<div class="col-2">
+				<button class="btn btn-sm btn-outline-primary" (click)="nextArticle()">{{ 'Next' | translate }}</button>
+			</div>
+		</div>
+	</div>
+	<br>
+
+	<div class="container" *ngIf="articleId === INDEX">
+		<div class="blog-header">
+			<h1 class="blog-title">Articles</h1>
+			<p class="lead blog-description">Firsthand experience with Languages, Frameworks and Ides</p>
+		</div>
+		<div class="row">
+		  <div class="col-sm-8 blog-main">
+			  <p style="text-align:justify"> The below articles are short stories about my own first experience with new
+					frameworks, languages, methodologies and so on and so forth. The main reason for writing these stories is
+					to be able to repeat what I have done before when necessary, especially setup stuff that you only have to do  
+					once or twice, and you easily tend to forget after a while. <br><br>
+					Because I am not the only one having these problems, I am sharing my experiences and knowledge with all of you.
+					Have fun reading them.
+			  </p>
+		  	  <br>
+		  </div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-8 blog-main">
+		    	<div class="blog-post">
+					<h2 class="blog-post-title">Index</h2>
+			      	<hr>
+					<h3>JAVA related</h3>
+					<ul *ngFor="let article of javaArticles">
+						<li>
+							<a href="javascript:void(0)" (click)="goToArticle(article.id)">{{ article.title }}</a>
+						</li>
+					</ul>
+					<br>
+					<h3>Webhosting Setup related</h3>
+					<ul *ngFor="let article of webhostingArticles">
+						<li>
+							<a href="javascript:void(0)" (click)="goToArticle(article.id)">{{ article.title }}</a>
+						</li>
+					</ul>
+		   		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<span #articleDiv></span>	
+	</div>
+</body>
