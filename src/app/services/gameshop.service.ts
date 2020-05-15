@@ -56,6 +56,10 @@ export class GameShopService {
     return this.http.post(environment.backendUrl + 'gameshop/save', product); 
   }
 
+  saveProductRating(codeProduct: number, codeRatingUrl: string, rating: number){
+    return this.http.post(environment.backendUrl + 'gameshop/saveProductRating', { codeProduct: codeProduct, codeRatingUrl: codeRatingUrl, rating: rating }); 
+  }
+
   delete(codeProduct: Number){
     return this.http.post(environment.backendUrl + 'gameshop/delete', codeProduct); 
   }

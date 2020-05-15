@@ -17,6 +17,7 @@ import { GameShopService } from '../../services/gameshop.service';
 import { ContextService } from '../../services/context.service';
 
 import { UploadImageModalComponent } from './modals/uploadimagemodal.component';
+import { RatingModalComponent } from './modals/ratingmodal.component';
 
 @Component({
   selector: 'app-gameshop',
@@ -169,6 +170,18 @@ export class GameShop implements OnInit{
 
   openUploadImageModal(product){   
     let modal = this.modalService.open(UploadImageModalComponent, {ariaLabelledBy: 'app-uploadimage-modal'});
+
+    modal.componentInstance.product = product;
+
+    modal.result.then((result) => {
+      window.location.reload();
+    }, (reason) => {
+      window.location.reload();
+    });
+  }
+
+  openRatingModal(product){   
+    let modal = this.modalService.open(RatingModalComponent, {ariaLabelledBy: 'app-rating-modal'});
 
     modal.componentInstance.product = product;
 

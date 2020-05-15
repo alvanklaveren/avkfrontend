@@ -130,15 +130,22 @@
 								<div [innerHTML]="product.imageHTML | safe:'html'"></div>
 							</div>
 						</div>
-						<div class="col text-wrap" style="width:30px" (click)="openEditModal(product)">
+						<div class="col text-wrap" style="width:30px">
+							<div class="d-flex justify-content-end">
+								<button class="btn btn-sm btn-outline-primary" (click)="openEditModal(product)"><i class="far fa-edit"></i></button>
+							</div>
+							<br>
 							<div class="col text-wrap"><b>{{ product.name }}</b></div>
 							<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
 							<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
-							<br>
-							<div *ngFor="let productRating of product.productRatings; index as i">
-								{{ 'Rated' | translate }} {{ productRating.rating }} by 
-								<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
-							</div>
+							<div class="col text-wrap"><button class="btn btn-sm btn-outline-secondary" (click)="openRatingModal(product)">{{ 'Add Rating' | translate }}</button></div>
+						</div>
+					</div>
+					<br>
+					<div class="row" *ngFor="let productRating of product.productRatings; index as i">
+						<div class="col text-wrap">
+							{{ 'Rated' | translate }} {{ productRating.rating }} {{ 'by' | translate }} &nbsp;
+							<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
 						</div>
 					</div>
 				</div>
