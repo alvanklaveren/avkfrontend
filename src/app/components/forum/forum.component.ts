@@ -7,6 +7,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageCategory } from 'src/app/models/messagecategory';
 import { ForumService } from 'src/app/services/forum.service';
 import { Message } from 'src/app/models/message';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { stringify } from 'querystring';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-forum',
@@ -26,9 +29,12 @@ export class Forum implements OnInit{
 
   editMessageCategory: MessageCategory;
 
+  loginForm: FormGroup;
+
    constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
-              private title:Title, private modalService: NgbModal,
-              private contextService:ContextService, private forumService: ForumService){ 
+              private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
+              private contextService:ContextService, private forumService: ForumService, 
+              private authenticationService: AuthenticationService){ 
   }
 
   ngOnInit(){
@@ -36,6 +42,11 @@ export class Forum implements OnInit{
     this.contextService.setPageTitle(this, 'Forum');
 
     this.editMessageCategory = null;
+
+    this.loginForm = this.formBuilder.group({
+      username: [null, Validators.required],
+      password: [null, Validators.required],
+    });
 
     if(this.route.snapshot.paramMap.get('codeMessageCategory')) {
       this.codeMessageCategory = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeMessageCategory'));
@@ -109,6 +120,15 @@ export class Forum implements OnInit{
       this.messageCategories.splice(this.messageCategories.indexOf(messageCategory), 1)
       this.editMessageCategory = null;
     });   
+  }
+
+  login(){
+    let lf = this.loginForm.value;
+    console.log("Trying to login");
+
+    this.authenticationService.login(lf.username, lf.password).subscribe(res =>{
+      console.log("YES");
+    });
   }
 
 }
