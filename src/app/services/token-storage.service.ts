@@ -65,8 +65,8 @@ export class TokenStorageService {
   /* User */
   public saveUserKey(token) {    
     let payload = JSON.parse(window.atob(token.split('.')[1]));
-
-    this.http.post(environment.backendUrl + 'user/get', { id: payload.userId })
+    console.log(payload);
+    this.http.post(environment.backendUrl + 'forum/getForumUser', { code: payload.userCode })
     .subscribe((forumUser: ForumUser) => {
 
       sessionStorage.removeItem(USER_KEY);
@@ -77,6 +77,8 @@ export class TokenStorageService {
   }
 
   public getUser() {
+    console.log(USER_KEY);
+    
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
 

@@ -126,12 +126,19 @@ export class Forum implements OnInit{
     let lf = this.loginForm.value;
     console.log("Trying to login");
 
-    this.authenticationService.login(lf.username, lf.password).subscribe(res =>{
-      console.log("YES");
+    this.authenticationService.login(lf.username, lf.password).subscribe(async (response) =>{
       // when you reach this point, you logged in succesfully.
       // res however is null... how do I get the authentication tokens?
-    });
-  }
+      console.log("success");
+      let auth = response.headers.get('authorization');
+      let tokens = JSON.parse(auth);
+      this.authenticationService.saveAccessData(tokens);          
+      let user = this.authenticationService.getUser();
+      console.log(user);
+    }, (err) => {
+      console.log(err);
+    },
+  );  }
 
   emailNewPassword(){
     let lf = this.loginForm.value;

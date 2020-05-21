@@ -49,9 +49,8 @@ export class AuthenticationService implements AuthService {
     let sessionUser = this.tokenService.getUser();
 
     if (sessionUser) {
-      this.http.post(environment.backendUrl + 'user/get', { id: sessionUser.id }).subscribe((response) => {
-        let usr = response as ForumUser;        
-        let user = Object.assign(new ForumUser(), usr);
+      this.http.post(environment.backendUrl + 'forum/getForumUser', { code: sessionUser.id }).subscribe((forumUser: ForumUser) => {
+        let user = Object.assign(new ForumUser(), forumUser);
 
         this.admin = this.hasRole(user, 'ROLE_ADMIN');
         this.user.next(user);
@@ -147,9 +146,11 @@ export class AuthenticationService implements AuthService {
    * EXTRA AUTH METHODS
    */
 
-  public login(username: string, password: string) {
-    return this.http.post(environment.backendUrl + 'login', { username: username, password: password });
+  public login(username: string, password: string): Observable<any> {
+    return this.http.post(environment.backendUrl + 'login', { username: username, password: password }, {observe: 'response'});
   }
+
+
 
   /**
    * Logout
