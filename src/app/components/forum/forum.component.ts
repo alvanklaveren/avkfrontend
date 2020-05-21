@@ -128,6 +128,20 @@ export class Forum implements OnInit{
 
     this.authenticationService.login(lf.username, lf.password).subscribe(res =>{
       console.log("YES");
+      // when you reach this point, you logged in succesfully.
+      // res however is null... how do I get the authentication tokens?
+    });
+  }
+
+  emailNewPassword(){
+    let lf = this.loginForm.value;
+
+    this.forumService.emailNewPassword(lf.username).subscribe((res: {result:boolean}) => {
+      if(res.result) {
+        console.log("emailed");
+      } else {
+        console.log("Failed to email");
+      }
     });
   }
 

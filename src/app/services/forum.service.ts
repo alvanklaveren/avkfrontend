@@ -82,4 +82,8 @@ export class ForumService {
     return this.http.post(environment.backendUrl + 'forum/getImages', {});
   }
 
+  emailNewPassword(username: string) {
+    return this.http.post(environment.backendUrl + 'forum/emailNewPassword', username);
+  }
+
 }
