@@ -67,11 +67,10 @@ export class AdministratorPage implements OnInit{
 
   constantsForm: FormGroup;
 
-  codeConstantsGuestImage: number;
-  guestImageUrl = '';
-
-  codeConstantsWebLogo: number;
-  webLogoUrl = '';
+  codeConstantsGuestImage;
+  guestImage;
+  codeConstantsWebLogo;
+  webLogo;
 
   acmeAddressConstants: Constants;
   acmeConstants: Constants;
@@ -178,13 +177,29 @@ export class AdministratorPage implements OnInit{
     this.administratorService.getConstantById('guestimage').subscribe(res => {
       let constants = res as Constants;
       this.codeConstantsGuestImage = constants.code;
-      this.guestImageUrl = this.administratorService.constantImageUrl + this.codeConstantsGuestImage;
+      this.administratorService.getConstantsImage(constants.code).subscribe(res => {
+        let that = this;
+        let reader = new FileReader();
+        reader.readAsDataURL(res); 
+        reader.onloadend = function() {
+            let rawImage = reader.result;
+            that.guestImage = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:auto; height:40px;"/>';
+          }
+      });
     });
 
     this.administratorService.getConstantById('weblogo').subscribe(res => {
       let constants = res as Constants;
       this.codeConstantsWebLogo = constants.code;
-      this.webLogoUrl = this.administratorService.constantImageUrl + this.codeConstantsWebLogo;
+      this.administratorService.getConstantsImage(constants.code).subscribe(res => {
+        let that = this;
+        let reader = new FileReader();
+        reader.readAsDataURL(res); 
+        reader.onloadend = function() {
+            let rawImage = reader.result;
+            that.webLogo = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:auto; height:40px;"/>';
+          }
+      });
     });
   }
 

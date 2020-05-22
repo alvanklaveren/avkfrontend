@@ -10,6 +10,9 @@ import { SmartResponse } from 'src/app/models/smartresponse';
 import { MessageCategory } from 'src/app/models/messagecategory';
 import * as moment from 'moment';
 import { ImageModalComponent } from './modals/image.modal.component';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ForumUser } from 'src/app/models/forumuser';
 
 @Component({
   selector: 'app-forum',
@@ -19,6 +22,9 @@ import { ImageModalComponent } from './modals/image.modal.component';
 
 export class ForumMessage implements OnInit{
 
+  user: ForumUser;
+  isAdmin: boolean = false;
+  isMember: boolean = false;
 
   loading = true;
 
@@ -39,11 +45,16 @@ export class ForumMessage implements OnInit{
   askChangeCategory = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
-              private title:Title, private modalService: NgbModal, 
+              private title:Title, private modalService: NgbModal, private tokenStorageService: TokenStorageService,
+              private authenticationService: AuthenticationService,
               private contextService:ContextService, private forumService: ForumService){ 
   }
 
   ngOnInit(){
+
+    this.user = this.tokenStorageService.getUser();
+    this.isAdmin = this.authenticationService.isAdmin();
+    this.isMember = this.authenticationService.isMember();
 
     this.avatarUrl = this.forumService.avatarUrl;
     this.editMessage = null;
@@ -162,7 +173,6 @@ export class ForumMessage implements OnInit{
   }
 
   onReplyDelete(replyMessage: Message) {
-    console.log(replyMessage);
     this.forumService.delete(replyMessage).subscribe( res => {
       this.ngOnInit();
     });

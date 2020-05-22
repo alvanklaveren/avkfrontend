@@ -1,10 +1,10 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTabpageContent" aria-controls="navbarTabpageContent" aria-expanded="false" aria-label="Toggle navigation">
-		  <span class="navbar-toggler-icon"></span>
+		<button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarTabpageContent" aria-controls="navbarTabpageContent" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon bg-light"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbarTabpageContent">
-		  <div class="navbar-nav">
+		<div class="collapse navbar-collapse bg-light" id="navbarTabpageContent">
+		  <div class="navbar-nav bg-light">
 			<a *ngIf="tabpage == CONSTANTS" class="nav-item nav-link active">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
 			<a *ngIf="tabpage !== CONSTANTS" class="nav-item nav-link" (click)="setTabPage(CONSTANTS)">{{ tabpages[CONSTANTS].menutitle | translate }}</a>
 			
@@ -22,45 +22,47 @@
 	<div *ngIf="tabpage == CONSTANTS">
 		<h2>{{ tabpages[CONSTANTS].title | translate }}</h2>
 		<br>
-		<form [formGroup]="constantsForm">
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" for="guestAvatar"> {{ 'Guest Avatar' | translate }}</label>
-				<div class="col-sm-4">
-					<input type="file" id="guestAvatar" formControlName="guestAvatar" (change)="onUploadGuestAvatar($event)" #fileInput>
+		<div class="container">
+			<form [formGroup]="constantsForm">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label" for="guestAvatar"> {{ 'Guest Avatar' | translate }}</label>
+					<div class="col-sm-4">
+						<input type="file" id="guestAvatar" formControlName="guestAvatar" (change)="onUploadGuestAvatar($event)" #fileInput>
+					</div>
+					<div class="col-sm-2 col-form-control" data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
+						<div [innerHTML]="guestImage | safe:'html'"></div>
+					</div>
 				</div>
-				<div class="col-sm-2 col-form-control" data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
-					<img style="width:auto; height:40px;" onerror="this.style.display='block'" [src]="guestImageUrl" alt="missing picture"/>
-				</div>
-			</div>
 
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" for="webLogo"> {{ 'Web Logo' | translate }}</label>
-				<div class="col-sm-4">
-					<input type="file" id="webLogo" formControlName="webLogo" (change)="onUploadWebLogo($event)" #fileInput>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label" for="webLogo"> {{ 'Web Logo' | translate }}</label>
+					<div class="col-sm-4">
+						<input type="file" id="webLogo" formControlName="webLogo" (change)="onUploadWebLogo($event)" #fileInput>
+					</div>
+					<div class="col-sm-2 col-form-control" data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
+						<div [innerHTML]="webLogo | safe:'html'"></div>
+					</div>
 				</div>
-				<div class="col-sm-2 col-form-control" data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
-					<img style="width:auto; height:40px;" onerror="this.style.display='block'" [src]="webLogoUrl" alt="missing picture"/>
-				</div>
-			</div>
-			
-			<br><hr><br>
+				
+				<br><hr><br>
 
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" for="acmeAddress"> {{ 'Acme Address' | translate }}</label>
-				<div class="col-sm-8">
-					<input class="form-control" type="text" id="acmeAddress" formControlName="acmeAddress">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label" for="acmeAddress"> {{ 'Acme Address' | translate }}</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" id="acmeAddress" formControlName="acmeAddress">
+					</div>
 				</div>
-			</div>
 
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" for="acme"> {{ 'Acme Id' | translate }}</label>
-				<div class="col-sm-8">
-					<input class="form-control" type="text" id="acme" formControlName="acme">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label" for="acme"> {{ 'Acme Id' | translate }}</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" id="acme" formControlName="acme">
+					</div>
 				</div>
-			</div>
 
-			<button type="button" class="btn btn-primary" (click)="onSaveConstants()">{{ 'Apply Changes' | translate }}</button> 
-		</form>
+				<button type="button" class="btn btn-primary" (click)="onSaveConstants()">{{ 'Apply Changes' | translate }}</button> 
+			</form>
+		</div>
 		<br><br><br><br><br>
 	</div>
 
@@ -100,14 +102,14 @@
 
 	<div *ngIf="tabpage == CODETABLES">
 		<h2>{{ tabpages[CODETABLES].title | translate }}</h2>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div>
-				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCodeTablesContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					 <span class="navbar-toggler-icon"></span>
+				<button class="navbar-toggler navbar-toggler-right bg-dark" type="button" data-toggle="collapse" data-target="#navbarCodeTablesContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					 <span class="navbar-toggler-icon bg-dark"></span>
 				</button>
 			</div>    
-				<div class="collapse navbar-collapse" id="navbarCodeTablesContent">
-			  <ul class="navbar-nav">
+				<div class="collapse navbar-collapse bg-dark" id="navbarCodeTablesContent">
+			  <ul class="navbar-nav bg-dark">
 				<li *ngIf="codetable == COMPANIES" class="nav-item nav-link active">{{ codeTables[COMPANIES].menutitle | translate }}</li>
 				<li *ngIf="codetable !== COMPANIES" class="nav-item nav-link" (click)="selectCodeTable(COMPANIES)">{{ codeTables[COMPANIES].menutitle | translate }}</li>
 

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ContextService } from './services/context.service';
 import { environment } from 'src/environments/environment';
 import {TranslateService} from '@ngx-translate/core';
+import { AuthenticationService } from './services/authentication.service';
+import { TokenStorageService } from './services/token-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -29,16 +31,16 @@ export class AppComponent implements OnInit{
   mailTo: string = environment.mailTo;
 
   menuItems = [
-    { description: 'Administrator', url: '/administrator' },
-    { description: 'Home', url: '/' },
-    { description: 'Forum', url: '/forum' },
-    { description: 'My Game Collection', url: '/gameshop' },
-    { description: 'Articles', url: '/articles' },
-    { description: 'About me', url: '/aboutme' },
+    { id: 0, description: 'Administrator', url: '/administrator', disabled: true },
+    { id: 1, description: 'Home', url: '/', disabled: false },
+    { id: 2, description: 'Forum', url: '/forum', disabled: false },
+    { id: 3, description: 'My Game Collection', url: '/gameshop', disabled: false },
+    { id: 4, description: 'Articles', url: '/articles', disabled: false },
+    { id: 5, description: 'About me', url: '/aboutme', disabled: false },
   ]
 
-  constructor(private router:Router, private contextService:ContextService, private translateService: TranslateService
-              ){ 
+  constructor(private router:Router, private contextService:ContextService, private translateService: TranslateService,
+              private authenticationService: AuthenticationService, private tokenStorageService: TokenStorageService ){ 
     if(this.selectedIsoA2){
       if(this.selectedIsoA2.toUpperCase() === 'US') {
         this.flagIcon = '../assets/fonts/flag_us.svg';
@@ -66,6 +68,7 @@ export class AppComponent implements OnInit{
   }
 
   ngAfterViewInit() {
+
     this.contextService.translate('[aboutwebsite]').subscribe(res => {
       let response = res as any;
       this.aboutWebsite = response.result;
@@ -78,6 +81,14 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
+    // console.log(this.authenticationService.hasRole(this.tokenStorageService.getUser(), "ROLE_ADMIN"));
+    console.log(this.authenticationService.isAdmin());
+    if(this.authenticationService.isAdmin()) {
+      this.menuItems[0].disabled=false;
+    } else {
+      this.menuItems[0].disabled=true;
+    }
+
     this.translateService.setDefaultLang(this.selectedIsoA2);
     this.setTheme(this.theme);
   }

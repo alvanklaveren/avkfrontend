@@ -9,8 +9,6 @@ import { ForumUser } from '../models/forumuser';
 @Injectable({ providedIn: 'root' })
 export class AdministratorService {
 
-  constantImageUrl = environment.backendUrl + 'administrator/getConstantsImage/?codeConstants=';
-  
   constructor(private http: HttpClient) {}
 
   getConstant(codeConstants: number){
@@ -41,6 +39,10 @@ export class AdministratorService {
     return this.http.request(req);
   }
 
+  getConstantsImage(codeConstants: number): Observable<Blob> {
+    return this.http.get(environment.backendUrl + 'administrator/getConstantsImage/?codeConstants=' + codeConstants, {responseType: 'blob'});
+  }
+
   getUsers(){
     return this.http.post(environment.backendUrl + 'administrator/getUsers', {});
   }
@@ -62,9 +64,6 @@ export class AdministratorService {
   }
 
   deleteCodeTableRow(codetable: number, code: number){
-    console.log(codetable);
-    console.log(code);
-
     return this.http.post(environment.backendUrl + 'administrator/deleteCodeTableRow', {codeTable: codetable, code: code});
   }
 

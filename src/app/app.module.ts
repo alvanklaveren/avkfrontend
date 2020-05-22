@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -17,6 +17,7 @@ import { GameShopModule } from './components/gameshop/gameshop.module';
 import { ForumModule } from './components/forum/forum.module';
 import { AdministratorPageModule } from './components/administrator/administrator.module';
 import { ArticlesModule } from './components/articles/articles.module';
+import { AuthInterceptor } from './auth.interceptor';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,7 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdministratorPageModule,
     ArticlesModule,
   ],
-  providers: [],
+  providers: [{provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true,},],
   bootstrap: [AppComponent] 
 })
 export class AppModule { }

@@ -17,13 +17,13 @@
 	</ol>
 
 	<div *ngIf="message" class="container">
-		<div class="col" *ngIf="!askChangeCategory">
+		<div class="col" *ngIf="!askChangeCategory && isAdmin">
 			<button class="btn btn-sm btn-primary" type="button" (click)="askChangeCategory = true">
 				<span> {{ 'Change Category' | translate }} </span>
 			</button>
 		</div>
 
-		<div class="row" *ngIf="askChangeCategory">
+		<div class="row" *ngIf="askChangeCategory && isAdmin">
 			<div class="col">
 				<ng-select class="form-control" [items]="messageCategories" bindLabel="description" [(ngModel)]="newMessageCategory" [editableSearchTerm]="false" [multiple]="false" [clearable]="false">
 				</ng-select>
@@ -46,7 +46,9 @@
 				<div *ngIf="!editMessage">
 					<div class="row">
 						<h3 class="col">{{ message.description }}</h3>
-						<span class="col text-right" ><span (click)="onEditMessage(message)"><i class="far fa-2x fa-edit text-primary"></i></span></span>
+						<span *ngIf="user && user.code === message.forumUser.code" class="col text-right"><span (click)="onEditMessage(message)">
+							<i class="far fa-2x fa-edit text-primary"></i>
+						</span></span>
 					</div>
 					<hr>
 					<p [innerHTML]="message.preparedMessageText | safe:'html'"></p>
@@ -117,7 +119,7 @@
 
 				<hr>
 
-				<button class="btn btn-sm btn-outline-primary" type="button" (click)="onAddReplyMessage()">
+				<button *ngIf="user" class="btn btn-sm btn-outline-primary" type="button" (click)="onAddReplyMessage()">
 					<i class="far fa-comment"></i>
 					<span> {{ "Add Comment" | translate }} </span>
 				</button>

@@ -8,8 +8,10 @@ import { MessageCategory } from 'src/app/models/messagecategory';
 import { ForumService } from 'src/app/services/forum.service';
 import { Message } from 'src/app/models/message';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { stringify } from 'querystring';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ForumUser } from 'src/app/models/forumuser';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { browser } from 'protractor';
 
 @Component({
   selector: 'app-forum',
@@ -29,23 +31,38 @@ export class Forum implements OnInit{
 
   editMessageCategory: MessageCategory;
 
+  user: ForumUser;
+  isAdmin: boolean = false;
+  isMember: boolean = false;
+
   loginForm: FormGroup;
+  forgotPasswordForm: FormGroup;
+
+  forgotPassword = false;
 
    constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
-              private contextService:ContextService, private forumService: ForumService, 
-              private authenticationService: AuthenticationService){ 
+              private contextService:ContextService, private forumService: ForumService,
+              private tokenStorageService: TokenStorageService, private authenticationService: AuthenticationService){ 
   }
 
   ngOnInit(){
 
     this.contextService.setPageTitle(this, 'Forum');
 
+    this.user = this.tokenStorageService.getUser();
+    this.isAdmin = this.authenticationService.isAdmin();
+    this.isMember = this.authenticationService.isMember();
+
     this.editMessageCategory = null;
 
     this.loginForm = this.formBuilder.group({
       username: [null, Validators.required],
       password: [null, Validators.required],
+    });
+
+    this.forgotPasswordForm = this.formBuilder.group({
+      username: [null, Validators.required],
     });
 
     if(this.route.snapshot.paramMap.get('codeMessageCategory')) {
@@ -124,32 +141,40 @@ export class Forum implements OnInit{
 
   login(){
     let lf = this.loginForm.value;
-    console.log("Trying to login");
 
     this.authenticationService.login(lf.username, lf.password).subscribe(async (response) =>{
-      // when you reach this point, you logged in succesfully.
-      // res however is null... how do I get the authentication tokens?
-      console.log("success");
       let auth = response.headers.get('authorization');
       let tokens = JSON.parse(auth);
-      this.authenticationService.saveAccessData(tokens);          
-      let user = this.authenticationService.getUser();
-      console.log(user);
+      this.authenticationService.saveAccessData(tokens);
+      await this.delay(1000); // it takes a sec to get the data saved to local and session storage
+      this.user = this.tokenStorageService.getUser();
+      this.authenticationService.setUser();
+      window.location.reload();
     }, (err) => {
       console.log(err);
-    },
-  );  }
+    });  
+  }
+
+  logout(){
+    this.authenticationService.logout();
+    this.user = this.tokenStorageService.getUser();
+    window.location.reload();
+  }
 
   emailNewPassword(){
     let lf = this.loginForm.value;
 
     this.forumService.emailNewPassword(lf.username).subscribe((res: {result:boolean}) => {
       if(res.result) {
-        console.log("emailed");
+        this.forgotPassword = false;
       } else {
-        console.log("Failed to email");
+        this.forgotPassword = false;
       }
     });
+  }
+
+  delay(ms: number) {
+     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
 }

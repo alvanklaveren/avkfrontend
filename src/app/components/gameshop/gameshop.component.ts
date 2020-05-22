@@ -18,6 +18,9 @@ import { ContextService } from '../../services/context.service';
 
 import { UploadImageModalComponent } from './modals/uploadimagemodal.component';
 import { RatingModalComponent } from './modals/ratingmodal.component';
+import { ForumUser } from 'src/app/models/forumuser';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-gameshop',
@@ -49,21 +52,24 @@ export class GameShop implements OnInit{
   addingCompany = false;
   newCompanyDescription = '';
 
+  isAdmin: boolean = false;
+
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
-              private contextService:ContextService, private gameShopService: GameShopService){ 
+              private contextService:ContextService, private gameShopService: GameShopService,
+              private authenticationService: AuthenticationService){ 
   }
 
   ngOnInit(){
 
     this.contextService.setPageTitle(this, 'My Game Collection');
 
-    this.searchSubject.pipe(debounceTime(200), distinctUntilChanged()).subscribe((searchString) => {
-      console.log(searchString);
+    this.isAdmin = this.authenticationService.isAdmin();
+
+    this.searchSubject.pipe(debounceTime(200), distinctUntilChanged()).subscribe((searchString) => {      
       if (searchString && searchString.length > 2) {
         this.gameShopService.simpleSearch(searchString, 0, 10).subscribe((response) => {
           this.searchProductNames = response as Array<String>;
-          console.log(this.searchProductNames);
         });
       }
     });
@@ -152,6 +158,11 @@ export class GameShop implements OnInit{
   }
 
   openEditModal(product?){   
+
+    if(!this.isAdmin){
+      return;
+    }
+
     let modal = this.modalService.open(GameModalComponent, {ariaLabelledBy: 'app-game-modal'});
 
     if(product) {
@@ -169,6 +180,11 @@ export class GameShop implements OnInit{
   }
 
   openUploadImageModal(product){   
+
+    if(!this.isAdmin){
+      return;
+    }
+
     let modal = this.modalService.open(UploadImageModalComponent, {ariaLabelledBy: 'app-uploadimage-modal'});
 
     modal.componentInstance.product = product;
@@ -181,6 +197,11 @@ export class GameShop implements OnInit{
   }
 
   openRatingModal(product){   
+
+    if(!this.isAdmin){
+      return;
+    }
+
     let modal = this.modalService.open(RatingModalComponent, {ariaLabelledBy: 'app-rating-modal'});
 
     modal.componentInstance.product = product;
@@ -193,6 +214,11 @@ export class GameShop implements OnInit{
   }
 
   addCompany(){
+
+    if(!this.isAdmin){
+      return;
+    }
+
     this.gameShopService.addCompany(this.newCompanyDescription).subscribe(res => {
       this.addingCompany = false;
       this.newCompanyDescription = '';
@@ -211,7 +237,6 @@ export class GameShop implements OnInit{
   }
 
   searchTypeAhead(){
-    console.log("typing");
   }
 
   onSortChanged(){

@@ -2,7 +2,8 @@
 
 	<!-- Filter, sort and display selection -->
 	<div *ngIf="!loading">
-		<div *ngIf="!addingCompany">
+
+		<div *ngIf="!addingCompany && isAdmin">
 			<div class="d-flex flex-row bd-highlight mb-3">
 				<div class="p-2 bd-highlight">
 					<button class="btn btn-outline-secondary" type="button" (click)="openEditModal()">{{ "Add Product" | translate }}</button>
@@ -131,14 +132,14 @@
 							</div>
 						</div>
 						<div class="col text-wrap" style="width:30px">
-							<div class="d-flex justify-content-end">
+							<div *ngIf="isAdmin" class="d-flex justify-content-end">
 								<button class="btn btn-sm btn-outline-primary" (click)="openEditModal(product)"><i class="far fa-edit"></i></button>
 							</div>
 							<br>
 							<div class="col text-wrap"><b>{{ product.name }}</b></div>
 							<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
 							<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
-							<div class="col text-wrap"><button class="btn btn-sm btn-outline-secondary" (click)="openRatingModal(product)">{{ 'Add Rating' | translate }}</button></div>
+							<div *ngIf="isAdmin" class="col text-wrap"><button class="btn btn-sm btn-outline-secondary" (click)="openRatingModal(product)">{{ 'Add Rating' | translate }}</button></div>
 						</div>
 					</div>
 					<br>

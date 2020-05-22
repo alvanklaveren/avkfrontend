@@ -28,7 +28,7 @@ export class AuthenticationService implements AuthService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenStorageService,
+    private tokenStorageService: TokenStorageService,
     private router: Router,
   ) { }
 
@@ -39,17 +39,17 @@ export class AuthenticationService implements AuthService {
    * @memberOf AuthService
    */
   public isAuthorized(): Observable<boolean> {
-    return this.tokenService
+    return this.tokenStorageService
       .getAccessToken().pipe(
         map((token) => !!token));
   }
 
   public setUser() {
 
-    let sessionUser = this.tokenService.getUser();
+    let sessionUser = this.tokenStorageService.getUser();
 
     if (sessionUser) {
-      this.http.post(environment.backendUrl + 'forum/getForumUser', { code: sessionUser.id }).subscribe((forumUser: ForumUser) => {
+      this.http.post(environment.backendUrl + 'forum/getForumUser', { code: sessionUser.code }).subscribe((forumUser: ForumUser) => {
         let user = Object.assign(new ForumUser(), forumUser);
 
         this.admin = this.hasRole(user, 'ROLE_ADMIN');
@@ -67,7 +67,7 @@ export class AuthenticationService implements AuthService {
   }
 
   public getTokenUser() {
-    return this.tokenService.getUser();
+    return this.tokenStorageService.getUser();
   }
 
   /**
@@ -77,7 +77,7 @@ export class AuthenticationService implements AuthService {
    * @returns {Observable<string>}
    */
   public getAccessToken(): Observable<string> {
-    return this.tokenService.getAccessToken();
+    return this.tokenStorageService.getAccessToken();
   }
 
   /**
@@ -87,7 +87,7 @@ export class AuthenticationService implements AuthService {
    * @returns {Observable<object>}
    */
   public refreshToken(): Observable<object> {
-    return this.tokenService
+    return this.tokenStorageService
       .getRefreshToken().pipe(
         switchMap((refreshToken: string) => {
           return this.http.post(environment.backendUrl + 'refresh', refreshToken );
@@ -157,7 +157,7 @@ export class AuthenticationService implements AuthService {
    */
   public logout(): void {
     this.admin = false;
-    this.tokenService.clear();
+    this.tokenStorageService.clear();
   }
 
   /**
@@ -167,12 +167,24 @@ export class AuthenticationService implements AuthService {
    * @param {IAccessData} data
    */
   public saveAccessData({ accessToken, refreshToken }: IAccessData) {
-    this.tokenService.setAccessToken(accessToken);
-    this.tokenService.setRefreshToken(refreshToken);
+    this.tokenStorageService.setAccessToken(accessToken);
+    this.tokenStorageService.setRefreshToken(refreshToken);
   }
  
   public isAdmin() {
-    return this.admin;
+    if(!this.tokenStorageService.getUser()){
+      return false;
+    }
+    
+    return this.hasRole(this.tokenStorageService.getUser(), "ROLE_ADMIN");
+  }
+
+  public isMember() {
+    if(!this.tokenStorageService.getUser()){
+      return false;
+    }
+    
+    return this.hasRole(this.tokenStorageService.getUser(), "ROLE_MEMBER");
   }
 
   public emailNewPassword(emailAddress: String) { 
