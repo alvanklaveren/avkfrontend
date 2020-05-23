@@ -29,37 +29,41 @@
 			</div>
 		</div>
 	
-		<form class="form-inline" [formGroup]="searchForm">
-			<!-- Sortorder -->
-			<div class="form-group">
-				<label for="selectsort" class="col-sm col-form-label">{{ 'Sort by' | translate }}</label>
-				<ng-select id="selectsort" class="dropdown-menu" formControlName="productSortId" [editableSearchTerm]="false" [multiple]="false" [clearable]="false" (change)="onSortChanged()">
-					<ng-option *ngFor="let productSort of productSortList" [value]="productSort.id">
-						<a class="dropdown-item avkdropdown">{{ productSort.description }}</a>
-					</ng-option>
-				</ng-select>
-			</div>
-
+		<form class="d-flex form-inline" [formGroup]="searchForm">
 			<!-- Game Console Filter -->
 			<div class="form-group">
-				<label for="selectconsole" class="col-sm col-form-label">{{ 'Game Console' | translate }}</label>
-				<ng-select id="selectconsole" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" formControlName="codeGameConsole" [clearable]="false" (change)="onFilterChanged()">
-					<ng-option *ngFor="let gameConsole of gameConsoleList" [value]="gameConsole.code">
-						<a class="dropdown-item avkdropdown">{{ gameConsole.description }}</a>
-					</ng-option>
-				</ng-select>
+				<label class="col-sm-4" for="selectconsole">{{ 'Console' | translate }}</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="selectconsole" formControlName="codeGameConsole" (change)="onFilterChanged()">
+						<option *ngFor="let gc of gameConsoleList" [ngValue]="gc.code">
+							<a class="dropdown-item avkdropdown">{{ gc.description }}</a>
+						</option>
+					</select>
+				</div>
 			</div>
-
+	
 			<!-- Product Type Filter -->
 			<div class="form-group">
-				<label for="selectproducttype" class="col-sm col-form-label">{{ 'Product Type' | translate }}</label>
-				<ng-select id="selectproducttype" class="dropdown-menu" [editableSearchTerm]="false" [multiple]="false" formControlName="codeProductType" [clearable]="false" (change)="onFilterChanged()">
-					<ng-option *ngFor="let productType of productTypeList" [value]="productType.code">
-						<a class="dropdown-item avkdropdown">{{ productType.description }}</a>
-					</ng-option>
-				</ng-select>
+				<label class="col-sm-6 col-form-label" for="selectproducttype">{{ 'Product Type' | translate }}</label>
+				<div class="col-sm-6">
+					<select class="form-control" id="selectproducttype" formControlName="codeProductType" (change)="onFilterChanged()">
+						<option *ngFor="let pt of productTypeList" [ngValue]="pt.code">
+							<a class="dropdown-item avkdropdown">{{ pt.description }}</a>
+						</option>
+					</select>
+				</div>
 			</div>
-
+			<!-- Sortorder -->
+			<div class="form-group">
+				<label class="col-sm-4 col-form-label" for="selectsort">{{ 'Sort by' | translate }}</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="selectsort" formControlName="productSortId" (change)="onFilterChanged()">
+						<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
+							<a class="dropdown-item avkdropdown">{{ ps.description }}</a>
+						</option>
+					</select>
+				</div>
+			</div>
 		</form>
 
 		<!-- Search by Product Name -->
