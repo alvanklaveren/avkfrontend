@@ -87,6 +87,7 @@ export class AdministratorPage implements OnInit{
 
     if(!this.authenticationService.isAdmin()){
       this.router.navigateByUrl("home");
+      return;
     };
 
 

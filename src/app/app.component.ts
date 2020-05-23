@@ -81,8 +81,6 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    // console.log(this.authenticationService.hasRole(this.tokenStorageService.getUser(), "ROLE_ADMIN"));
-    console.log(this.authenticationService.isAdmin());
     if(this.authenticationService.isAdmin()) {
       this.menuItems[0].disabled=false;
     } else {
