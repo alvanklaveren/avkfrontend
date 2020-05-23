@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import { AuthenticationService } from './services/authentication.service';
 import { TokenStorageService } from './services/token-storage.service';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { CookieModalComponent } from './cookiemodal.component';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +41,8 @@ export class AppComponent implements OnInit{
     { id: 5, description: 'About me', url: '/aboutme', disabled: false },
   ]
 
-  constructor(private router:Router, private contextService:ContextService, private translateService: TranslateService,
+  constructor(private router:Router, private modalService: NgbModal,
+              private contextService:ContextService, private translateService: TranslateService,
               private authenticationService: AuthenticationService, private tokenStorageService: TokenStorageService ){ 
     if(this.selectedIsoA2){
       if(this.selectedIsoA2.toUpperCase() === 'US') {
@@ -49,20 +52,20 @@ export class AppComponent implements OnInit{
       }
 
       if(!this.contextService.hasAgreedToCookies()) {
-        if(this.selectedIsoA2.toUpperCase() === 'US') {
-          this.cookiemessage = '<b>Cookies</b><br>This site only uses technical cookies that are necessary for this site to function. By continuing ' + 
-          'to use this site you these cookies will be used on your device. If you disabled cookies in your browser settings, ' +
-          'this site may not function properly. <a href="http://cookiesandyou.com/" target="_blank">Learn more about cookies.</a></small> ' +
-          '<br><div style="display: flex;justify-content: center;"></div></div>' 
-        } else if(this.selectedIsoA2.toUpperCase() === 'NL'){
-          this.cookiemessage = '<b>Cookies</b><br>Deze website gebruikt enkel technische cookies die nodig zijn om deze website goed te laten functioneren. ' + 
-          'Bij verder gebruik van deze website ben je dus op de hoogte dat dit soort cookies op dit apparaat zullen worden gebruikt. ' +
-          'Als je cookies hebt uitgeschakeld in je browser, dan zal deze website mogelijk minder goed functioneren. ' +
-          '<a href="http://cookiesandyou.com/" target="_blank">Leer meer over cookies.</a></small> ' +
-          '<br><div style="display: flex;justify-content: center;"></div></div>'    
-        }
+        let ngbModalOptions: NgbModalOptions = {
+          backdrop : 'static',
+          keyboard : false,
+          ariaLabelledBy: 'app-cookie-modal'
+        };
+        let modal = this.modalService.open(CookieModalComponent, ngbModalOptions);
+        modal
+    
+        modal.result.then((result) => {
+          this.contextService.setAgreedToCookies();
+        }, (reason) => {
+          this.contextService.setAgreedToCookies();
+        });  
       }
-
     }
 
   }

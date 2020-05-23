@@ -18,6 +18,7 @@ import { ForumModule } from './components/forum/forum.module';
 import { AdministratorPageModule } from './components/administrator/administrator.module';
 import { ArticlesModule } from './components/articles/articles.module';
 import { AuthInterceptor } from './auth.interceptor';
+import { CookieModalComponent } from './cookiemodal.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -26,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    CookieModalComponent,
   ],
   imports: [
     SharedModule,
@@ -47,7 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdministratorPageModule,
     ArticlesModule,
   ],
-  providers: [{provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true,},],
+  providers: [{provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true}],
   bootstrap: [AppComponent] 
 })
 export class AppModule { }
