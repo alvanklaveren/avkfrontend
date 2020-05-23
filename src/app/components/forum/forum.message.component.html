@@ -142,7 +142,9 @@
 					<div *ngIf="editReplyMessage != reply">
 						<div class="row">
 						<p class="col" [innerHTML]="reply.preparedMessageText | safe:'html'"></p>
-						<span class="col text-right" ><span (click)="onEditReplyMessage(reply)"><i class="far fa-1x fa-edit text-primary"></i></span></span>
+						<span class="col text-right" *ngIf="user && user.code === message.forumUser.code">
+							<span (click)="onEditReplyMessage(reply)"><i class="far fa-1x fa-edit text-primary"></i></span>
+						</span>
 						</div>
 					</div>
 
@@ -197,5 +199,5 @@
 			<div class="col"></div>
 		</div>
 	</div>
-
+	<br><br>
 </body>

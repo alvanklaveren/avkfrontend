@@ -18,6 +18,7 @@ import { ProductType } from 'src/app/models/producttype';
 import { GameConsole } from 'src/app/models/gameconsole';
 import { RatingUrl } from 'src/app/models/ratingurl';
 import { CodeTableModalComponent } from './modals/codetablemodal.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -67,10 +68,10 @@ export class AdministratorPage implements OnInit{
 
   constantsForm: FormGroup;
 
-  codeConstantsGuestImage;
-  guestImage;
-  codeConstantsWebLogo;
-  webLogo;
+  codeConstantsGuestImage: number;
+  guestImage: string;
+  codeConstantsWebLogo: number;
+  webLogo: string;
 
   acmeAddressConstants: Constants;
   acmeConstants: Constants;
@@ -79,10 +80,15 @@ export class AdministratorPage implements OnInit{
 
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
     private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
-    private contextService:ContextService, private administratorService: AdministratorService,
-    private gameShopService: GameShopService){ }
+    private contextService:ContextService, private authenticationService: AuthenticationService,
+    private administratorService: AdministratorService, private gameShopService: GameShopService){ }
   
   ngOnInit(){
+
+    if(!this.authenticationService.isAdmin()){
+      this.router.navigateByUrl("home");
+    };
+
 
     this.contextService.setPageTitle(this, 'Administrator');
     this.tabpage = this.contextService.toNumber(this.contextService.getSessionGlobal(this.ADMINTABPAGE));
