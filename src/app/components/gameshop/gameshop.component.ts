@@ -18,8 +18,6 @@ import { ContextService } from '../../services/context.service';
 
 import { UploadImageModalComponent } from './modals/uploadimagemodal.component';
 import { RatingModalComponent } from './modals/ratingmodal.component';
-import { ForumUser } from 'src/app/models/forumuser';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -236,7 +234,13 @@ export class GameShop implements OnInit{
     this.getProductList();    
   }
 
-  searchTypeAhead(){
+  deleteProductRating(product, productRating) {
+    this.gameShopService.deleteProductRating(productRating.code).subscribe(res => {
+      let index = product.productRatings.indexOf(productRating, 0);
+      if(index > -1) {
+        product.productRatings.splice(index, 1);
+      }
+    });
   }
 
   onSortChanged(){

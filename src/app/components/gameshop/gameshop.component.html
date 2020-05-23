@@ -118,6 +118,7 @@
 						<div class="col text-wrap" [innerHtml]="product.description | safe: 'html'"></div>
 						<br>
 						<div class="col text-wrap" *ngFor="let productRating of product.productRatings; index as i">
+							<button *ngIf="isAdmin" class="btn btn-sm btn-outline-danger border-0" (click)="deleteProductRating(product, productRating)"><small><i class="far fa-trash-alt"></i></small></button>
 							{{ 'Rated' | translate }} {{ productRating.rating }} by 
 							<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
 						</div>
@@ -149,6 +150,7 @@
 					<br>
 					<div class="row" *ngFor="let productRating of product.productRatings; index as i">
 						<div class="col text-wrap">
+							<button *ngIf="isAdmin" class="btn btn-sm btn-outline-danger border-0" (click)="deleteProductRating(product, productRating)"><small><i class="far fa-trash-alt"></i></small></button>
 							{{ 'Rated' | translate }} {{ productRating.rating }} {{ 'by' | translate }} &nbsp;
 							<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
 						</div>

@@ -64,6 +64,10 @@ export class GameShopService {
     return this.http.post(environment.backendUrl + 'gameshop/delete', codeProduct); 
   }
 
+  deleteProductRating(codeProductRating: Number){
+    return this.http.post(environment.backendUrl + 'gameshop/deleteProductRating', codeProductRating); 
+  }
+
   getGameShopMobile(codeGameConsole: number, codeProductType: number, description?: string){
     if(!description){
       return this.http.get(environment.backendUrl + 'gameshop/gameshopmobile/' + codeGameConsole + '/' + codeProductType); 
