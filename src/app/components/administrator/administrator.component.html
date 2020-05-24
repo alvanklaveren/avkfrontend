@@ -121,7 +121,10 @@
 
 				<li *ngIf="codetable == RATINGURLS" class="nav-item nav-link active">{{ codeTables[RATINGURLS].menutitle | translate }}</li>
 				<li *ngIf="codetable !== RATINGURLS" class="nav-item nav-link" (click)="selectCodeTable(RATINGURLS)">{{ codeTables[RATINGURLS].menutitle | translate }}</li>
-			  </ul>		  
+
+				<li *ngIf="codetable == TRANSLATION" class="nav-item nav-link active">{{ codeTables[TRANSLATION].menutitle | translate }}</li>
+				<li *ngIf="codetable !== TRANSLATION" class="nav-item nav-link" (click)="selectCodeTable(TRANSLATION)">{{ codeTables[TRANSLATION].menutitle | translate }}</li>
+			</ul>		  
 			</div>
 		</nav>
 
@@ -140,23 +143,38 @@
 			<div class="text-secondary small"> {{ 'Number of rows' | translate }}: {{ selectedCodeTable.length }} </div>
 			<table class="table table-hover table-striped">
 				<thead>
-					<th style="width:10%;">{{ 'Code'| translate }}</th>
-					<th *ngIf="codetable != RATINGURLS" style="width:80%;">{{ 'Description'| translate }}</th>
+					<th *ngIf="codetable != TRANSLATION" style="width:10%;">{{ 'Code'| translate }}</th>
+
+					<th *ngIf="codetable != RATINGURLS && codetable != TRANSLATION" style="width:80%;">{{ 'Description'| translate }}</th>
+					
 					<th *ngIf="codetable == RATINGURLS" style="width:80%;">{{ 'URL'| translate }}</th>
+
 					<th *ngIf="codetable == GAMECONSOLES" style="width:10%;">{{ 'Sortorder'| translate }}</th>
+
+					<th *ngIf="codetable == TRANSLATION" style="width:34%;">{{ 'Original'| translate }}</th>
+					<th *ngIf="codetable == TRANSLATION" style="width:33%;">{{ 'US'| translate }}</th>
+					<th *ngIf="codetable == TRANSLATION" style="width:33%;">{{ 'NL'| translate }}</th>
 				</thead>
 				<tbody *ngIf="disablePaging">
 					<tr *ngFor="let ct of selectedCodeTable" (click)="onCodeTableRowClicked(ct)">
-						<td>{{ ct.code }}</td>
+						<td *ngIf="codetable != TRANSLATION">{{ ct.code }}</td>
 						<td *ngIf="ct.description">{{ ct.description }}</td>
 						<td *ngIf="ct.url">{{ ct.url }}</td>
-						<td>{{ ct.sortorder }}</td>
+						<td *ngIf="ct.sortorder">{{ ct.sortorder }}</td>
+						<td *ngIf="ct.original">{{ ct.original }}</td>
+						<td *ngIf="ct.us">{{ ct.us }}</td>
+						<td *ngIf="ct.nl">{{ ct.nl }}</td>
 					</tr>
 				</tbody>
 				<tbody *ngIf="!disablePaging">
 					<tr *ngFor="let ct of selectedCodeTable | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" (click)="onCodeTableRowClicked(ct)">
-						<td>{{ ct.code }}</td>
-						<td>{{ ct.description }}</td>
+						<td *ngIf="codetable != TRANSLATION">{{ ct.code }}</td>
+						<td *ngIf="ct.description">{{ ct.description }}</td>
+						<td *ngIf="ct.url">{{ ct.url }}</td>
+						<td *ngIf="ct.sortorder">{{ ct.sortorder }}</td>
+						<td *ngIf="ct.original">{{ ct.original }}</td>
+						<td *ngIf="ct.us">{{ ct.us }}</td>
+						<td *ngIf="ct.nl">{{ ct.nl }}</td>
 					</tr>
 				</tbody>
 			</table>

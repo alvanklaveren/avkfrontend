@@ -19,6 +19,8 @@ import { GameConsole } from 'src/app/models/gameconsole';
 import { RatingUrl } from 'src/app/models/ratingurl';
 import { CodeTableModalComponent } from './modals/codetablemodal.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Translation } from 'src/app/models/translation';
+import { TranslationService } from 'src/app/services/translation.service';
 
 
 @Component({
@@ -47,17 +49,20 @@ export class AdministratorPage implements OnInit{
   productTypes: ProductType[];
   gameConsoles: GameConsole[];
   ratingUrls: RatingUrl[];
+  translations: Translation[];
 
   COMPANIES: number = 0;
   GAMECONSOLES: number = 1;
   PRODUCTTYPES: number = 2;
   RATINGURLS: number = 3;
+  TRANSLATION: number = 4;
   codetable: number = this.COMPANIES;
   codeTables = [
     {id: 0, menutitle: 'Companies', class: 'Company'},
     {id: 1, menutitle: 'Game Consoles', class: 'Game Console'},
     {id: 2, menutitle: 'Product Types', class: 'Product Type'},
     {id: 3, menutitle: 'Rating Site Urls', class: 'Rating URL'},
+    {id: 4, menutitle: 'Dictionary', class: 'Translation'},
   ]
 
   selectedCodeTable: any;
@@ -81,7 +86,8 @@ export class AdministratorPage implements OnInit{
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
     private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
     private contextService:ContextService, private authenticationService: AuthenticationService,
-    private administratorService: AdministratorService, private gameShopService: GameShopService){ }
+    private administratorService: AdministratorService, private gameShopService: GameShopService,
+    private translationService: TranslationService){ }
   
   ngOnInit(){
 
@@ -162,6 +168,13 @@ export class AdministratorPage implements OnInit{
         this.selectCodeTable(this.codetable);
       }
     });
+    this.translationService.getTranslations().subscribe(res => {
+      this.translations = res as Translation[];
+      this.translations.sort((a,b) => a.original.localeCompare(b.original));
+      if(this.codetable == this.TRANSLATION){
+        this.selectCodeTable(this.codetable);
+      }
+    });
   }
 
   selectCodeTable(codetable: number) {
@@ -175,6 +188,7 @@ export class AdministratorPage implements OnInit{
       case this.GAMECONSOLES: this.selectedCodeTable = this.gameConsoles; break;
       case this.PRODUCTTYPES: this.selectedCodeTable = this.productTypes; break;
       case this.RATINGURLS: this.selectedCodeTable = this.ratingUrls; break;
+      case this.TRANSLATION: this.selectedCodeTable = this.translations; break;
     }
 
     this.disablePaging = this.selectedCodeTable.length < this.pageSize;

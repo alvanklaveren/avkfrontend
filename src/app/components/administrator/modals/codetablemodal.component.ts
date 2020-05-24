@@ -8,6 +8,7 @@ import { GameShopService } from 'src/app/services/gameshop.service';
 import { ProductType } from 'src/app/models/producttype';
 import { GameConsole } from 'src/app/models/gameconsole';
 import { RatingUrl } from 'src/app/models/ratingurl';
+import { Translation } from 'src/app/models/translation';
 
 @Component({
   selector: 'app-codetable-modal',
@@ -24,6 +25,7 @@ export class CodeTableModalComponent implements OnInit{
     GAMECONSOLES: number = 1;
     PRODUCTTYPES: number = 2;
     RATINGURLS: number = 3;
+    TRANSLATION: number = 4;
   
     editForm: FormGroup;
 
@@ -51,6 +53,11 @@ export class CodeTableModalComponent implements OnInit{
             } else if(this.codetable == this.RATINGURLS) {
                 this.codeTableRow = new RatingUrl();
                 this.codeTableRow.url = ' ';
+            } else if(this.codetable == this.TRANSLATION) {
+                this.codeTableRow = new Translation();
+                this.codeTableRow.original = ' ';
+                this.codeTableRow.us = ' ';
+                this.codeTableRow.nl = ' ';
             }
             this.codeTableRow.code = null;
         }
@@ -67,7 +74,7 @@ export class CodeTableModalComponent implements OnInit{
                 codeCompany: [null, Validators.required],
             });
 
-            let codeCompany = (this.codeTableRow.code) ? this.codeTableRow.company.code : 6;
+            let codeCompany = (this.codeTableRow.code) ? this.codeTableRow.company.code : 6; // 6 = company "-"
             this.editForm.patchValue({
                 description: this.codeTableRow.description,
                 sortorder: this.codeTableRow.sortorder,
@@ -90,6 +97,18 @@ export class CodeTableModalComponent implements OnInit{
             this.editForm.patchValue({
                 description: this.codeTableRow.description,
             });   
+        } else if(this.codetable == this.TRANSLATION) {
+            this.editForm = this.formBuilder.group({
+                original: [null, Validators.required],
+                us: [null, Validators.required],
+                nl: [null, Validators.required],
+            });
+
+            this.editForm.patchValue({
+                original: this.codeTableRow.original,
+                us: this.codeTableRow.us,
+                nl: this.codeTableRow.nl,
+            });     
         }
     }
 
@@ -106,7 +125,7 @@ export class CodeTableModalComponent implements OnInit{
     onSave(){
         let ef = this.editForm.value;
 
-        if(this.codetable != this.RATINGURLS){
+        if(this.codetable != this.RATINGURLS && this.codetable != this.TRANSLATION){
             this.codeTableRow.description = ef.description;
         } else {
             this.codeTableRow.url = ef.url;
@@ -119,6 +138,12 @@ export class CodeTableModalComponent implements OnInit{
                 company = this.companies.find(c => c.code == 6);
             }
             this.codeTableRow.company = company;
+        }
+
+        if(this.codetable == this.TRANSLATION){
+            this.codeTableRow.original = ef.original;
+            this.codeTableRow.us = ef.us;
+            this.codeTableRow.nl = ef.nl;
         }
 
         this.administratorService.saveCodeTableRow(this.codetable, this.codeTableRow).subscribe(res => {

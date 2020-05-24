@@ -12,4 +12,8 @@ export class TranslationService {
     return this.http.post(environment.backendUrl + 'translation/translate', {original: original, isoA2: isoA2});
   }
 
+  getTranslations(){
+    return this.http.get(environment.backendUrl + 'translation/getTranslations');
+  }
+
 }
