@@ -1,0 +1,189 @@
+AVK Website install
+
+- Create keystore, and export private key and crt.
+  1) Create keystore (unless already exists): 
+     keytool -genkeypair -alias tomcat -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore keystore.p12 -validity 3650 -storepass changeit
+
+  2) extract the keys: 
+	a) openssl pkcs12 -in keystore.p12 -nokeys -out tomcat.crt
+	   openssl pkcs12 -in keystore.p12  -nodes -nocerts -out tomcat.key
+	   - we will need these (crt and key) for angular run on 443
+           - chmod 400 tomcat.key and chmod 400 tomcat.crt
+
+	b) for development, create a self-signed certificate and immediately export crt and key:
+           openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout tomcat.key -days 3560 -out tomcat.crt 
+
+  3) Spring: add this to you application.properties:
+		server.port=8444
+		server.ssl.key-store-type=PKCS12
+		server.ssl.key-store=classpath:keystore.p12
+		server.ssl.key-store-password=changeit
+		server.ssl.key-alias=tomcat
+		security.require-ssl=true
+  
+     We do not have to change 8444 perse... because the website will approach the Angular port (443)
+
+  4) angular: Start with "ng serve --port 8443 --ssl true --ssl-cert keystore.crt --ssl-key keystore.key"
+     IMPORTANT: this line works when the .crt and .key files are in the root folder (the parent folder of /src)
+
+  5) Setup a droplet (to experiment), and install tomcat and node/angular (npm install ...) and see if it works.
+	Setup of a droplet at Digital Ocean
+	- Create a droplet (10 dollar) with Ubuntu (18.04 at moment of writing)
+	- Install mysql: 
+	  - sudo apt update
+	  - sudo apt install mysql-server
+	  - sudo mysql_secure_installation (set password to 1234ab, as usual. and disable remote logon to database). 
+
+	- Install tomcat:
+	  - sudo apt update
+	  - sudo apt install default-jdk (at this moment openjdk 11)
+	  - sudo groupadd tomcat
+	  - sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
+	  - download Tomcat binary (.gz) (can use curl, or download an use filezilla to copy it)
+	    e.g. curl -O http://apache.cs.uu.nl/tomcat/tomcat-9/v9.0.35/bin/apache-tomcat-9.0.35.tar.gz
+	  - sudo mkdir /opt/tomcat
+	  - sudo tar xzvf apache-tomcat-*tar.gz -C /opt/tomcat --strip-components=1
+	  - cd /opt/tomcat
+	  - sudo chgrp -R tomcat /opt/tomcat
+	  - sudo chmod -R g+r conf
+	  - sudo chmod g+x conf
+	  - sudo chown -R tomcat webapps work temp logs
+	  - (this if nothing else works, otherwise skip: chmod -R 777 webapps temp logs work conf)
+	  - sudo update-java-alternatives -l (shows what JAVA_HOME should be set to)
+	  - export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+	  - sudo nano /etc/systemd/system/tomcat.service and paste this in:
+		[Unit]
+		Description=Apache Tomcat Web Application Container
+		After=network.target
+
+		[Service]
+		Type=forking
+
+		Environment=JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+		Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
+		Environment=CATALINA_HOME=/opt/tomcat
+		Environment=CATALINA_BASE=/opt/tomcat
+		Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+		Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+		ExecStart=/opt/tomcat/bin/startup.sh
+		ExecStop=/opt/tomcat/bin/shutdown.sh
+
+		User=tomcat
+		Group=tomcat
+		UMask=0007
+		RestartSec=10
+		Restart=always
+
+		[Install]
+		WantedBy=multi-user.target
+
+	 - sudo systemctl daemon-reload
+	 - sudo systemctl start tomcat
+	 - sudo systemctl status tomcat
+	 - sudo ufw allow 8080 (for testing.. we will reroute this to 80 -> 443 later)
+	 - try http://<ipadress>:8080. Should show the apache html page
+	 - when tomcat seems to work: sudo systemctl enable tomcat
+
+ 6) Install website stuff:
+    - import database into mysql:
+      	- login (mysql -u root -p) and: CREATE DATABASE avkspring;
+	- now exit and: mysql -u root -p avkspring < avk.sql
+        - sudo mysql
+        - ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234ab';
+	- FLUSH PRIVILEGES;
+
+    - setup spring boot app
+        - create WAR for backend Java Spring-Boot app. Set it to server.port:8444 and deploy it to droplet
+          (i.e. put WAR in /opt/tomcat folder).
+        - to check if it started up properly, go to tomcat/logs and tail -f catalina.out
+        - try to access it (https://<ipaddress>/backend/gameshop/gameshopmobile/0/0). 
+          If it doesn't work, sudo ufw allow 8444 if you have firewall enabled.
+        - make sure tomcat's server.xml only contains connector to port 444 and a redirect of 8444 to 444.
+          because (80)80, and later on (8)443 will be used for the angular app.
+
+    - setup angular
+     	- sudo apt-get update
+      	- sudo apt-get install nginx
+	- using firewall? : 
+		- sudo ufw app list 
+		- sudo ufw allow ‘Nginx HTTP’
+		- sudo ufw allow ‘Nginx HTTPS’
+	- now first get it running over port 80 to not get confused about ssl keys
+	- systemctl status nginx
+        - now check http://<ip-address> and see if nginx splash screen is shown
+	- next edit /etc/nginx/sites-enabled/default to:
+		server {
+		  listen          80 default_server;
+		  listen          [::]:80 default_server;
+		  server_name     alvanklaveren.com www.alvanklaveren.com;
+		  root            /opt/angular/avk-fe/;
+		}
+		...
+		location / {
+			try_files $uri $uri/ /index.html;
+                }
+
+	  the root is where you will eventually drop all the files in /dist/avk-fe 
+          on your development machine that we generate later.
+
+	  the try_files line is extremely important for app-routing to work (/gameshop /articles etc).
+
+        - on development, run ng build --prod. This creates dist folder
+	- copy the contents of /dist/avk-fe to /opt/angular/avk-fe
+	- (sudo) service nginx restart (or sudo nginx -s reload).
+
+	- when everything works on port 80, now change it to 443:
+          - First export the key and crt from keystore(.p12) using the above 
+            (remember to remove the additional info from the files, so you are left with 
+            only the stuff between the ---- start and end tags
+            openssl methods and store them under /opt/angular
+          - Again edit /etc/nginx/sites-enabled/default and change to:
+		server {
+		  listen          443 ssl default_server;
+		  listen          [::]:443 ssl default_server;
+		  server_name     alvanklaveren.com www.alvanklaveren.com;
+		  root            /opt/angular/avk-fe/;
+
+  	    	  ssl_certificate     /opt/angular/tomcat.crt;
+	    	  ssl_certificate_key /opt/angular/tomcat.key;
+		}
+
+Angular: for angular app to run in mobile (android) browsers, uncomment web-animations-js 
+         and classlist.js in polyfills.ts, and install:
+	 - npm i core-js
+         - npm install --save intl
+	 - npm install --save web-animations-js
+	 - npm install --save classlist.js
+	 - add to polyfills.ts: (window as any).global = window;
+         - add to index.html in <head></head>:
+              <script>
+	    	var global = global || window;
+		var Buffer = Buffer || [];
+		var process = process || {
+		   env: { DEBUG: undefined },
+ 		   version: []
+		};
+	     </script>
+             
+         - Denk eraan, je backendURL in environment.prod.ts moet nu verwijzen naar:
+                backendUrl: 'https://alvanklaveren.com:444/backend/'
+           want zonder valide certificaat kun je daar niets weghalen.
+
+Deploy:
+Everytime you want to deploy:
+ - for backend, just package the war using PROD as profile.
+   possibly run service tomcat restart
+ - for frontend, ng build --prod and copy the content of /dist/avk-fe to droplets /opt/angular/avk-fe
+   next service nginx restart
+     
+
+DNS:
+Oude website: 
+	- A record @ 95.85.62.94
+        - AAAA record @ 2a03:b0c0:0:1010::9d:8001
+
+New website:
+	- A record @ 82.196.9.141
+        - AAAA record @ 2a03:b0c0:0:1010::d9:d001
+

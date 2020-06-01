@@ -25,6 +25,11 @@ import '@angular/localize/init';
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 import 'classlist.js';  // Run `npm install --save classlist.js`.
 
+/** Evergreen browsers require these. **/
+//import 'core-js/es6/reflect';
+//import 'core-js/es7/reflect';
+
+
 /**
  * Web Animations `@angular/platform-browser/animations`
  * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
@@ -55,6 +60,8 @@ import 'web-animations-js';  // Run `npm install --save web-animations-js`.
  *  (window as any).__Zone_enable_cross_context_check = true;
  *
  */
+(window as any).global = window;
+ // import './zone-flags';
 
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
@@ -65,3 +72,5 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+ import 'intl';  // Run `npm install --save intl`.
