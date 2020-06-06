@@ -31,13 +31,23 @@ export class UploadImageModalComponent implements OnInit {
             return;
         }
 
-        this.gameShopService.uploadImage(this.product.code, this.selectedFile).subscribe(res => {
+        let fileContent = undefined;
+
+        let fileReader = new FileReader();
+        fileReader.onload = (e) => {
+        fileContent = fileReader.result;
+
+        this.gameShopService.uploadImageAlt(this.product.code, fileContent).subscribe(res => {
             this.activeModal.close();
-        },
-        (err => {
-            console.log("Saving failed");
-        }
-        ));
+            },
+            (err => {
+                console.log("Saving failed");
+                console.log(err);
+            })
+        );
+    };
+
+        fileReader.readAsBinaryString(this.selectedFile);
 
     }
 
@@ -52,4 +62,5 @@ export class UploadImageModalComponent implements OnInit {
     onClose() {
         this.activeModal.close();
     }
+
   }

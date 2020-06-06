@@ -89,4 +89,13 @@ export class GameShopService {
 
     return this.http.request(req);
   }
+
+  uploadImageAlt(codeProduct: number, fileContent) {
+    // for some reason, sending a multipartfile is not working.. god knows why. 
+    // but it started to go wrong when I added jwt auth filters in spring.
+    // the below will work (sends a base64 formatted string and decodes on backend)
+    return this.http.post(environment.backendUrl + 'gameshop/uploadImageAlt', {codeProduct: codeProduct, fileContent: btoa(fileContent)});
+    
+  }
+
 }
