@@ -7,6 +7,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { CookieModalComponent } from './cookiemodal.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +23,14 @@ export class AppComponent implements OnInit{
   successmessage: string = null;
   cookiemessage: string = null;
 
+  today: string;
+
   aboutText = 'About ...';
   aboutWebsite: string = '';
 
   theme = this.contextService.getTheme();
   flagIcon = '';
-
+ 
   selectedIsoA2 = this.contextService.getIsoA2();
 
   mailTo: string = environment.mailTo;
@@ -71,7 +74,7 @@ export class AppComponent implements OnInit{
   }
 
   ngAfterViewInit() {
-
+   
     this.contextService.translate('[aboutwebsite]').subscribe(res => {
       let response = res as any;
       this.aboutWebsite = response.result;
@@ -84,6 +87,14 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
+
+    let todayNow = new Date();
+    let dd = String(todayNow.getDate()).padStart(2, '0');
+    let mm = String(todayNow.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = todayNow.getFullYear();
+    
+    this.today = yyyy + '/' + mm + '/' + dd;
+
     if(this.authenticationService.isAdmin()) {
       this.menuItems[0].disabled=false;
     } else {
