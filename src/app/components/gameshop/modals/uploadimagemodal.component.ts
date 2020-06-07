@@ -35,20 +35,18 @@ export class UploadImageModalComponent implements OnInit {
 
         let fileReader = new FileReader();
         fileReader.onload = (e) => {
-        fileContent = fileReader.result;
+            fileContent = fileReader.result;
 
-        this.gameShopService.uploadImageAlt(this.product.code, fileContent).subscribe(res => {
-            this.activeModal.close();
-            },
-            (err => {
-                console.log("Saving failed");
-                console.log(err);
-            })
-        );
-    };
+            this.gameShopService.uploadImageAlt(this.product.code, fileContent).subscribe(res => {
+                    this.activeModal.close();
+                },(err => {
+                        console.log("Saving failed");
+                        console.log(err);
+                })
+            );
+        };
 
-        fileReader.readAsBinaryString(this.selectedFile);
-
+    fileReader.readAsBinaryString(this.selectedFile);
     }
 
     onFileChanged(event){

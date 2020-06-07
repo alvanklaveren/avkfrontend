@@ -39,6 +39,14 @@ export class AdministratorService {
     return this.http.request(req);
   }
 
+  uploadImageAlt(codeConstants: any, fileContent) {
+    // for some reason, sending a multipartfile is not working.. god knows why. 
+    // but it started to go wrong when I added jwt auth filters in spring.
+    // the below will work (sends a base64 formatted string and decodes on backend)
+    console.log(btoa(fileContent));
+    return this.http.post(environment.backendUrl + 'administrator/uploadConstantsImageAlt', {codeConstants: codeConstants, fileContent: btoa(fileContent)});    
+  }
+
   getConstantsImage(codeConstants: number): Observable<Blob> {
     return this.http.get(environment.backendUrl + 'administrator/getConstantsImage/?codeConstants=' + codeConstants, {responseType: 'blob'});
   }

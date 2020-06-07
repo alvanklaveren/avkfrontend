@@ -35,20 +35,29 @@ export class ImageModalComponent implements OnInit {
         });
     }
 
+
     uploadImage(){
 
         if(!this.selectedFile || !this.message){
             return;
         }
 
-        this.forumService.uploadImage(this.selectedFile, this.message.code).subscribe(res => {
-            this.ngOnInit();
-        },
-        (err => {
-            console.log("Saving failed");
-        }
-        ));
+        let fileContent = undefined;
 
+        let fileReader = new FileReader();
+        fileReader.onload = (e) => {
+            fileContent = fileReader.result;
+
+            this.forumService.uploadImageAlt(fileContent, this.message.code).subscribe(res => {
+                    this.ngOnInit();
+                },(err => {
+                        console.log("Saving failed");
+                        console.log(err);
+                })
+            );
+        };
+
+    fileReader.readAsBinaryString(this.selectedFile);
     }
 
     onSelectImage(codeMessageImage: number){

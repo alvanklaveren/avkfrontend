@@ -233,15 +233,27 @@ export class AdministratorPage implements OnInit{
   }
 
   uploadImage(codeConstants: number, file: File){
-    if(!file || !codeConstants){ return; }
 
-    this.administratorService.uploadImage(codeConstants, file).subscribe(res => {
-      window.location.reload();
-    },
-    (err => {
-        console.log("Saving image failed");
+    if(!file || !codeConstants){ 
+        return;
     }
-    ));
+
+    let fileContent = undefined;
+
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+        fileContent = fileReader.result;
+
+        this.administratorService.uploadImageAlt(codeConstants, fileContent).subscribe(res => {
+          window.location.reload();
+        },(err => {
+                    console.log("Saving failed");
+                    console.log(err);
+            })
+        );
+    };
+
+    fileReader.readAsBinaryString(file);
   }
 
   onSaveConstants(){
