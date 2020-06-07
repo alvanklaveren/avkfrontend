@@ -125,7 +125,9 @@ export class GameShop implements OnInit{
         } else {
           this.products = response as Array<Product>;
         }
+
         this.loading = false;
+        this.fetchImages();
       });
     } else {
       this.gameShopService.getProductList(sf.codeGameConsole, sf.codeProductType, this.page, this.pageSize, sf.productSortId).subscribe( response => {
@@ -134,25 +136,28 @@ export class GameShop implements OnInit{
         } else {
           this.products = response as Array<Product>;
         }
+
         this.loading = false;
-
-        for(let product of this.products){
-          this.gameShopService.getProductMainImage(product.code).subscribe( blob => {
-            
-            let reader = new FileReader();
-            reader.readAsDataURL(blob); 
-            reader.onloadend = function() {
-                let rawImage = reader.result;
-                product.imageHTML = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>';
-              }
-
-          });
-          
-        }
-
+        this.fetchImages();
       });
     }  
 
+  }
+
+  fetchImages(){
+    for(let product of this.products){
+      this.gameShopService.getProductMainImage(product.code).subscribe( blob => {
+        
+        let reader = new FileReader();
+        reader.readAsDataURL(blob); 
+        reader.onloadend = function() {
+            let rawImage = reader.result;
+            product.imageHTML = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>';
+          }
+
+      });
+      
+    }
   }
 
   openEditModal(product?){   
@@ -230,7 +235,7 @@ export class GameShop implements OnInit{
 
   search(){
     this.products = [];
-    this.page = 0;   
+    this.page = 0;
     this.getProductList();    
   }
 
