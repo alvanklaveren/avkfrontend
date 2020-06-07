@@ -39,13 +39,13 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Consoles' | translate }}</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a *ngFor="let gc of gameConsoleList" class="dropdown-item" (click)="searchForm.value.codeGameConsole=gc.code;onFilterChanged()">{{ gc.description }}</a>
+								<a *ngFor="let gc of gameConsoleList" class="dropdown-item" (click)="this.codeGameConsole=gc.code;onFilterChanged()">{{ gc.description }}</a>
 							</div>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Product Type' | translate }}</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a *ngFor="let pt of productTypeList" class="dropdown-item" (click)="searchForm.value.codeProductType=pt.code;onFilterChanged()">{{ pt.description }}</a>
+								<a *ngFor="let pt of productTypeList" class="dropdown-item" (click)="this.codeProductType=pt.code;onFilterChanged()">{{ pt.description }}</a>
 							</div>
 						</li>
 					</ul>
@@ -53,16 +53,18 @@
 					<!-- Search by Product Name -->
 					<div class="row justify-content-end bg-dark">
 						<form class="form-inline input-group input-group-sm">
+							&nbsp;&nbsp;
 							<input type="text" aria-label="Search" class="form-control" [(ngModel)]="searchProductName" [ngModelOptions]="{standalone: true}" id="productName" placeholder="{{ 'Search' | translate }}">
 							<button class="btn btn-sm btn-outline-light" (click)="search()"><i class="fas fa-search"> </i></button>
+							&nbsp;&nbsp;
 						</form>
 					</div>
-
 				</div>
 			</nav>
 		</div>
 		<br />
-
+		<h5>{{ selectedConsole | translate }} </h5>
+		<br />
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class="col-4">
@@ -71,7 +73,7 @@
 						<div class="form-group">
 							<label class="col-sm-4 col-form-label" for="selectsort">{{ 'Sort by' | translate }}</label>
 							<div class="col-sm-8">
-								<select class="form-control" id="selectsort" formControlName="productSortId" (change)="onFilterChanged()">
+								<select class="form-control" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
 									<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
 										<a class="dropdown-item avkdropdown">{{ ps.description }}</a>
 									</option>

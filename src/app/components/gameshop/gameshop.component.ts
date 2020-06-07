@@ -39,6 +39,9 @@ export class GameShop implements OnInit{
 
   products: Array<Product>;
 
+  codeGameConsole: number;
+  codeProductType: number;
+
   gameConsoleList: [GameConsole];
   productTypeList: [ProductType];
   productSortList: [ProductSort];
@@ -51,6 +54,8 @@ export class GameShop implements OnInit{
   newCompanyDescription = '';
 
   isAdmin: boolean = false;
+
+  selectedConsole = '';
 
   constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
@@ -74,8 +79,6 @@ export class GameShop implements OnInit{
 
     this.searchForm = this.formBuilder.group({
       productSortId: [null],
-      codeGameConsole: [null],
-      codeProductType: [null],
     });
 
     this.imageUrl = this.gameShopService.imageUrl;
@@ -89,23 +92,23 @@ export class GameShop implements OnInit{
           this.gameShopService.getProductTypeList().subscribe(res => {
             this.productTypeList = res as [ProductType];
 
-            let codeGameConsole = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
-            let codeProductType = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeProductType'));
+            this.codeGameConsole = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
+            this.codeProductType = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeProductType'));
             let productSortId = 0;
         
-            if(!codeGameConsole){ codeProductType = 0; }
+            if(!this.codeGameConsole){ 
+              this.codeProductType = 0; 
+            }
             
-            if(codeGameConsole == 0){
-              codeProductType == 0;
+            if(this.codeGameConsole == 0){
+              this.codeProductType == 0;
               productSortId = 3;
             }
         
-            if(!codeProductType){ codeProductType = 0; }
+            if(!this.codeProductType){ this.codeProductType = 0; }
             
             this.searchForm.patchValue({
               productSortId: productSortId,
-              codeGameConsole: codeGameConsole,
-              codeProductType: codeProductType,
             });
         
             this.getProductList();
@@ -117,6 +120,16 @@ export class GameShop implements OnInit{
 
   getProductList(){
     let sf = this.searchForm.value;
+
+    if(!this.codeGameConsole || this.codeGameConsole === 0){ 
+      if(!this.codeProductType || this.codeProductType === 0){
+        this.selectedConsole = 'Most Recently Added Products';
+      } else {
+        this.selectedConsole = '';
+      }
+    } else {
+      this.selectedConsole = this.gameConsoleList.find(gc => gc.code === this.codeGameConsole).description;            
+    }
 
     if(this.searchProductName && this.searchProductName.length > 0) {
       this.gameShopService.searchProductList(this.searchProductName, this.page, this.pageSize).subscribe( response => {
@@ -130,7 +143,7 @@ export class GameShop implements OnInit{
         this.fetchImages();
       });
     } else {
-      this.gameShopService.getProductList(sf.codeGameConsole, sf.codeProductType, this.page, this.pageSize, sf.productSortId).subscribe( response => {
+      this.gameShopService.getProductList(this.codeGameConsole, this.codeProductType, this.page, this.pageSize, sf.productSortId).subscribe( response => {
         if (scroll && this.products) {
           this.products = this.products.concat(response as Array<Product>);
         } else {
@@ -249,7 +262,6 @@ export class GameShop implements OnInit{
   }
 
   onSortChanged(){
-    this.searchProductName = '';
     this.products = [];
     this.getProductList();
   }
@@ -257,12 +269,11 @@ export class GameShop implements OnInit{
   onFilterChanged(){
     this.searchProductName = '';
 
-    let sf = this.searchForm.value;
     // same page navigate will change the url but will not reload the page (this is exactly what we want)
-    this.router.navigateByUrl('gameshop/' + sf.codeGameConsole + '/' + sf.codeProductType);
+    this.router.navigateByUrl('gameshop/' + this.codeGameConsole + '/' + this.codeProductType);
     // refresh the part of the page that matters.
     this.products = [];
-    this.getProductList();    
+    this.getProductList();
   }
 
   onScroll() {
