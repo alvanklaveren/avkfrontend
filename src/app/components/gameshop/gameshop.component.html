@@ -87,24 +87,29 @@
 
 	<!-- The product list -->
 	<div *ngIf="!loading">
-		<div *ngIf="listType==='list'" (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
+		<div *ngIf="listType==='list'" id="listlayout" (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
 			<div class="border" *ngFor="let product of products; index as i" style="box-shadow:2px 2px 2px #AAAAAA; margin-left:4px; margin-right:4px; margin-top:4px; margin-bottom:4px" (click)="openEditModal(product)">
-				<div class="row">
-					<div class="col-2" data-toggle="tooltip" data-placement="top" title="Click to enlarge image" style="cursor:zoom-in;">
-						<div [innerHTML]="product.imageHTML | safe:'html'"></div>
-					</div>
-					<div class="col-4 text-wrap" style="width:30px">
-						<div class="col text-wrap"><b>{{ product.name }}</b></div>
-						<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
-						<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
-					</div>
-					<div class="col">
-						<div class="col text-wrap" [innerHtml]="product.description | safe: 'html'"></div>
-						<br>
-						<div class="col text-wrap" *ngFor="let productRating of product.productRatings; index as i">
-							<button *ngIf="isAdmin" class="btn btn-sm btn-outline-danger border-0" (click)="deleteProductRating(product, productRating)"><small><i class="far fa-trash-alt"></i></small></button>
-							{{ 'Rated' | translate }} {{ productRating.rating }} by 
-							<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
+				<div class="container">
+					<div class="row">
+						<div class="col-4" data-toggle="tooltip" data-placement="top" title="Click to enlarge image" style="cursor:zoom-in;">
+							<div [innerHTML]="product.imageHTML | safe:'html'"></div>
+						</div>
+						<div class="col-4 text-wrap" style="width:30px">
+							<div class="col text-wrap"><b>{{ product.name }}</b></div>
+							<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
+							<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
+						</div>
+						<div class="col-4">
+							<div class="col text-wrap" [innerHtml]="product.description | safe: 'html'"></div>
+							<br>
+							<div class="col text-wrap" *ngFor="let productRating of product.productRatings; index as i">
+								<button *ngIf="isAdmin" class="btn btn-sm btn-outline-danger border-0" (click)="deleteProductRating(product, productRating)"><small><i class="far fa-trash-alt"></i></small></button>								
+								{{ 'Rated' | translate }} {{ productRating.rating }} 
+								<a id="ratedby"> 
+									{{ 'by' | translate }} 
+									<a href="//{{ productRating.ratingUrl.url }}" target="_blank">{{ productRating.ratingUrl.url }}</a>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>

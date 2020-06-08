@@ -121,7 +121,6 @@ export class GameShop implements OnInit{
   getProductList(){
     let sf = this.searchForm.value;
 
-    console.log(sf.productSortId);
     if(!this.codeGameConsole || this.codeGameConsole === 0){ 
       if((!this.codeProductType || this.codeProductType === 0) && sf.productSortId === 3){
         this.selectedConsole = 'Most Recently Added Products';
