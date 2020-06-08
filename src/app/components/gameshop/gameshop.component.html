@@ -29,65 +29,59 @@
 			</div>
 		</div>
 
-		<div class="container">
-			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-				<button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarTabpageContent" aria-controls="navbarTabpageContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon bg-dark"></span>
-				</button>
-				<div class="collapse navbar-collapse bg-dark" id="navbarTabpageContent">
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Consoles' | translate }}</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a *ngFor="let gc of gameConsoleList" class="dropdown-item" (click)="this.codeGameConsole=gc.code;onFilterChanged()">{{ gc.description }}</a>
-							</div>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Product Type' | translate }}</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a *ngFor="let pt of productTypeList" class="dropdown-item" (click)="this.codeProductType=pt.code;onFilterChanged()">{{ pt.description }}</a>
-							</div>
-						</li>
-					</ul>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarTabpageContent" aria-controls="navbarTabpageContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon bg-dark"></span>
+			</button>
+			<div class="collapse navbar-collapse bg-dark" id="navbarTabpageContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Consoles' | translate }}</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a *ngFor="let gc of gameConsoleList" class="dropdown-item" (click)="this.codeGameConsole=gc.code;onFilterChanged()">{{ gc.description }}</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Product Type' | translate }}</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a *ngFor="let pt of productTypeList" class="dropdown-item" (click)="this.codeProductType=pt.code;onFilterChanged()">{{ pt.description }}</a>
+						</div>
+					</li>
+				</ul>
 
-					<!-- Search by Product Name -->
-					<div class="row justify-content-end bg-dark">
-						<form class="form-inline input-group input-group-sm">
-							&nbsp;&nbsp;
-							<input type="text" aria-label="Search" class="form-control" [(ngModel)]="searchProductName" [ngModelOptions]="{standalone: true}" id="productName" placeholder="{{ 'Search' | translate }}">
-							<button class="btn btn-sm btn-outline-light" (click)="search()"><i class="fas fa-search"> </i></button>
-							&nbsp;&nbsp;
-						</form>
-					</div>
+				<!-- Search by Product Name -->
+				<div class="row justify-content-end bg-dark">
+					<form class="form-inline input-group input-group-sm">
+						&nbsp;&nbsp;
+						<input type="text" aria-label="Search" class="form-control" [(ngModel)]="searchProductName" [ngModelOptions]="{standalone: true}" id="productName" placeholder="{{ 'Search' | translate }}">
+						<button class="btn btn-sm btn-outline-light" (click)="search()"><i class="fas fa-search"> </i></button>
+						&nbsp;&nbsp;
+					</form>
 				</div>
-			</nav>
-		</div>
+			</div>
+		</nav>
 		<br />
-		<div class="container">
-			<h5>{{ selectedConsole | translate }} </h5>
-			<br />
-			<form class="form-inline" [formGroup]="searchForm">
-				<!-- Sortorder -->
-				<div class="form-group">
-					<label class="col-form-label col-form-label-sm" for="selectsort">{{ 'Sort by' | translate }}&nbsp;</label>
-					<select class="form-control form-control-sm" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
-						<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
-							<a class="dropdown-item avkdropdown">{{ ps.description }}</a>
-						</option>
-					</select>
-				</div>
-			</form>
-		</div>
+		<h5>{{ selectedConsole | translate }} </h5>
+		<br />
+		<form class="form-inline" [formGroup]="searchForm">
+			<!-- Sortorder -->
+			<div class="form-group">
+				<label class="col-form-label col-form-label-sm" for="selectsort">{{ 'Sort by' | translate }}&nbsp;</label>
+				<select class="form-control form-control-sm" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
+					<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
+						<a class="dropdown-item avkdropdown">{{ ps.description }}</a>
+					</option>
+				</select>
+			</div>
+		</form>
 	</div>
 
-	<div class="container">
-		<div class="d-flex justify-content-end">
-			<div class="btn-group btn-group-sm" role="group" aria-label="Select Display" data-toggle="tooltip" data-placement="top" title="Click to select display">
-				<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>
-				<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('flex')"><i class="fas fa-th"></i></button>
-				<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('list')"><i class="fas fa-list"></i></button>
-				<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-th"></i></button>
-			</div>
+	<div class="d-flex justify-content-end">
+		<div class="btn-group btn-group-sm" role="group" aria-label="Select Display" data-toggle="tooltip" data-placement="top" title="Click to select display">
+			<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>
+			<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('flex')"><i class="fas fa-th"></i></button>
+			<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('list')"><i class="fas fa-list"></i></button>
+			<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-th"></i></button>
 		</div>
 	</div>
 
