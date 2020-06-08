@@ -63,33 +63,30 @@
 			</nav>
 		</div>
 		<br />
-		<h5>{{ selectedConsole | translate }} </h5>
-		<br />
 		<div class="container">
-			<div class="row justify-content-between">
-				<div class="col-4">
-					<form class="form-inline" [formGroup]="searchForm">
-						<!-- Sortorder -->
-						<div class="form-group">
-							<label class="col-sm-4 col-form-label" for="selectsort">{{ 'Sort by' | translate }}</label>
-							<div class="col-sm-8">
-								<select class="form-control" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
-									<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
-										<a class="dropdown-item avkdropdown">{{ ps.description }}</a>
-									</option>
-								</select>
-							</div>
-						</div>
-					</form>
+			<h5>{{ selectedConsole | translate }} </h5>
+			<br />
+			<form class="form-inline" [formGroup]="searchForm">
+				<!-- Sortorder -->
+				<div class="form-group">
+					<label class="col-form-label col-form-label-sm" for="selectsort">{{ 'Sort by' | translate }}&nbsp;</label>
+					<select class="form-control form-control-sm" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
+						<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
+							<a class="dropdown-item avkdropdown">{{ ps.description }}</a>
+						</option>
+					</select>
 				</div>
-				<div class="col-4">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Select Display" data-toggle="tooltip" data-placement="top" title="Click to select display">
-						<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>
-						<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('flex')"><i class="fas fa-th"></i></button>
-						<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('list')"><i class="fas fa-list"></i></button>
-						<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-th"></i></button>
-					</div>
-				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="d-flex justify-content-end">
+			<div class="btn-group btn-group-sm" role="group" aria-label="Select Display" data-toggle="tooltip" data-placement="top" title="Click to select display">
+				<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-list"></i></button>
+				<button *ngIf="listType==='list'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('flex')"><i class="fas fa-th"></i></button>
+				<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary" style="cursor:pointer;" (click)="setListType('list')"><i class="fas fa-list"></i></button>
+				<button *ngIf="listType==='flex'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="fas fa-th"></i></button>
 			</div>
 		</div>
 	</div>
