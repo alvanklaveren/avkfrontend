@@ -18,6 +18,10 @@
     cursor:pointer;
 }
 
+select.form-control {
+    -webkit-appearance: menulist;
+}
+
 .ng-select {
     padding-top:0px;
     min-height: 35px;
