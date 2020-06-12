@@ -29,6 +29,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class GameShop implements OnInit{
 
   loading = true;
+  isMenuCollapsed = true;
+  isConsoleMenuCollapsed = true;
 
   searchForm: FormGroup;
   searchProductName: string = '';

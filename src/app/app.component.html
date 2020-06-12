@@ -19,13 +19,13 @@
 			  </a>
 			</div>
 			<div>
-				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<button class="navbar-toggler navbar-toggler-right" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-label="Toggle navigation">
 					 <span class="navbar-toggler-icon"></span>
 				</button>
 			</div>    
 		  
 		  
-			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+			<div class="collapse navbar-collapse justify-content-end" [ngbCollapse]="isMenuCollapsed" id="navbarSupportedContent">
 				<ul class="navbar-nav align-items-end" id="menuItems">
 					<li class="nav-item" *ngFor="let menuItem of menuItems">
 						 <a *ngIf="menuItem.description !== 'Administrator' && !menuItem.disabled" class="nav-link" href="{{ menuItem.url }}">{{ menuItem.description | translate }}</a>

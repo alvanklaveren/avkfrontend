@@ -25,6 +25,8 @@ export class AppComponent implements OnInit{
 
   today: string;
 
+  isMenuCollapsed = true;
+
   aboutText = 'About ...';
   aboutWebsite: string = '';
 

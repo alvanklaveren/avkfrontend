@@ -44,6 +44,9 @@ export class AdministratorPage implements OnInit{
     {id: 2, menutitle: 'Code Tables', title: 'Code Tables'},
   ]
 
+  isFirstMenuCollapsed = true;
+  isSecondMenuCollapsed = true;
+
   // code table lists
   companies: Company[];
   productTypes: ProductType[];

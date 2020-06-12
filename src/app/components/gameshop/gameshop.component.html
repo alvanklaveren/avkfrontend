@@ -30,21 +30,21 @@
 		</div>
 
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarTabpageContent" aria-controls="navbarTabpageContent" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler bg-dark" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon bg-dark"></span>
 			</button>
-			<div class="collapse navbar-collapse bg-dark" id="navbarTabpageContent">
+			<div class="collapse navbar-collapse bg-dark" [ngbCollapse]="isMenuCollapsed" id="navbarTabpageContent">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Consoles' | translate }}</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a *ngFor="let gc of gameConsoleList" class="dropdown-item" (click)="this.codeGameConsole=gc.code;onFilterChanged()">{{ gc.description }}</a>
+					<li ngbDropdown class="nav-item dropdown">
+						<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Consoles' | translate }}</a>
+						<div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown1">
+							<a ngbDropdownItem *ngFor="let gc of gameConsoleList" class="dropdown-item" (click)="this.codeGameConsole=gc.code;onFilterChanged()">{{ gc.description }}</a>
 						</div>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Product Type' | translate }}</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a *ngFor="let pt of productTypeList" class="dropdown-item" (click)="this.codeProductType=pt.code;onFilterChanged()">{{ pt.description }}</a>
+					<li ngbDropdown class="nav-item">
+						<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Product Type' | translate }}</a>
+						<div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown2">
+							<a ngbDropdownItem *ngFor="let pt of productTypeList" class="dropdown-item" (click)="this.codeProductType=pt.code;onFilterChanged()">{{ pt.description }}</a>
 						</div>
 					</li>
 				</ul>
