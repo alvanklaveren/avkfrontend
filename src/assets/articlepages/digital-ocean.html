@@ -1,0 +1,284 @@
+<span>
+    <div class="container">
+      <div class="blog-header">
+        <h1 class="blog-title">Digital Ocean Ubuntu Droplet</h1>
+        <p class="lead blog-description">Installing a Spring / Angular website on a Digital Ocean Droplet</p>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+          <div class="blog-post">
+            <h2 class="blog-post-title">How to install a Spring/Angular website on Digital Ocean</h2>
+            <p class="blog-post-meta">June 15, 2020 by <a href="#">Alex</a></p>
+
+			<p style="text-align:justify">When I decided to stop using Wicket for my personal website,
+				I had to invest some time in getting it up and running with Spring and Angular. All together
+				it took me about a day to get everything working the way I wanted, but as always a step-by-step
+				document like this one allows me to do it (again) in under an hour.
+            </p>
+
+<hr>
+<h3 id="h3">Before we start...</h3>
+	<p style="text-align:justify">
+	Prior to reading the article I expect you to have at least some knowledge of and experience with:
+	</p>
+	<ol class="blog-ul" style="text-align:justify">
+		<li><p>(Apache) Tomcat and Apache (configuration)</p></li>
+		<li><p>SSL (https) certificates</p></li>
+		<li><p>the Linux filesystem</p></li>
+	</ol>
+	<p style="text-align:justify">
+		If you get stuck with the whole SSL certificate part, there are two more documents on this site
+		that help you generate (and/or buy) an SSL certificate and show how to setup SSL on a Tomcat server.
+	</p>
+		
+	<h3 id="h3">Step by step installation</h3>
+	<p style="text-align:justify">
+		This is a short list (no fancy screenshots) to get a, or at least my, website installed. We start with getting
+		it up and running in development mode (using port 8443 and 8444, instead of 443 and 444) to make sure everything works:
+	<ul>
+		<li><p style="text-align:justify">Create keystore, and export private key and crt.</p>
+		<ol>
+			<li><p style="text-align:justify">Create keystore (unless already exists): <br>
+				<code>keytool -genkeypair -alias tomcat -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore keystore.p12 -validity 3650 -storepass &lt;yourkeystorepassword&gt;</code>
+				</p>
+
+				<li><p style="text-align:justify"> extract the keys: <br>
+					<ul>
+						<li><p style="text-align:justify"> 
+							<code>openssl pkcs12 -in keystore.p12 -nokeys -out tomcat.crt</code><br>
+							<code>openssl pkcs12 -in keystore.p12  -nodes -nocerts -out tomcat.key</code><br>
+							(we will need these files, .crt and key, to get angular run on 443)<br>
+							<code>chmod 400 tomcat.key and chmod 400 tomcat.crt</code>
+						</p>
+						<li><p style="text-align:justify">for development, create a self-signed certificate and immediately export crt and key:
+							<code>openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout tomcat.key -days 3560 -out tomcat.crt </code>
+						</p>
+					</ul>
+					</p>
+
+					<li><p style="text-align:justify"> Spring: add this to you application.properties:<br>
+							<code>
+								server.port=8444<br>
+								server.ssl.key-store-type=PKCS12<br>
+								server.ssl.key-store=classpath:keystore.p12<br>
+								server.ssl.key-store-password=&lt;yourkeystorepassword&gt;<br>
+								server.ssl.key-alias=tomcat<br>
+								security.require-ssl=true<br>
+							</code>
+							<br>
+							We do not really have to change 8444, because the website will approach the Angular port (443), but we will anyway
+							in case we want to approach the backend directly instead of through the Angular server.
+					    </p>
+
+						<li>Angular: Start with <code>ng serve --port 8443 --ssl true --ssl-cert keystore.crt --ssl-key keystore.key</code><br>
+							<p style="text-align:justify">
+								IMPORTANT: this line works when the .crt and .key files are in the root folder (the parent folder of /src)
+							</p>
+		</ol>
+  <li><p style="text-align:justify"> Setup an Ubuntu droplet at Digital Ocean (to experiment), and install tomcat and node/angular (npm install ...) and see if it works:<br>
+		<ol>
+			<li>Create a (10 dollar) droplet with Ubuntu (18.04 at moment of writing)
+			<li>Install mysql: 
+			<ul>
+				<li><code>sudo apt update</code>
+				<li><code>sudo apt install mysql-server</code>
+				<li><code>sudo mysql_secure_installation</code> (in this example we set the password to 1111. and disable remote logon to database). 
+			</ul>
+			<br>
+			<li>Install tomcat:
+			<ul>
+				<li><code>sudo apt update</code>
+				<li><code>sudo apt install default-jdk (at this moment openjdk 11)</code>
+				<li><code>sudo groupadd tomcat</code>
+				<li><code>sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat</code>
+				<li>download Tomcat binary (.gz) (can use curl, or download an use filezilla to copy it)
+					e.g. <code>curl -O http://apache.cs.uu.nl/tomcat/tomcat-9/v9.0.35/bin/apache-tomcat-9.0.35.tar.gz</code>
+				<li><code>sudo mkdir /opt/tomcat</code>
+				<li><code>sudo tar xzvf apache-tomcat-*tar.gz -C /opt/tomcat --strip-components=1</code>
+				<li><code>cd /opt/tomcat</code>
+				<li><code>sudo chgrp -R tomcat /opt/tomcat</code>
+				<li><code>sudo chmod -R g+r conf</code>
+				<li><code>sudo chmod g+x conf</code>
+				<li><code>sudo chown -R tomcat webapps work temp logs</code>
+					(this if nothing else works, otherwise skip: <code>chmod -R 777 webapps temp logs work conf</code>)
+				<li><code>sudo update-java-alternatives -l</code> (shows what JAVA_HOME should be set to)
+				<li><code>export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64</code>
+				<li><code>sudo nano /etc/systemd/system/tomcat.service</code> and paste this in:
+<pre>
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=network.target
+
+[Service]
+Type=forking
+
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat
+Environment=CATALINA_BASE=/opt/tomcat
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/opt/tomcat/bin/shutdown.sh
+
+User=tomcat
+Group=tomcat
+UMask=0007
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+				<li><code>sudo systemctl daemon-reload</code>
+				<li><code>sudo systemctl start tomcat</code>
+				<li><code>sudo systemctl status tomcat</code>
+				<li><code>sudo ufw allow 8080</code> (for testing.. we will reroute this to 80 -> 443 later)<br>
+				try <code>http://&lt;your ipadress&gt;:8080</code>. It should show the apache html page.<br>
+				When tomcat seems to work: <code>sudo systemctl enable tomcat</code>
+			<ul>
+		</ul>
+	</ul>
+	<br>
+	<li><p style="text-align:justify"> Install website stuff (we use <b>avkspring</b> as schema name and <b>1111</b> as password in this example):
+	<ul>
+    	<li>import database into mysql: 
+			<ul>
+				<li>login (<code>mysql -u root -p</code>) 
+				<li>and <code>CREATE DATABASE avkspring;</code>
+			</ul>
+		<li>now exit and (if you have any) import your existing schema:<br>
+			<ul>
+				<li><code>mysql -u root -p avkspring &lt; avk.sql</code><br>
+				<li><code>sudo mysql</code><br>
+				<li><code>ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1111';</code><br>
+				<li><code>FLUSH PRIVILEGES;</code><br>
+			</ul>
+	</ul>
+	<br>
+	<li><p style="text-align:justify">
+			Setup the spring boot app:<br>
+			<ul>		
+				<li>create WAR for backend Java Spring-Boot app. Set it to <code>server.port:8444</code> and deploy it to droplet
+				(i.e. put WAR in /opt/tomcat folder).
+				<li>to check if it started up properly, go to tomcat/logs and <code>tail -f catalina.out</code>
+				<li>try to access it (<code>https://&lt;your ipaddress&gt;/backend/gameshop/gameshopmobile/0/0</code>). 
+				If it doesn't work, <code>sudo ufw allow 8444</code> if you have firewall enabled.
+				<li>make sure tomcat's server.xml only contains connector to port 444 and a redirect of 8444 to 444.
+				because (80)80, and later on (8)443 will be used for the angular app.
+			</ul>
+		</p>
+    	<li><p style="text-align:justify">
+			Setup the angular app (the angular working folder used in this example is <b>avk_fe</b>, but yours is probably different):
+			<ul>
+     			<li><code>sudo apt-get update</code>
+      			<li>Install the Nginx server: <code>sudo apt-get install nginx</code>
+				<li>using firewall? : 
+					<ul>
+						<li><code>sudo ufw app list</code>
+						<li><code>sudo ufw allow ‘Nginx HTTP’</code>
+						<li><code>sudo ufw allow ‘Nginx HTTPS’</code>
+					</ul>
+		<li><p style="text-align:justify">now first get it running over port 80 to not get confused about ssl keys
+			<li><code>systemctl status nginx</code> and check <code>http://&lt;your_ip_address&gt;</code> and see if the Nginx splash screen is shown
+		<li><p style="text-align:justify">next edit /etc/nginx/sites-enabled/default to:</p>
+			<pre>
+server {
+listen          80 default_server;
+listen          [::]:80 default_server;
+server_name     alvanklaveren.com www.alvanklaveren.com;
+root            /opt/angular/avk-fe/;
+}
+...
+location / {
+	try_files $uri $uri/ /index.html;
+}
+			</pre>
+		<p style="text-align:justify">
+			the root is where you will eventually drop all the files in /dist/avk-fe on your development machine that we generate later.
+			the try_files line is extremely important for app-routing to work (/gameshop /articles etc).
+		</p>
+
+		<li>on development, run <code>ng build --prod</code>. This creates dist folder
+		<li>copy the contents of /dist/avk-fe to /opt/angular/avk-fe
+		<li><code>sudo service nginx restart</code>			
+		</li> (or <code>sudo nginx -s reload</code>).
+
+		<li>when everything works on port 80, now change it to 443:
+			<ul>
+				<li>First export the key and crt from keystore(.p12) using the above 
+					(remember to remove the additional info from the files, so you are left with 
+					only the stuff between the ---- start and end tags
+					openssl methods and store them under /opt/angular
+				<li>Again edit /etc/nginx/sites-enabled/default and change to:
+			<pre>
+server {
+listen          443 ssl default_server;
+listen          [::]:443 ssl default_server;
+server_name     alvanklaveren.com www.alvanklaveren.com;
+root            /opt/angular/avk-fe/;
+
+	ssl_certificate     /opt/angular/tomcat.crt;
+	ssl_certificate_key /opt/angular/tomcat.key;
+}
+			</pre>
+
+			<li><p style="text-align:justify">For angular app to run in mobile (android) browsers, uncomment web-animations-js 
+			and classlist.js in polyfills.ts, and install:
+			<ul>
+				<li><code>npm i core-js</code>
+				<li><code>npm install --save intl</code>
+				<li><code>npm install --save web-animations-js</code>
+				<li><code>npm install --save classlist.js</code>
+				<li>add to polyfills.ts: <code>(window as any).global = window</code>;
+				<li>add to index.html between <code>&lt;head&gt; ... &lt;/head&gt;</code>:
+
+					<pre>
+&lt;script&gt;
+	var global = global || window;
+	var Buffer = Buffer || [];
+	var process = process || {
+	env: { DEBUG: undefined },
+	version: []
+	};
+&lt;/script&gt;
+					</pre>
+			</ul>
+				
+			<b>Important</b>: In environment.prod.ts your backendUrl should point to the actual productional server:
+				<code>backendUrl: 'https://&lt;your_prod_ipadress&gt;:<b>444</b>/backend/'</code>
+			because without a valid certificate, it is impossible to fetch data from your backend.
+
+		</ul>
+	</ul>
+	<br>
+	<li><p style="text-align:justify">Everytime you want to deploy:
+		<ul>
+ 			<li>for backend, just package the war using PROD as profile. possibly run <code>service tomcat restart</code>
+   			<li>for frontend, <code>ng build --prod</code> and copy the content of /dist/avk-fe to droplets /opt/angular/avk-fe
+   			<li>next <code>service nginx restart</code>
+		</ul> 
+
+	</ul>
+
+	<p style="text-align:justify">
+		That wasn't hard at all, was it? 
+	</p>
+	
+	<h3 id="h3">Final words</h3>
+	<p style="text-align:justify">
+	In this document I described how to get my Angular/Spring website installed on an Ubuntu droplet at Digital Ocean.
+	When you have a step-by-step list like this, it's child's play. If you don't, it may take a bit longer.
+	</p>
+          </div><!-- /.blog-post -->
+
+        </div><!-- /.blog-main -->
+
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+  
+</span>
