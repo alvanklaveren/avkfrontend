@@ -6,6 +6,7 @@
     margin-top:4px; 
     margin-bottom:4px;
     max-width: 32%;
+    min-width: 32%;
 }
 
 .avkfleximg {
@@ -18,17 +19,17 @@
     cursor:pointer;
 }
 
-select.form-control {
-    -webkit-appearance: menulist;
-}
+// select.form-control {
+//     -webkit-appearance: menulist;
+// }
 
-.ng-select {
-    padding-top:0px;
-    min-height: 35px;
-    height: 35px;
-    -webkit-appearance: menulist;
-    -ms-expand { display: block; }
-}
+// .ng-select {
+//     padding-top:0px;
+//     min-height: 35px;
+//     height: 35px;
+//     -webkit-appearance: menulist;
+//     -ms-expand { display: block; }
+// }
 
 /* Extra Small devices (phones, > 768px) */
 @media only screen and (max-width:767px){

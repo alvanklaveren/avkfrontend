@@ -94,11 +94,13 @@
 				<router-outlet></router-outlet>
 			</div>
 			
-			<div class="col-2" id="basepanelright">
-				<h4>{{ aboutText | translate }}</h4>
-				<div id="abouttext">
-					<span #aboutDiv></span>
-					<a id="myemail" href="mailto:{{ mailTo }}">message</a>
+			<div class="col-2">
+				<div id="basepanelright">
+					<h4>{{ aboutText | translate }}</h4>
+					<div id="abouttext">
+						<span #aboutDiv></span>
+						<a id="myemail" href="mailto:{{ mailTo }}">message</a>
+					</div>
 				</div>
 			</div>
 			

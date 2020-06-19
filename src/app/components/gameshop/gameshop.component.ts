@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
+import { Subject, merge } from 'rxjs';
 
 import { Product } from 'src/app/models/product';
 import { ProductSort } from 'src/app/models/productSort';
@@ -33,9 +33,11 @@ export class GameShop implements OnInit{
   isConsoleMenuCollapsed = true;
 
   searchForm: FormGroup;
-  searchProductName: string = '';
-  searchProductNames: Array<String> = [];
+  searchProductName: string;
+  searchProductNames: Array<{name:string}> = [];
   searchSubject: Subject<string> = new Subject<string>();
+
+  searcher: {name:string};
 
   listType = this.contextService.getGameListType();
 
@@ -74,7 +76,11 @@ export class GameShop implements OnInit{
     this.searchSubject.pipe(debounceTime(200), distinctUntilChanged()).subscribe((searchString) => {      
       if (searchString && searchString.length > 2) {
         this.gameShopService.simpleSearch(searchString, 0, 10).subscribe((response) => {
-          this.searchProductNames = response as Array<String>;
+          let searchNames = response as Array<string>;
+          this.searchProductNames = [];
+          for(let searchPN of searchNames) {
+            this.searchProductNames.push({name: searchPN});
+          }
         });
       }
     });
@@ -161,8 +167,15 @@ export class GameShop implements OnInit{
 
   fetchImages(){
     for(let product of this.products){
-      this.gameShopService.getProductMainImage(product.code).subscribe( blob => {
+
+      let jobs = [];
+
+      jobs.push(this.gameShopService.getProductMainImage(product.code));
+
+      merge(...jobs).subscribe(res => {
         
+        let blob: Blob = res as Blob;
+
         let reader = new FileReader();
         reader.readAsDataURL(blob); 
         reader.onloadend = function() {
