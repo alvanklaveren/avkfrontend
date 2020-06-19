@@ -25,7 +25,7 @@
 
 		<div class="row" *ngIf="askChangeCategory && isAdmin">
 			<div class="col">
-				<ng-select class="form-control" [items]="messageCategories" bindLabel="description" [(ngModel)]="newMessageCategory" [editableSearchTerm]="false" [multiple]="false" [clearable]="false">
+				<ng-select class="col-sm" [items]="messageCategories" bindLabel="description" [(ngModel)]="newMessageCategory" [editableSearchTerm]="false" [multiple]="false" [clearable]="false">
 				</ng-select>
 			</div>
 			<div class="col">

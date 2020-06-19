@@ -12,6 +12,14 @@ body::-webkit-scrollbar {
  background: #0052A6;
  }
 
+ .ng-select.ng-select.ng-select-single.ng-select-filtered:not(.ng-select-opened) .ng-select-container.ng-has-value .ng-value-container .ng-value { 
+     visibility: visible; 
+ }
+
+ .ng-select .ng-select-container .ng-value-container .ng-input, .ng-select .ng-select-container .ng-value-container .ng-input>input{
+    background: none!important;
+ }
+
 // ---------------------------
 // ALL
 // ---------------------------

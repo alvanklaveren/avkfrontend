@@ -74,6 +74,7 @@ export class GameShop implements OnInit{
     this.isAdmin = this.authenticationService.isAdmin();
 
     this.searchSubject.pipe(debounceTime(200), distinctUntilChanged()).subscribe((searchString) => {      
+      this.searchProductName=searchString;
       if (searchString && searchString.length > 2) {
         this.gameShopService.simpleSearch(searchString, 0, 10).subscribe((response) => {
           let searchNames = response as Array<string>;
