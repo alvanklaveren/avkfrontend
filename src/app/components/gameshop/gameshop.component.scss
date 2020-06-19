@@ -31,15 +31,38 @@
 //     -ms-expand { display: block; }
 // }
 
-/* Extra Small devices (phones, > 768px) */
-@media only screen and (max-width:767px){
+@media only screen and (min-width:930px) and (max-width:1300px){
     .avkflex {
         box-shadow:2px 2px 2px #AAAAAA; 
         margin-left:4px; 
         margin-right:4px; 
         margin-top:4px; 
         margin-bottom:4px;
-        max-width: 100%;
+        min-width: 47%;
+        max-width: 47%;
+    }
+    
+    .avkfleximg {
+        width:320px;
+        height:auto;
+        padding-left:10%; 
+        padding-right:2%; 
+        margin-left:auto; 
+        margin-right:auto; 
+        cursor:pointer;
+    }      
+}
+
+/* Extra Small devices (phones, > 768px) */
+@media only screen and (max-width:930px){
+    .avkflex {
+        box-shadow:2px 2px 2px #AAAAAA; 
+        margin-left:4px; 
+        margin-right:4px; 
+        margin-top:4px; 
+        margin-bottom:4px;
+        min-width: 98%;
+        max-width: 98%;
     }
     
     .avkfleximg {
