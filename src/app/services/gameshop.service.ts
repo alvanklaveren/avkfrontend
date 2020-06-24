@@ -98,4 +98,8 @@ export class GameShopService {
     
   }
 
+  getProductDescription(codeProduct:number){
+    return this.http.post(environment.backendUrl + 'gameshop/getProductDescription', codeProduct);
+  }
+
 }

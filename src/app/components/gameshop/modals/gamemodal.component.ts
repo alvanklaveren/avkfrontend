@@ -55,14 +55,22 @@ export class GameModalComponent implements OnInit{
         });
 
         if (this.product) {
-            this.editForm.patchValue({
-                name: this.product.name,
-                year: this.product.year,
-                description: this.product.description,
-                codeGameConsole: this.product.gameConsole.code,
-                codeProductType: this.product.productType.code,
-                codeCompany: this.product.company.code,
+            
+            // the description in the @Input object (product) has been formatted 
+            // to show as HTML, so we need the actual description from the database.
+            this.gameShopService.getProductDescription(this.product.code).subscribe(res => {
+                let description = (res as {description: string}).description as string;
+
+                this.editForm.patchValue({
+                    name: this.product.name,
+                    year: this.product.year,
+                    description: description,
+                    codeGameConsole: this.product.gameConsole.code,
+                    codeProductType: this.product.productType.code,
+                    codeCompany: this.product.company.code,
+                });
             });
+
         } else {
         }
     }
