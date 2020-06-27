@@ -59,19 +59,17 @@
 						<button *ngIf="theme==='dark'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">Dark</button>
 					</div>  
 					
-					<div class="dropdown" role="group" aria-label="Select Language" style="float:right;" data-toggle="tooltip" data-placement="top" title="Click to select language">
-						<div class="btn-group dropleft">
-							<button class="btn btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<div style="float:right;">
+						<div ngbDropdown class="d-inline-block col-auto">
+							<button ngbDropdownToggle class="btn btn-sm" type="button" id="dropDownLanguage">
 								<img src='{{ flagIcon }}' width=40px height=40px alt='English'>
 						  	</button>
-						  
-							<div class="dropdown-menu" aria-labelledby="btnGroupDropLanguage">
-								<button type="button" class="dropdown-item" id="flag_us" (click)="changeLanguage('us')" style="cursor:pointer;"><img src="../assets/fonts/flag_us.svg" width=35px height=35px alt=''> English</button>
-								<button type="button" class="dropdown-item" id="flag_nl" (click)="changeLanguage('nl')" style="cursor:pointer;"><img src="../assets/fonts/flag_nl.svg" width=35px height=35px alt=''> Dutch</button>
+							<div ngbDropdownMenu aria-labelledby="dropDownLanguage">
+								<button ngbDropdownItem id="flag_us" (click)="changeLanguage('us')" style="cursor:pointer;"><img src="../assets/fonts/flag_us.svg" width=35px height=35px alt=''> English</button>
+								<button ngbDropdownItem id="flag_nl" (click)="changeLanguage('nl')" style="cursor:pointer;"><img src="../assets/fonts/flag_nl.svg" width=35px height=35px alt=''> Dutch</button>
 							</div>
-						</div>
-					</div>      	
-
+					    </div>
+					</div>
 				</div>
 
 				<div><a style="font-size:2; text-align:center"><br></a></div>

@@ -162,9 +162,9 @@ export class Forum implements OnInit{
   }
 
   emailNewPassword(){
-    let lf = this.loginForm.value;
+    let fpForm = this.forgotPasswordForm.value;
 
-    this.forumService.emailNewPassword(lf.username).subscribe((res: {result:boolean}) => {
+    this.forumService.emailNewPassword(fpForm.username).subscribe((res: {result:boolean}) => {
       if(res.result) {
         this.forgotPassword = false;
       } else {
