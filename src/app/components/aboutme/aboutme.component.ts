@@ -36,13 +36,7 @@ export class AboutMe implements OnInit{
   ngOnInit(){
 
     this.contextService.setPageTitle(this, 'About me');
-
-    if(this.contextService.getIsoA2() || this.contextService.getIsoA2().toUpperCase() === 'US'){
-      this.downloadCVText = 'Click here to download my Curriculum Vitae';
-    } else if(this.contextService.getIsoA2() || this.contextService.getIsoA2().toUpperCase() === 'NL'){
-      this.downloadCVText = 'Klik hier om mijn Curriculum Vitae te downloaden';
-    }
-
+    this.downloadCVText = 'Click here to download my Curriculum Vitae';
   }
 
 }
