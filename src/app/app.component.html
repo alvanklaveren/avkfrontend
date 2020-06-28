@@ -65,8 +65,8 @@
 								<img src='{{ flagIcon }}' width=40px height=40px alt='English'>
 						  	</button>
 							<div ngbDropdownMenu aria-labelledby="dropDownLanguage">
-								<button ngbDropdownItem id="flag_us" (click)="changeLanguage('us')" style="cursor:pointer;"><img src="../assets/fonts/flag_us.svg" width=35px height=35px alt=''> English</button>
-								<button ngbDropdownItem id="flag_nl" (click)="changeLanguage('nl')" style="cursor:pointer;"><img src="../assets/fonts/flag_nl.svg" width=35px height=35px alt=''> Dutch</button>
+								<button ngbDropdownItem id="flag_us" (click)="changeLanguage('us')" style="cursor:pointer;"><img src="../assets/fonts/flag_us.svg" width=35px height=35px alt=''>{{ 'English' | translate }}</button>
+								<button ngbDropdownItem id="flag_nl" (click)="changeLanguage('nl')" style="cursor:pointer;"><img src="../assets/fonts/flag_nl.svg" width=35px height=35px alt=''>{{ 'Dutch' | translate }}</button>
 							</div>
 					    </div>
 					</div>
