@@ -53,10 +53,10 @@
 	
 				<div>
 					<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select theme">
-						<button *ngIf="theme==='light'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">Light</button>
-						<button *ngIf="theme==='light'" (click)="setTheme('dark')" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">Dark</button>
-						<button *ngIf="theme==='dark'" (click)="setTheme('light')" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">Light</button>
-						<button *ngIf="theme==='dark'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">Dark</button>
+						<button *ngIf="theme==='light'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">{{ 'Light' | translate }}</button>
+						<button *ngIf="theme==='light'" (click)="setTheme('dark')" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">{{ 'Dark' | translate }}</button>
+						<button *ngIf="theme==='dark'" (click)="setTheme('light')" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">{{ 'Light' | translate }}</button>
+						<button *ngIf="theme==='dark'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">{{ 'Dark' | translate }}</button>
 					</div>  
 					
 					<div style="float:right;">
