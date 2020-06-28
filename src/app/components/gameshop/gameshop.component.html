@@ -75,7 +75,7 @@
 				<label class="col-form-label col-form-label-sm" for="selectsort">{{ 'Sort by' | translate }}&nbsp;</label>
 				<select class="form-control form-control-sm" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
 					<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
-						<a class="dropdown-item avkdropdown">{{ ps.description }}</a>
+						<a class="dropdown-item avkdropdown">{{ ps.description | translate }}</a>
 					</option>
 				</select>
 			</div>
