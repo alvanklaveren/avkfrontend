@@ -57,7 +57,7 @@
             <div class="col-sm-8">
                 <select class="form-control" id="productproducttype" formControlName="codeProductType">
                     <option *ngFor="let pt of productTypeList" [ngValue]="pt.code">
-                        <a class="dropdown-item avkdropdown">{{ pt.description }}</a>
+                        <a class="dropdown-item avkdropdown">{{ pt.description | translate }}</a>
                     </option>
                 </select>
             </div>
@@ -71,16 +71,16 @@
         <div class="row" *ngIf="!askDelete">
             <div class="col text-left">
                 <button [hidden]="!product" class="btn btn-danger" type="button" (click)="askDelete=true">
-                    <span> {{ "Delete" | translate }} </span>
+                    <span> {{ 'Delete' | translate }} </span>
                 </button>
             </div>
 
             <div class="col text-right">
 
                 <div class="btn-group btn-group-toggle" role="group" style="width: auto">
-                    <button class="btn btn-outline-secondary" type="button" (click)="onDismiss()">{{ "Cancel" | translate }}</button>
+                    <button class="btn btn-outline-secondary" type="button" (click)="onDismiss()">{{ 'Cancel' | translate }}</button>
                     <button [disabled]="!editForm.valid" class="btn btn-primary" type="button" (click)="onSave()">
-                        <span> {{ "Save" | translate }} </span>
+                        <span> {{ 'Save' | translate }} </span>
                     </button>
                 </div>
             </div>
@@ -90,8 +90,8 @@
             <div class="col text-right">
                 <span>{{ 'About to delete' | translate }} </span>
                 <div class="btn-group btn-group-toggle" role="group" style="width: auto">
-                    <button class="btn btn-outline-secondary" type="button" (click)="askDelete=false">{{ "Cancel" | translate }}</button>
-                    <button class="btn btn-success" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
+                    <button class="btn btn-outline-secondary" type="button" (click)="askDelete=false">{{ 'Cancel' | translate }}</button>
+                    <button class="btn btn-success" type="button" (click)="onDelete()">{{ 'Delete' | translate }}</button>
                 </div>
             </div>
         </div>
