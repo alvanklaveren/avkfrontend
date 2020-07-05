@@ -293,6 +293,13 @@ export class GameShop implements OnInit{
   }
 
   onScroll() {
+    let sf = this.searchForm.value;
+    if(!this.codeGameConsole || this.codeGameConsole === 0){ 
+      if((!this.codeProductType || this.codeProductType === 0) && sf.productSortId === 3){
+        return; // do not fetch more than 1 page (24 items) when fetching most recently added products.
+      }
+    }
+
     this.page++;
     this.getProductList();
   }
