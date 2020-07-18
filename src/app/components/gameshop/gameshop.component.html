@@ -98,7 +98,11 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-4" data-toggle="tooltip" data-placement="top" title="Click to enlarge image" style="cursor:zoom-in;">
-							<div [innerHTML]="product.imageHTML | safe:'html'"></div>
+							<div *ngIf="!product.imageHTML"><avk-loading></avk-loading></div>
+							<div *ngIf="product.imageHTML !== '?'" [innerHTML]="product.imageHTML | safe:'html'"></div>
+							<div *ngIf="product.imageHTML === '?'">
+								<button class="btn btn-outline-primary">{{ 'Upload Image' | translate }} </button>
+							</div>
 						</div>
 						<div class="col-4 text-wrap" style="width:30px">
 							<div class="col text-wrap"><b>{{ product.name }}</b></div>
@@ -129,8 +133,11 @@
 						<div style="width:40%" (click)="openUploadImageModal(product)">
 							<div data-toggle="tooltip" data-placement="top" style="cursor:zoom-in;">
 								<div *ngIf="!product.imageHTML"><avk-loading></avk-loading></div>
-								<div *ngIf="product.imageHTML" [innerHTML]="product.imageHTML | safe:'html'"></div>
-							</div>
+								<div *ngIf="product.imageHTML !== '?'" [innerHTML]="product.imageHTML | safe:'html'"></div>
+								<div *ngIf="product.imageHTML === '?'">
+									<button class="btn btn-outline-primary">{{ 'Upload Image' | translate }} </button>
+								</div>
+								</div>
 						</div>
 						<div class="col text-wrap" style="width:30px">
 							<div *ngIf="isAdmin" class="d-flex justify-content-end">

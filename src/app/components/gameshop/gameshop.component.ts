@@ -32,6 +32,8 @@ export class GameShop implements OnInit{
   isMenuCollapsed = true;
   isConsoleMenuCollapsed = true;
 
+  mostRecentlyAdded = 'Most Recently Added Products';
+
   searchForm: FormGroup;
   searchProductName: string;
   searchProductNames: Array<{name:string}> = [];
@@ -132,7 +134,7 @@ export class GameShop implements OnInit{
 
     if(!this.codeGameConsole || this.codeGameConsole === 0){ 
       if((!this.codeProductType || this.codeProductType === 0) && sf.productSortId === 3){
-        this.selectedConsole = 'Most Recently Added Products';
+        this.selectedConsole = this.mostRecentlyAdded;
       } else {
         this.selectedConsole = '';
       }
@@ -177,11 +179,21 @@ export class GameShop implements OnInit{
         
         let blob: Blob = res as Blob;
 
+        let that = this;
+
         let reader = new FileReader();
         reader.readAsDataURL(blob); 
         reader.onloadend = function() {
             let rawImage = reader.result;
-            product.imageHTML = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>';
+            if(that.isAdmin) {
+              if(rawImage.toString() !== 'data:'){
+                product.imageHTML = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="[Click to upload picture]" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>';
+              } else {
+                product.imageHTML = '?';
+              }
+            } else {
+              product.imageHTML = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:95%;height:auto;padding-left:10%; padding-right:2%; margin-left:auto; margin-right:auto; cursor:pointer;"/>';
+            }
           }
 
       });
@@ -294,10 +306,8 @@ export class GameShop implements OnInit{
 
   onScroll() {
     let sf = this.searchForm.value;
-    if(!this.codeGameConsole || this.codeGameConsole === 0){ 
-      if((!this.codeProductType || this.codeProductType === 0) && sf.productSortId === 3){
-        return; // do not fetch more than 1 page (24 items) when fetching most recently added products.
-      }
+    if(this.selectedConsole === this.mostRecentlyAdded){ 
+      return; // do not fetch more than 1 page (24 items) when fetching most recently added products.
     }
 
     this.page++;
