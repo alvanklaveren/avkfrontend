@@ -19,12 +19,8 @@
 		</div>
 		<div class="row">
 		  <div class="col-sm-8 blog-main">
-			  <p style="text-align:justify">The below articles are short stories about my own first experience with new
-					frameworks, languages, methodologies and so on and so forth. The main reason for writing these stories is
-					to be able to repeat what I have done before when necessary, especially setup stuff that you only have to do  
-					once or twice, and you easily tend to forget after a while. <br><br>
-					Because I am not the only one having these problems, I am sharing my experiences and knowledge with all of you.
-					Have fun reading them.
+			  <p style="text-align:justify">
+				{{ articlesHeaderText | translate }}
 			  </p>
 		  	  <br>
 		  </div>
@@ -33,16 +29,16 @@
 		<div class="row">
 			<div class="col-sm-8 blog-main">
 		    	<div class="blog-post">
-					<h2 class="blog-post-title">Index</h2>
+					<h2 class="blog-post-title">{{ 'Index' | translate }}</h2>
 			      	<hr>
-					<h3>JAVA related</h3>
+					<h3>{{ 'JAVA related' | translate }}</h3>
 					<ul *ngFor="let article of javaArticles">
 						<li>
 							<a href="javascript:void(0)" (click)="goToArticle(article.id)">{{ article.title }}</a>
 						</li>
 					</ul>
 					<br>
-					<h3>Webhosting Setup related</h3>
+					<h3>{{ 'Webhosting Setup related' | translate }}</h3>
 					<ul *ngFor="let article of webhostingArticles">
 						<li>
 							<a href="javascript:void(0)" (click)="goToArticle(article.id)">{{ article.title }}</a>

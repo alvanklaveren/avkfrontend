@@ -33,6 +33,8 @@ export class Articles implements OnInit{
     {id: 'HTTPS-over-port-443', title: 'How to get tomcat run over port 443 (https)', 'document':'https-over-443.html', order: 6 },
   ]
 
+  articlesHeaderText: string = '' // = 'The below articles are short stories about my own first experience with new frameworks, languages, methodologies and so on and so forth. The main reason for writing these stories is to be able to repeat what I have done before when necessary, especially setup stuff that you only have to do once or twice, and you easily tend to forget after a while. <br><br>Because I am not the only one having these problems, I am sharing my experiences and knowledge with all of you. Have fun reading them.'
+
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private title:Title, 
               private contextService:ContextService){ }
 
@@ -40,6 +42,12 @@ export class Articles implements OnInit{
   ngOnInit(){
     this.contextService.setPageTitle(this, 'Articles'); 
     this.articleId = this.route.snapshot.paramMap.get('articleId');
+    this.contextService.translate('[articlesheadertext]').subscribe(res => {
+      let translation: {result, original, isoA2} = res as {result, original, isoA2};
+      this.articlesHeaderText = translation.result as string;
+      this.articlesHeaderText = this.articlesHeaderText.replace(new RegExp('<br>', 'g'), '\n');
+      console.log(this.articlesHeaderText);
+    });
   }
 
   ngAfterViewInit() {

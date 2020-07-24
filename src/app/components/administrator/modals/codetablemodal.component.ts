@@ -55,9 +55,9 @@ export class CodeTableModalComponent implements OnInit{
                 this.codeTableRow.url = ' ';
             } else if(this.codetable == this.TRANSLATION) {
                 this.codeTableRow = new Translation();
-                this.codeTableRow.original = ' ';
-                this.codeTableRow.us = ' ';
-                this.codeTableRow.nl = ' ';
+                this.codeTableRow.original = 'original text';
+                this.codeTableRow.us = 'add us translation here';
+                this.codeTableRow.nl = 'add dutch translation here';
             }
             this.codeTableRow.code = null;
         }
