@@ -53,10 +53,14 @@
 	
 				<div>
 					<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select theme">
-						<button *ngIf="theme==='light'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="far fa-sun" aria-hidden="true"></i>{{ 'Light' | translate }}</button>
-						<button *ngIf="theme==='light'" (click)="setTheme('dark')" type="button" class="btn btn-outline-secondary" style="cursor:pointer;"><i class="far fa-moon" aria-hidden="true"></i>{{ 'Dark' | translate }}</button>
-						<button *ngIf="theme==='dark'" (click)="setTheme('light')" type="button" class="btn btn-outline-secondary" style="cursor:pointer;"><i class="far fa-sun" aria-hidden="true"></i>{{ 'Light' | translate }}</button>
-						<button *ngIf="theme==='dark'" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;"><i class="far fa-moon" aria-hidden="true"></i>{{ 'Dark' | translate }}</button>
+						<div *ngFor="let theme of avkThemes">
+							<button *ngIf="theme.id === selectedTheme" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">
+								<i class="{{ theme.icon }}" aria-hidden="true"></i> {{ theme.description | translate }}
+							</button>
+							<button *ngIf="theme.id !== selectedTheme" (click)="setTheme(theme.id)" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">
+								<i class="{{ theme.icon }}" aria-hidden="true"></i> {{ theme.description | translate }}
+							</button>
+						</div>
 					</div>  
 					
 					<div style="float:right;">

@@ -30,8 +30,14 @@ export class AppComponent implements OnInit{
   aboutText = 'About ...';
   aboutWebsite: string = '';
 
-  theme = this.contextService.getTheme();
+  selectedTheme = this.contextService.getTheme();
   flagIcon = '';
+
+  avkThemes = [
+    { id: 'light', description: 'Light', icon: 'far fa-sun' },
+    { id: 'dark', description: 'Dark', icon: 'far fa-moon' },
+    /*{ id: 'hell', description: 'Hell', icon: 'fas fa-skull-crossbones' },*/
+  ];
  
   selectedIsoA2 = this.contextService.getIsoA2();
 
@@ -44,7 +50,7 @@ export class AppComponent implements OnInit{
     { id: 3, description: 'My Game Collection', url: '/gameshop', icon: 'fas fa-gamepad', disabled: false },
     { id: 4, description: 'Articles', url: '/articles', icon: 'fas fa-newspaper', disabled: false },
     { id: 5, description: 'About me', url: '/aboutme', icon: 'fas fa-grin-beam', disabled: false },
-  ]
+  ];
 
   constructor(private router:Router, private modalService: NgbModal,
               private contextService:ContextService, private translateService: TranslateService,
@@ -104,7 +110,10 @@ export class AppComponent implements OnInit{
     }
 
     this.translateService.setDefaultLang(this.selectedIsoA2);
-    this.setTheme(this.theme);
+    if(!this.selectedTheme){
+      this.selectedTheme = 'light';
+    }
+    this.setTheme(this.selectedTheme);
   }
 
   changeLanguage(language){
@@ -127,9 +136,9 @@ export class AppComponent implements OnInit{
   }
   
   setTheme(theme:string){
-    this.theme = theme;
-    this.contextService.setTheme(theme);
-    if(theme === 'dark'){
+    this.selectedTheme = theme;
+    this.contextService.setTheme(this.selectedTheme);
+    if(this.selectedTheme === 'dark'){
       document.body.classList.remove("light-mode");
       document.body.classList.add("dark-mode");
       document.getElementById("myapproot").classList.remove("light-mode");
