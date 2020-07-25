@@ -7,7 +7,6 @@ import { AuthenticationService } from './services/authentication.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { CookieModalComponent } from './cookiemodal.component';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +35,7 @@ export class AppComponent implements OnInit{
   avkThemes = [
     { id: 'light', description: 'Light', icon: 'far fa-sun', cssId: 'light-mode' },
     { id: 'dark', description: 'Dark', icon: 'far fa-moon', cssId: 'dark-mode' },
-    /*{ id: 'hell', description: 'Hell', icon: 'fas fa-skull-crossbones', cssId: 'hell-mode' },*/
+    { id: 'hell', description: 'Demon', icon: 'fas fa-skull-crossbones', cssId: 'hell-mode' },
   ];
  
   selectedIsoA2 = this.contextService.getIsoA2();

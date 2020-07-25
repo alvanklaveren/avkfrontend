@@ -28,6 +28,44 @@ body::-webkit-scrollbar {
     color:#101010;
 }
 
+.light-mode #topmenu{
+    background-color: #0072C6;
+}
+
+.light-mode #logo_big a{
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    font-size: 150%;
+    color:#FFFFFF;
+    text-shadow:2px 2px #9999FF;
+}
+
+.light-mode #logo_small a {
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    font-size: 130%;
+    text-shadow:2px 2px #9999FF;
+}
+
+.dark-mode #topmenu{
+    background-color: #0072C6;
+}
+
+.dark-mode #logo_big a{
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    font-size: 150%;
+    color:#FFFFFF;
+    text-shadow:2px 2px #9999FF;
+}
+
+.dark-mode #logo_small a {
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    font-size: 130%;
+    text-shadow:2px 2px #9999FF;
+}
+
 .dark-mode {
     background-color:#101010; 
     color:#101010;
@@ -41,6 +79,60 @@ body::-webkit-scrollbar {
 .dark-mode #basepanelright {
     background-color:#202020;
     color:#F3F3FC; 
+}
+
+.hell-mode {
+    /*background-image: url("https://image.freepik.com/free-photo/blaze-fire-flame-texture-background_133982-16.jpg");*/
+    background-image: url("./assets/images/hell.jpg");
+    background-attachment: fixed;
+    
+    background-size: cover;
+    background-color:#201010; 
+    color:#f70b0b;
+}
+
+.hell-mode #logo_big a {
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    font-size: 150%;
+    text-shadow:2px 2px #c9520e;
+}
+
+.hell-mode #logo_small a {
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    font-size: 130%;
+    text-shadow:2px 2px #c9520e;
+}
+
+.hell-mode #basepanelleft {
+    background-color: transparent;
+    color:rgb(218, 181, 21); 
+}
+
+.hell-mode #basepanelright {
+    background-color: transparent;
+    color:#f70b0b; 
+}
+
+.hell-mode a {
+    background-color:#000000;    
+    color:rgb(218, 181, 21); 
+}
+
+.hell-mode #topmenu {
+    background-color:#b80202;    
+    color:rgb(218, 181, 21); 
+}
+
+.hell-mode #topmenu a {
+    background-color:#b80202;    
+    color:rgb(218, 181, 21); 
+}
+
+.hell-mode #topmenu a:hover {
+    background-color:#b80202;    
+    color:rgb(230, 255, 5); 
 }
 
 // CENTER PANEL
@@ -98,4 +190,45 @@ body::-webkit-scrollbar {
 .dark-mode #centerpanel ol{
     background-color:#202020;
     color:#FFFFFF; 
+}
+
+.hell-mode #centerpanel {
+    background-color:#000000;
+    color:#f70b0b; 
+}
+
+.hell-mode #centerpanel div{
+    background-color:#000000;
+    color:#f70b0b; 
+}
+
+.hell-mode #centerpanel table{
+    background-color:#000000;
+    color:#f70b0b; 
+}
+
+.hell-mode #centerpanel body{
+    background-color:#000000;
+    color:#f70b0b; 
+}
+
+.hell-mode #centerpanel ol{
+    background-color:#000000;
+    color:#f70b0b; 
+}
+
+.hell-mode #centerpanel a{
+    background-color:#000000;    
+    color:rgb(247, 205, 19); 
+}
+
+.hell-mode #centerpanel mark{
+    background-color:#000000;    
+    color:rgb(233, 109, 93); 
+}
+
+.hell-mode button {
+    color: #f70b0b; 
+    border-color: #f70b0b; 
+    background-color: #000000;
 }

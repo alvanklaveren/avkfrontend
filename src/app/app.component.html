@@ -3,17 +3,17 @@
 		<nav class="navbar navbar-expand-lg navbar-dark" id="topmenu">
 
 			<div id ="logo_big">
-			  <a class="navbar-brand" href="/" style="font-family: verdana, sans-serif;font-weight: bold;font-size: 150%;color:#FFFFFF;text-shadow:2px 2px #9999FF" data-toggle="tooltip" data-placement="top" title="Click to go back to homepage">
+			  <a class="navbar-brand" href="/" data-toggle="tooltip" data-placement="top" title="Click to go back to homepage">
 				ALVANKLAVEREN.COM
 			  </a>
-			  <a class="navbar-brand" href="/" style="font-family: verdana, sans-serif;font-weight: bold;font-size: 30%;color:#FFFFFF;text-shadow:1px 1px #9999FF" data-toggle="tooltip" data-placement="top" title="Click to go back to homepage">
+			  <a class="navbar-brand" href="/" style="font-size: 30%; text-shadow:1px 1px" data-toggle="tooltip" data-placement="top" title="Click to go back to homepage">
 			  .ORG<br>
 			  .NET<br>
 			  .NL<br>
 			  </a>	
 			</div>
 			<div id ="logo_small">
-			  <a class="navbar-brand" href="/" style="font-family: verdana, sans-serif;font-weight: bold;font-size: 130%;color:#FFFFFF;text-shadow:2px 2px #9999FF" data-toggle="tooltip" data-placement="top" title="Click to go back to homepage">
+			  <a class="navbar-brand" href="/" data-toggle="tooltip" data-placement="top" title="Click to go back to homepage">
 				ALVANKLAVEREN.COM
 				<br>
 			  </a>
@@ -52,15 +52,13 @@
 				<div><small><br/></small></div>
 	
 				<div>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select theme">
-						<div *ngFor="let theme of avkThemes">
-							<button *ngIf="theme.id === selectedTheme" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">
-								<i class="{{ theme.icon }}" aria-hidden="true"></i> {{ theme.description | translate }}
-							</button>
-							<button *ngIf="theme.id !== selectedTheme" (click)="setTheme(theme.id)" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">
-								<i class="{{ theme.icon }}" aria-hidden="true"></i> {{ theme.description | translate }}
-							</button>
-						</div>
+					<div *ngFor="let theme of avkThemes" class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select theme">
+						<button *ngIf="theme.id === selectedTheme" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">
+							<i class="{{ theme.icon }}" aria-hidden="true"></i> {{ theme.description | translate }}
+						</button>
+						<button *ngIf="theme.id !== selectedTheme" (click)="setTheme(theme.id)" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">
+							<i class="{{ theme.icon }}" aria-hidden="true"></i> {{ theme.description | translate }}
+						</button>
 					</div>  
 					
 					<div style="float:right;">
