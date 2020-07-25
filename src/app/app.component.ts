@@ -38,12 +38,12 @@ export class AppComponent implements OnInit{
   mailTo: string = environment.mailTo;
 
   menuItems = [
-    { id: 0, description: 'Administrator', url: '/administrator', disabled: true },
-    { id: 1, description: 'Home', url: '/', disabled: false },
-    { id: 2, description: 'Forum', url: '/forum', disabled: false },
-    { id: 3, description: 'My Game Collection', url: '/gameshop', disabled: false },
-    { id: 4, description: 'Articles', url: '/articles', disabled: false },
-    { id: 5, description: 'About me', url: '/aboutme', disabled: false },
+    { id: 0, description: 'Administrator', url: '/administrator', icon: 'fas fa-home', disabled: true },
+    { id: 1, description: 'Home', url: '/', icon: 'fas fa-home', disabled: false },
+    { id: 2, description: 'Forum', url: '/forum', icon: 'fas fa-comments', disabled: false },
+    { id: 3, description: 'My Game Collection', url: '/gameshop', icon: 'fas fa-gamepad', disabled: false },
+    { id: 4, description: 'Articles', url: '/articles', icon: 'fas fa-newspaper', disabled: false },
+    { id: 5, description: 'About me', url: '/aboutme', icon: 'fas fa-grin-beam', disabled: false },
   ]
 
   constructor(private router:Router, private modalService: NgbModal,
