@@ -34,9 +34,9 @@ export class AppComponent implements OnInit{
   flagIcon = '';
 
   avkThemes = [
-    { id: 'light', description: 'Light', icon: 'far fa-sun' },
-    { id: 'dark', description: 'Dark', icon: 'far fa-moon' },
-    /*{ id: 'hell', description: 'Hell', icon: 'fas fa-skull-crossbones' },*/
+    { id: 'light', description: 'Light', icon: 'far fa-sun', cssId: 'light-mode' },
+    { id: 'dark', description: 'Dark', icon: 'far fa-moon', cssId: 'dark-mode' },
+    /*{ id: 'hell', description: 'Hell', icon: 'fas fa-skull-crossbones', cssId: 'hell-mode' },*/
   ];
  
   selectedIsoA2 = this.contextService.getIsoA2();
@@ -135,19 +135,19 @@ export class AppComponent implements OnInit{
     this.contextService.setAgreedToCookies();
   }
   
-  setTheme(theme:string){
-    this.selectedTheme = theme;
+  setTheme(selectedThemeId:string){
+    this.selectedTheme = selectedThemeId;
     this.contextService.setTheme(this.selectedTheme);
-    if(this.selectedTheme === 'dark'){
-      document.body.classList.remove("light-mode");
-      document.body.classList.add("dark-mode");
-      document.getElementById("myapproot").classList.remove("light-mode");
-      document.getElementById("myapproot").classList.add("dark-mode");
-    } else {
-      document.body.classList.remove("dark-mode");
-      document.body.classList.add("light-mode");
-      document.getElementById("myapproot").classList.remove("dark-mode");
-      document.getElementById("myapproot").classList.add("light-mode");
+
+    for(let theme of this.avkThemes){
+      if(theme.id === selectedThemeId){
+        document.body.classList.add(theme.cssId);
+        document.getElementById("myapproot").classList.add(theme.cssId); 
+      } else {
+        document.body.classList.remove(theme.cssId);
+        document.getElementById("myapproot").classList.remove(theme.cssId);
+      }
+
     }
   }
 }
