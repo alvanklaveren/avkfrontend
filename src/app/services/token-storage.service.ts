@@ -59,7 +59,10 @@ export class TokenStorageService {
    * Remove tokens
    */
   public clear() {
-    sessionStorage.clear();
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(REFRESH_KEY);
+    sessionStorage.removeItem(USER_KEY);
+    // keep agreed-to-cookies cookie
   }
 
   /* User */
