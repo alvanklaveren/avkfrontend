@@ -19,6 +19,7 @@ import { AdministratorPageModule } from './components/administrator/administrato
 import { ArticlesModule } from './components/articles/articles.module';
 import { AuthInterceptor } from './auth.interceptor';
 import { CookieModalComponent } from './cookiemodal.component';
+import { CookieService } from 'ngx-cookie-service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,7 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdministratorPageModule,
     ArticlesModule,
   ],
-  providers: [{provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true}],
+  providers: [CookieService, {provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true}],
   bootstrap: [AppComponent] 
 })
 export class AppModule { }

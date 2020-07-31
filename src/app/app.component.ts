@@ -67,8 +67,8 @@ export class AppComponent implements OnInit{
           keyboard : false,
           ariaLabelledBy: 'app-cookie-modal'
         };
+        
         let modal = this.modalService.open(CookieModalComponent, ngbModalOptions);
-        modal
     
         modal.result.then((result) => {
           this.contextService.setAgreedToCookies();

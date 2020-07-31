@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslationService } from './translation.service';
+import { CookieService } from 'ngx-cookie-service';
+import * as moment from 'moment';
 
 const ISOA2 = 'isoA2';
 const THEME = 'theme';
 const LIST_TYPE = 'listType';
 const AGREED_TO_COOKIE = 'agreedToCookie';
+const AGREED_TO_COOKIE_ALIVE_DAYS = 1;
 
 @Injectable({ providedIn: 'root' })
 export class ContextService {
 
 
-  constructor(private http: HttpClient, private translationService:TranslationService) { }
+  constructor(private http: HttpClient, private translationService:TranslationService, 
+              private cookieService: CookieService) { }
 
   public getGameListType(): string {
     let listType = localStorage.getItem(LIST_TYPE);
@@ -44,11 +48,25 @@ export class ContextService {
   }
 
   public hasAgreedToCookies(): boolean {
-    return (sessionStorage.getItem(AGREED_TO_COOKIE) === 'y');
+    let cookie = this.cookieService.get(AGREED_TO_COOKIE);
+    if(cookie == null || cookie == undefined || cookie === 'undefined') { 
+      return false; 
+    }    
+
+    let existingCookieDate = moment(cookie);
+    if(existingCookieDate == null || existingCookieDate == undefined) { return false; }
+
+    if(moment.utc().subtract(AGREED_TO_COOKIE_ALIVE_DAYS, 'days').isAfter(existingCookieDate)){
+      return false;
+    }
+    return true;
   }
 
   public setAgreedToCookies(): ContextService{
-    return this.setSessionGlobal(AGREED_TO_COOKIE, 'y');
+    let today = moment.utc();
+    console.log(today.format());
+    this.cookieService.set(AGREED_TO_COOKIE, today.format());
+    return this;
   }
 
   public translate(original: string){
