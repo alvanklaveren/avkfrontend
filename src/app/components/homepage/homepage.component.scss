@@ -1,4 +1,10 @@
-#hellogalaxy{
+#hellogalaxy_light{
+    width:70%; 
+    border:2; 
+    box-shadow:2px 5px 10px #66A0A0;
+}
+
+#hellogalaxy_dark {
     width:70%; 
     border:2; 
     box-shadow:2px 5px 10px #66A0A0;
@@ -11,7 +17,13 @@
 
 /* Extra Small devices (phones, > 768px) */
 @media only screen and (max-width:767px){   
-    #hellogalaxy {
+    #hellogalaxy_light {
+        width:98%; 
+        border:1; 
+        box-shadow:1px 1px 2px #66A0A0;
+    }
+
+    #hellogalaxy_dark {
         width:98%; 
         border:1; 
         box-shadow:1px 1px 2px #66A0A0;
