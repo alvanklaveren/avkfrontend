@@ -108,16 +108,18 @@ export class GameShop implements OnInit{
             let productSortId = 0;
         
             if(!this.codeGameConsole){ 
-              this.codeProductType = 0; 
+              this.codeGameConsole = 0;
             }
             
             if(this.codeGameConsole == 0){
-              this.codeProductType == 0;
+              this.codeProductType = 0;
               productSortId = 3;
+            } else {
+              productSortId = 0;
             }
         
             if(!this.codeProductType){ this.codeProductType = 0; }
-            
+
             this.searchForm.patchValue({
               productSortId: productSortId,
             });
@@ -131,6 +133,10 @@ export class GameShop implements OnInit{
 
   getProductList(){
     let sf = this.searchForm.value;
+
+    this.searchForm.patchValue({
+      productSortId: sf.productSortId,
+    });
 
     if(!this.codeGameConsole || this.codeGameConsole === 0){ 
       if((!this.codeProductType || this.codeProductType === 0) && sf.productSortId === 3){
@@ -299,6 +305,7 @@ export class GameShop implements OnInit{
 
     // same page navigate will change the url but will not reload the page (this is exactly what we want)
     this.router.navigateByUrl('gameshop/' + this.codeGameConsole + '/' + this.codeProductType);
+
     // refresh the part of the page that matters.
     this.products = [];
     this.getProductList();
