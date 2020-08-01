@@ -49,7 +49,8 @@ export class ContextService {
 
   public hasAgreedToCookies(): boolean {
     let cookie = this.cookieService.get(AGREED_TO_COOKIE);
-    if(cookie == null || cookie == undefined || cookie === 'undefined') { 
+    console.log(cookie);
+    if(cookie == null || cookie == undefined || cookie === 'undefined' || cookie === '') { 
       return false; 
     }    
 
