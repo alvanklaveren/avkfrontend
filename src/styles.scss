@@ -32,16 +32,34 @@ body::-webkit-scrollbar {
     background-color: #0072C6;
 }
 
-.light-mode #hellogalaxy_dark{
-    display:none;
+.light-mode {
+    #hellogalaxy_dark{    
+        display:none;
+    }
+
+    #hellogalaxy_demon{
+        display:none;
+    }
+
 }
 
-.dark-mode #hellogalaxy_light{
-    display:none;
+.dark-mode{
+    #hellogalaxy_light{
+        display:none;
+    }
+
+    #hellogalaxy_demon{
+        display:none;
+    }
 }
 
-.hell-mode  #hellogalaxy_light{
-    display:none;
+.hell-mode{
+    #hellogalaxy_light{
+        display:none;
+    }
+    #hellogalaxy_dark{
+        display:none;
+    }
 }
 
 .light-mode #logo_big a{
