@@ -19,6 +19,7 @@ import { ContextService } from '../../services/context.service';
 import { UploadImageModalComponent } from './modals/uploadimagemodal.component';
 import { RatingModalComponent } from './modals/ratingmodal.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Company } from 'src/app/models/company';
 
 @Component({
   selector: 'app-gameshop',
@@ -45,12 +46,15 @@ export class GameShop implements OnInit{
 
   products: Array<Product>;
 
+  gameConsoleCompanies: Array<Company>;
+  gameConsoleMenuList: Array<{companyName:string, consoles: Array<GameConsole>}> = [];
+
   codeGameConsole: number;
   codeProductType: number;
 
-  gameConsoleList: [GameConsole];
-  productTypeList: [ProductType];
-  productSortList: [ProductSort];
+  gameConsoleList: Array<GameConsole>;
+  productTypeList: Array<ProductType>;
+  productSortList: Array<ProductSort>;
 
   pageSize = 24;
   page = 0;
@@ -95,13 +99,32 @@ export class GameShop implements OnInit{
     this.imageUrl = this.gameShopService.imageUrl;
 
     this.gameShopService.getProductSortList().subscribe(res => {
-        this.productSortList = res as [ProductSort];
+        this.productSortList = res as Array<ProductSort>;
 
         this.gameShopService.getGameConsoleList().subscribe(res => {
-          this.gameConsoleList = res as [GameConsole];
+          this.gameConsoleList = res as Array<GameConsole>;
+          
+          this.gameConsoleCompanies = [];
+
+          for(let gcc of this.gameConsoleList.map(gc => gc.company)) {
+            // when company (gcc) is undefined, it is not a gameconsole, but a wildcard 
+            // ('All', for instance), we add these wildcards to the menu separately.
+            if(gcc) {
+              if(this.gameConsoleCompanies.filter(obj => obj.code === gcc.code).length == 0) {
+                this.gameConsoleCompanies.push(gcc);
+              }
+            }
+          }
+
+          for(let company of this.gameConsoleCompanies){
+            let companyName: string = company.description;
+            let consoles = this.gameConsoleList.filter(gc => gc.company?.code == company.code);
+            let gameConsoleMenuItem = {companyName, consoles};
+            this.gameConsoleMenuList.push(gameConsoleMenuItem);
+          }
 
           this.gameShopService.getProductTypeList().subscribe(res => {
-            this.productTypeList = res as [ProductType];
+            this.productTypeList = res as Array<ProductType>;
 
             this.codeGameConsole = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
             this.codeProductType = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeProductType'));

@@ -39,6 +39,7 @@
 						<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'Consoles' | translate }}</a>
 						<div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown1">
 							<a ngbDropdownItem *ngFor="let gc of gameConsoleList" class="dropdown-item" (click)="this.codeGameConsole=gc.code;onFilterChanged()">{{ gc.description }}</a>
+							<!-- <a ngbDropdownItem *ngFor="let gcList of gameConsoleMenuList" class="dropdown-item">{{ gcList.companyName }}</a> -->
 						</div>
 					</li>
 					<li ngbDropdown class="nav-item">
