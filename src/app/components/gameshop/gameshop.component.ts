@@ -243,11 +243,11 @@ export class GameShop implements OnInit{
     }
 
     modal.result.then((result) => {
-      window.location.reload();
+      product = result as Product;
       
     }, (reason) => {
       if(reason === 'Deleted') {
-        window.location.reload();
+        
       }
     });
   }
