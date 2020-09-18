@@ -153,9 +153,8 @@ alter table person add version mediumint unsigned default 0;
 		and enforce separation of UI from business logic.
 		<br><br>
 		Clean architecture is about separation of responsibilities, which I will explain briefly before going through the code, starting with the back-end:
-		When an external application connects to our server, it does so using an API. 
 		<br><br>
-		This API is formed by a component called a (rest) service. The only responsibility of this service is accept the incoming data (if any), 
+		When an external application connects to our server, it does so using an API. This API is formed by a component called a (rest) service. The only responsibility of this service is accept the incoming data (if any), 
 		possibly pre-format it a bit, and give it to the next layer, the usecase.
 		<br><br>
 		The usecase is where the business logic resides. This layer is responsible for taking in the (input) data from the service layer and decide
