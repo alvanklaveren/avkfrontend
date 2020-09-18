@@ -34,10 +34,11 @@
 		Welcome to a fast course in website building with Angular (typescript) and Spring (Java) using clean architecture 
 		to model our code, and service oriented architecture to enforce separation of front- and back-end.
 		<br><br>
-		The <a href="../../../assets/documents/WebsiteBuildingCourse.zip">zip</a> file that comes with this document contains the source code of both front- and back-end, and a script to 
-		setup the database. In chapter 1 I will very briefly explain how to setup the database, IDE and source folders, 
-		but expect the reader to do most of the setup without our help. In chapter 2 I briefly explain the architecture 
-		of the source code and walk through the code explaining some details on what is what and how Spring (JPA) works.
+		The <a href="../../../assets/documents/WebsiteBuildingCourse.zip">zip</a> file that comes with this document briefly
+		contains the source code of both front- and back-end, and a script to setup the database. In chapter 1, I will very 
+		explain how to setup the database, IDE and source folders, but I expect the reader to do most of the setup without
+		my help. In chapter 2, I explain more about the architecture of the source code and walk you through the code 
+		explaining some details on "what is what" and how Spring (Boot/JPA) works.
 		<br><br>
 		The web application we are going to “build” allows you to add information on people, where I focus on the three 
 		things that are 80% of what most web apps do: show a list of entities (persons in this case), go into the details 
@@ -48,7 +49,7 @@
 		<p>When you click on a person, you are redirected to a detail page:</p>
 		<img src="./assets/images/build-website-2.png" alt="<picture not found>" style="width:100%; border:1px solid black"></img>
 		<br><br>
-		<p>And when “Add” or “Edit”, a modal opens that allows use to add, update, or delete a person:</p>
+		<p>And when “Add” or “Edit” is pressed, a modal window opens that allows us to add, update, or delete a person:</p>
 		<img src="./assets/images/build-website-3.png" alt="<picture not found>" style="width:50%; border:1px solid black"></img>
 		<br>
 	</p>
@@ -127,10 +128,10 @@ alter table person add version mediumint unsigned default 0;
 	<h4 id="h4">1.3 Front-end</h4>
 	<p style="text-align:justify">
 		Use commandline to navigate to “C:\MyWeb\Frontend” and type:
-		<ol>
+		<ul>
 			<li>npm install @angular/cli -g</li>
 			<li>npm install bootstrap</li>
-		</ol>
+		</ul>
 		<br>
 
 		<ol>
@@ -154,14 +155,14 @@ alter table person add version mediumint unsigned default 0;
 		Clean architecture is about separation of responsibilities, which I will explain briefly before going through the code, starting with the back-end:
 		When an external application connects to our server, it does so using an API. 
 		<br><br>
-		This API is formed by a component called a (Rest) service. The only responsibility of this service is accept the incoming data (if any), 
+		This API is formed by a component called a (rest) service. The only responsibility of this service is accept the incoming data (if any), 
 		possibly pre-format it a bit, and give it to the next layer, the usecase.
 		<br><br>
-		The usecase is where the business logic resides. This layer is responsible for taking in the (input) data from the service layer, and decide
-		whether the data can be used or trusted. The usecase then optionally talks to the next layer, the repository, to connect to the database.
+		The usecase is where the business logic resides. This layer is responsible for taking in the (input) data from the service layer and decide
+		whether the data can be trusted and used. The usecase then optionally talks to the next layer, the repository, to connect to the database.
 		<br><br>
-		In the explanation, I will use two terms, DTO and entity. DTO is short for Data Transfer Object and is nothing more than a container 
-		(a structure if you will) of data. An entity however is a container that is directly connected to a row in a database table.
+		Before going into detail, I will first explain two terms: DTO and entity. DTO is short for Data Transfer Object and is nothing more than a 
+		container (a structure if you will) of data. An entity however is a container that is directly connected to a row in a database table.
 		<br><br>
 		In short, the program flow through these layers is:
 		<br>
@@ -179,22 +180,22 @@ alter table person add version mediumint unsigned default 0;
 		In the person service class, I have setup the API which can be used by external programs, which in our example is the front-end application, 
 		but you can just as easily access them using <code>“http://localhost:8080/{function}”</code> where {function} is replaced by the request mapping.
 		<br><br>
-		Because we make use of the Spring framework, which you don’t have to fully understand now, it is best if we start with the @ annotations in 
+		Because we make use of the Spring framework, which you don’t have to fully understand right now, it is best if we start with the @ annotations in 
 		the source code. What we are not going to do is explain how these annotations work.
 		<br><br>
-		The <code>@RestController</code> annotation tells the spring framework that this class in going to talk to the outside world. Because Spring 
-		is capable of automatically scanning the code for this annotations, no additional setup is required (although there are some exceptions, 
+		The <code>@RestController</code> annotation tells the spring framework that this class is going to talk to the outside world. Because Spring 
+		is capable of automatically scanning the code for these annotations, no additional setup is required (although there are some exceptions, 
 		which we will not go into right now).
 		<br><br>
-		The <code>@RequestMapping</code> is basically telling Spring what the API is to access a particular class or function of that class. By mapping 
-		the Class itself, in this example with “/person” we do not have to repeat ourselves for each and every function in this class, like person/getCities, 
+		The <code>@RequestMapping</code> is basically telling Spring what to "call" to access a particular class or function of that class. By mapping 
+		the class itself, in this example with “/person” we do not have to repeat ourselves for each and every function in this class, like person/getCities, 
 		person/savePerson, and so on.
 		<br><br>
 		The <code>@Autowired</code> annotation is an annotation that we will see in more classes, and it tells Spring to inject (construct) an object that 
 		is going to be used in this UseCase object. The idea is that Spring has a pool of these objects, and will prevent creation of such an object more 
-		than once, when it can be easily reused. This way we do not have to bother about memory management, as Spring does it for us. 
+		than once, when it can just as easily be reused. This way we do not have to bother about memory management, as Spring does it for us. 
 		<br><br>
-		<i>Important: Be aware that these autowired classes should never be stateful, so prevent using global variables.</i>
+		<i>Important: Be aware that these autowired classes should never be stateful, so prevent using global or instance variables that would make the object stateful.</i>
 		<br><br>
 		The <code>@CrossOrigin</code> can be ignored for now, but it has to do with preventing Cross Site Scripting hacking attempts, which should be 
 		setup carefully in a production environment.
@@ -211,7 +212,7 @@ alter table person add version mediumint unsigned default 0;
 	<h5 id="h5">2.1.2 PersonUseCase.java</h5>
 	<p style="text-align:justify">
 		The <code>@Transactional</code> annotation tells the Spring JPA framework that a database connection should be started. The framework automatically injects 
-		an transaction manager, start a session, and ensures that when we leave this function (and go back to the service layer) it closes the connection and either 
+		a transaction manager, start a session, and ensures that when we leave this function (and go back to the service layer) it closes the connection and either 
 		commits or rolls back the database transaction/session.
 		<br><br>
 		<i>
@@ -221,7 +222,7 @@ alter table person add version mediumint unsigned default 0;
 		<br><br>	
 		In the save function, we see that an attempt is made first to fetch a possibly existing person from the database, given that the id value (the primary key 
 		of table Person) in the PersonDTO object is not empty. Because we are inside a transaction (<code>@Transactional</code>), the fetch or newly created Person
-		object is automatically persisted in the session of the transaction. Spring understands that Person is an entity because of the annotation in that class: 
+		object is automatically persisted in the session of the transaction. Spring understands that Person is a database entity, because of the annotation in that class: 
 		<code>@Entity</code>.
 		<br><br>
 		Next, the person object is updated with the values from the DTO (and here it comes) “that we trust”. As explained, data coming from an external source can 
@@ -233,7 +234,7 @@ alter table person add version mediumint unsigned default 0;
 	<p style="border:1; border-color:gray; border-style:dotted; background:lightgray; text-align:justify">
 		<i>Entity</i>
 		<br><br>
-		 Before we continue to the repository layer, we quickly explain a few things about an entity object that you will probably not easily get from all the 
+		 Before we continue to the repository layer, I will quickly explain a few things about an entity object that you will probably not easily get from all the 
 		 JPA tutorials found on the Internet.
 		 <br><br>
 		 The <code>@Version</code> annotation helps JPA understand that it needs to be used to prevent user concurrency. The version column is updated by one each time an 
@@ -249,7 +250,7 @@ alter table person add version mediumint unsigned default 0;
 	<h5 id="h5">2.1.3 PersonRepository.java</h5>
 	<p style="text-align:justify">
 		This class extends a JPA Repository class that manages the basic update, delete, save, and fetch functions. Everything that is not already in the parent class “CrudRepository”, like save(), 
-		can be added here, for instance a function that searches a Person on id, and returns a Person object if person exists, or null if not. Mind you that a “get” would throw a RuntimeException 
+		can be added here, for instance a function that searches a Person on id, and returns a Person object if the person exists (Optional&lt;&gt;). Mind you that a “get” would throw a RuntimeException 
 		if the id could not be matched with a row in the Person table.
 		<br><br>
 		In our save example, it will save the entity to the database, and return the “saved” entity, containing a new version number and a value for id in case the record was new (insert into ..).
@@ -272,8 +273,8 @@ alter table person add version mediumint unsigned default 0;
 		<i>DTO</i>
 		<br><br>
 		A DTO is nothing more than a data container and should never become stateful like an entity does. A DTO does not have to reflect the entire table row, but for convenience
-		and easy explaining in this tutorial, we did make them represent the entire table row. Mind that for instance “city” in PersonDTO is not called “cityDTO”, as this name is
-		 meaningless to a third party calling the service. However, there is no harm in actually calling it cityDTO, in case you are wondering.
+		and ease of explanation in this tutorial, we did make them represent the entire table row. Mind that for instance “city” in PersonDTO is not called “cityDTO”, as this name is
+		meaningless to a third party calling the service. But there is no harm in actually calling it cityDTO, in case you were wondering.
 	</p>
 
 	<p style="text-align:justify">
@@ -285,7 +286,9 @@ alter table person add version mediumint unsigned default 0;
 	<h4 id="h5">2.2 Front-end</h4>
 	<p style="text-align:justify">
 		Basically, you can use any front-end (driven) software or back-end software to access the Rest calls from the service layer in your backend, but in this example we use 
-		Angular/typescript to create the UI of this application.
+		<a href="https://angular.io/">Angular (TypeScript)</a> to create the UI of this application.
+		<br><br>
+		Learning about Angular and TypeScript is best done using the tutorials present on the Internet, so we will stick to only explaining this structure.
 		<br><br>
 		The structure of the app is as follows:
 		<ol>
@@ -293,9 +296,6 @@ alter table person add version mediumint unsigned default 0;
 			<li><i>app/services</i> - The functions that talk to the service layer in the back-end</li>
 			<li><i>app/person</i> - The actual UI that makes use of the models and services</li>
 		</ol>
-		<p style="text-align:justify">
-			Learning about Angular and TypeScript is best done using the tutorials present on the Internet, so we will stick to only explaining this structure.
-		</p>
 		The structure of the UI components is as follows:
 		<ol>
 			<li><i>app/person</i> - Contains (at least) the persons list window</li>
@@ -305,16 +305,16 @@ alter table person add version mediumint unsigned default 0;
 		We start in the component that is responsible for showing us the persons list: app/person/persons.component.ts
 		<br><br>
 		<p style="text-align:justify">
-			in the ngOnInit(), we start by calling the service layer to fetch the list of all persons from the back-end. When this list is returned, it is stored in the components 
+			in the ngOnInit(), we start by calling the service layer to fetch the list of all persons from the back-end. When this list is returned, it is stored in the component's 
 			instance variable persons. Because of how Angular works, it automatically translates this to the corresponding HTML in the .html file (see the templateURL for the filename), 
-			and to keep maintenance low it is best to keep the names of the .ts and .html file (and .scss when you want page specific CSS tricks) the same.
+			and to keep maintenance low it is best to keep the names of the .ts and .html file (and .scss when you want to use page-specific <a href="https://css-tricks.com/">CSS Tricks</a>) the same.
 			<br><br>
 			When we click on one of the persons in the browser, it navigates to function openPersonDetails() which in turn navigates to another component found in the app-routing-module.ts, 
 			in this case that is the persondetail.component.ts, and opens that component in the browser, leaving the list window we were in.
 			<br><br>
 			When we click on the “Add” button however, it will not navigate to another window, but open a modal window, personmodal.component.ts, where you can add a new person if so needed 
 			(and the same for editing or deleting when accessing the modal from the person details window). In this particular case we do not actually leave the persons list window or the 
-			person detail window when modal is opened from there.
+			person detail window when we open the modal.
 			<br><br>
 			Because Angular is reactive, it will automatically update the info in your browser when the data in your modal is directly connected to the data in, for instance, 
 			the person detail window.
@@ -325,7 +325,7 @@ alter table person add version mediumint unsigned default 0;
 	<h3 id="h3">Final words</h3>
 	<p style="text-align:justify">
 		This tutorial explained how to setup your code to create a very basic website. Of course there are many factors to consider when setting up a website, for instance encryption 
-		(https), (single-)sign-on, performance, reporting, and so on, and so forth, but with the breadcrumbs provided in this document you already have a way of organizing and 
+		(https), (single-)sign-on, performance, reporting, and so on, and so forth. But with the breadcrumbs provided in this document you already have a way of organizing and 
 		maintaining your code for your future website.
 		<br><br>
 		Now get coding … 
