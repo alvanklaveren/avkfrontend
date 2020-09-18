@@ -25,7 +25,8 @@ export class Articles implements OnInit{
     {id: 'SpringAndWicket', title: 'How to add Spring to your existing Wicket application Part 1: Setup', document:'SpringWicket.html', order: 2 },
     {id: 'OPENSHIFTv2-TOMCAT7', title: 'How to install a Java EE/Tomcat7 webapplication on OpenShift Online v2', document:'openshift-tomcat7.html', order: 3 },
     {id: 'OPENSHIFTv3-WILDFLY', title: 'How to install a Java EE/Wildfly webapplication on OpenShift Online v3', document:'openshift-wildfly.html', order: 4 },
-    {id: 'DIGITAL OCEAN', title: 'How to install an Angular/Spring webapplication on Digital Ocean', document:'digital-ocean.html', order: 5 },
+    {id: 'DIGITAL-OCEAN', title: 'How to install an Angular/Spring webapplication on Digital Ocean', document:'digital-ocean.html', order: 5 },
+    {id: 'BUILD-WEBSITE', title: 'Build your own website with Spring and Angular', document:'website-template.html', order: 6 },
   ] 
 
   webhostingArticles = [

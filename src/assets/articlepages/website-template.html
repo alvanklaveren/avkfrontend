@@ -1,0 +1,343 @@
+<span>
+    <div class="container">
+      <div class="blog-header">
+        <h1 class="blog-title">Website Template in Spring and Angular</h1>
+        <p class="lead blog-description">Start building a website with Spring and Angular using this template</p>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+          <div class="blog-post">
+            <h2 class="blog-post-title">Start building a website with Spring and Angular using this template</h2>
+            <p class="blog-post-meta">September 18, 2020 by <a href="#">Alex</a></p>
+
+			<p style="text-align:justify">Want to build a website in <a href="https://spring.io/">Spring</a> (Java) and 
+				<a href="https://angular.io/">Angular</a> (TypeScript), but don't
+				want to start from scratch figuring out by trial and error how to get something display in your browser?
+				Start here. This article contains a fully functioning, fairly minimalistic, website to give you
+				a playground to start experimenting and learning Java, TypeScript, and web-related stuff like Bootstrap.
+	        </p>
+
+<hr>
+<h3 id="h3">Before we start...</h3>
+	<p style="text-align:justify">
+	Prior to reading the article I expect you to have at least some knowledge of and experience with:
+	</p>
+	<ol class="blog-ul" style="text-align:justify">
+		<li>Java, or another object oriented language</li>
+		<li>The basics of HTML</li>
+		<li>MYSQL, or another relational database management system</li>
+	</ol>
+		
+	<h3 id="h3">Introduction</h3>
+	<p style="text-align:justify">
+		Welcome to a fast course in website building with Angular (typescript) and Spring (Java) using clean architecture 
+		to model our code, and service oriented architecture to enforce separation of front- and back-end.
+		<br><br>
+		The <a href="../../../assets/documents/WebsiteBuildingCourse.zip">zip</a> file that comes with this document contains the source code of both front- and back-end, and a script to 
+		setup the database. In chapter 1 I will very briefly explain how to setup the database, IDE and source folders, 
+		but expect the reader to do most of the setup without our help. In chapter 2 I briefly explain the architecture 
+		of the source code and walk through the code explaining some details on what is what and how Spring (JPA) works.
+		<br><br>
+		The web application I am going to “build” allows you to add information on people, where I focus on the three 
+		things that are 80% of what most web apps do: show a list of entities (persons in this case), go into the details 
+		of such an entity, and the ability to add, delete and update such an entity.
+		<p>The first is a list of entities:</p>
+		<img src="./assets/images/build-website-1.png" alt="<picture not found>" style="width:100%; border:1px solid black"></img>
+		<br><br>
+		<p>When you click on an person, you are redirected to a detail page:</p>
+		<img src="./assets/images/build-website-2.png" alt="<picture not found>" style="width:100%; border:1px solid black"></img>
+		<br><br>
+		<p>And when “Add” or “Edit”, a modal opens that allows use to add, update, or delete a person:</p>
+		<img src="./assets/images/build-website-3.png" alt="<picture not found>" style="width:50%; border:1px solid black"></img>
+		<br>
+	</p>
+
+	<br>
+	<h3 id="h3">1 Setup</h3>
+	First, download the source code <a href="../../../assets/documents/WebsiteBuildingCourse.zip">here</a>.
+	<br><br>
+	<h4 id="h4">1.1 Prepare Database</h4>
+	<p style="text-align:justify">
+		<ol>
+			<li>Install MySQL</li>
+			<li>Install Dbeaver and connect to MYSQL on localhost</li>
+		</ol>
+		Create new Database and give it a name. In this example I will name it ‘mydb’.
+		<img src="./assets/images/build-website-4.png" alt="<picture not found>" style="width:50%; border:1px solid black"></img>
+		<br>
+		Right-click on the database name “mydb” and select “set as default”.
+		<br>
+		<img src="./assets/images/build-website-5.png" alt="<picture not found>" style="width:30%; border:1px solid black"></img>
+		<br><br>
+		<ol>
+			<li>In the SQL editor window, run the following SQL script:
+<pre><code>
+create table city(id int(5) unsigned not null primary key auto_increment, name varchar(256));
+create table person(id int(5) unsigned not null primary key auto_increment, name varchar(256), street varchar(256), postal_code varchar(16), city_id int(5) unsigned, foreign key (city_id) references city(id));					
+
+insert into city(name) values('Amsterdam');
+insert into city(name) values('London');
+insert into city(name) values('Paris');
+insert into city(name) values('Madrid');
+insert into city(name) values('Rome');
+
+insert into person(name, street, postal_code, city_id) values('Jannie Jansen', 'Abraham Kuyperstraat 9000', '1067 DH', 1);
+insert into person(name, street, postal_code, city_id) values('Joe Smith', 'Oxford Street 9000', 'W1D 1BS', 2);
+commit;
+
+alter table city add version mediumint unsigned default 0;
+alter table person add version mediumint unsigned default 0;
+</code></pre>
+				<br>
+				The last two instructions are to enable versioning, which helps to control user-concurrency.
+			</li>
+		</ol>
+	</p>
+	
+	<br>
+	<h4 id="h4">1.2 Back-end</h4>
+	<p style="text-align:justify">
+		<ol>
+			<li>Install <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html">Java 8 (JRE/JDK)</a> or higher</li>
+			<li>Install a Java IDE. In this article I use <a href="https://www.jetbrains.com/idea/download">IntelliJ Community Edition</a></li>
+			<li>Open the project found in the zip file. The location I use in this course is C:\MyWeb\Backend</li>
+			<li>Go to file application.properties: Make sure the database, username, and password match your setup. 
+				In this example the application properties look like this:
+				<img src="./assets/images/build-website-6.png" alt="<picture not found>" style="width:100%; border:1px solid black"></img>
+				<br><br>
+			</li>
+			<li>Setup an edit configuration (right side of top bar). In our example we call it MyWebsite. To create a configuration, 
+				click on the configuration (or “edit configurations” if none exists yet) 
+				<img src="./assets/images/build-website-7.png" alt="<picture not found>" style="width:100%; border:1px solid black"></img>
+				<br><br>
+				and create a new one
+				<img src="./assets/images/build-website-8.png" alt="<picture not found>" style="width:100%; border:1px solid black"></img>
+				<br><br>
+				The value for command line enables the debugger in IntelliJ:<br>
+				<code>spring-boot:run "-Drun.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8080 -Dserver.port=8005"</code>
+				<br>
+				Next, start your backend server by pressing the  <img src="./assets/images/build-website-9.png" alt="<picture not found>" style="width:3%; border:1px solid black"></img> icon.
+				  
+			</li>
+		</ol>
+	</p>
+
+	<br>
+	<h4 id="h4">1.3 Front-end</h4>
+	<p style="text-align:justify">
+		Use commandline to navigate to “C:\MyWeb\Frontend” and type:
+		<ol>
+			<li>npm install @angular/cli -g</li>
+			<li>npm install bootstrap</li>
+		</ol>
+		<br>
+
+		<ol>
+			<li>Install <a href="https://code.visualstudio.com/download">Visual Studio Code</a></li>
+			<li>Open the “C:\MyWeb\Frontend” folder in visual code.</li>
+			<li>Open a terminal (DOS shell) in VSCode and type “npm start”.</li>
+		</ol>
+		<br>
+		Your setup is now complete.<br>
+		To open the application go to an internet browser and navigate to <a href="http://localhost:4200">http://localhost:4200</a>
+	</p>
+
+	<br>
+	<h3 id="h3">2 Source Code Explained</h3>
+	<br>
+	<h4 id="h4">2.1 Back-end</h4>
+	<p style="text-align:justify">
+		Service oriented architecture brings many advantages like being able to use more than one (back-end) language for the same application, 
+		and enforce separation of UI from business logic.
+		<br><br>
+		Clean architecture is about separation of responsibilities, which I will explain briefly before going through the code, starting with the back-end:
+		When an external application connects to our server, it does so using an API. 
+		<br><br>
+		This API is formed by a component called a (Rest) service. The only responsibility of this service is accept the incoming data (if any), 
+		possibly pre-format it a bit, and give it to the next layer, the usecase.
+		<br><br>
+		The usecase is where the business logic resides. This layer is responsible for taking in the (input) data from the service layer, and decide
+		whether the data can be used or trusted. The usecase then optionally talks to the next layer, the repository, to connect to the database.
+		<br><br>
+		In the explanation, I will use two terms, DTO and entity. DTO is short for Data Transfer Object and is nothing more than a container 
+		(a structure if you will) of data. An entity however is a container that is directly connected to a row in a database table.
+		<br><br>
+		In short, the program flow through these layers is:
+		<br>
+		Service → dto (untrusted) → UseCase → entity (trusted) → Repository
+		<br>
+		and back:
+		<br>
+		Repository → entity (trusted) → UseCase → dto (trusted) → Service 
+		<br><br>
+		In the explanation, I will not duplicate/show code as you already have the source code in front of you. 
+	</p>
+	<br>
+	<h5 id="h5">2.1.1 PersonService.java</h5>
+	<p style="text-align:justify">
+		In the person service class, I have setup the API which can be used by external programs, which in our example is the front-end application, 
+		but you can just as easily access them using <code>“http://localhost:8080/{function}”</code> where {function} is replaced by the request mapping.
+		<br><br>
+		Because we make use of the Spring framework, which you don’t have to fully understand now, it is best if we start with the @ annotations in 
+		the source code. What we are not going to do is explain how these annotations work.
+		<br><br>
+		The <code>@RestController</code> annotation tells the spring framework that this class in going to talk to the outside world. Because Spring 
+		is capable of automatically scanning the code for this annotations, no additional setup is required (although there are some exceptions, 
+		which we will not go into right now).
+		<br><br>
+		The <code>@RequestMapping</code> is basically telling Spring what the API is to access a particular class or function of that class. By mapping 
+		the Class itself, in this example with “/person” we do not have to repeat ourselves for each and every function in this class, like person/getCities, 
+		person/savePerson, and so on.
+		<br><br>
+		The <code>@Autowired</code> annotation is an annotation that we will see in more classes, and it tells Spring to inject (construct) an object that 
+		is going to be used in this UseCase object. The idea is that Spring has a pool of these objects, and will prevent creation of such an object more 
+		than once, when it can be easily reused. This way we do not have to bother about memory management, as Spring does it for us. 
+		<br><br>
+		<i>Important: Be aware that these autowired classes should never be stateful, so prevent using global variables.</i>
+		<br><br>
+		The <code>@CrossOrigin</code> can be ignored for now, but it has to do with preventing Cross Site Scripting hacking attempts, which should be 
+		setup carefully in a production environment.
+		<br><br>
+		The <code>@RequestBody</code> (or <code>@RequestParam</code>) helps Spring understand that the argument of a function is fetched either from the body 
+		of the HTTP-request, or the URL.
+		<br><br>
+		In the save function, the argument given is a (Person)DTO object, containing data to update either an existing person or add a new one. 
+		Obviously an HTTP-request does not know what a PersonDTO is, and because of the Spring Framework we use, the JSON received is automatically 
+		mapped to a PersonDTO, given that we expect the JSON to contain the necessary data to populate this DTO. Next, the DTO is given to a function 
+		in the UseCase.
+	</p>
+	<br>
+	<h5 id="h5">2.1.2 PersonUseCase.java</h5>
+	<p style="text-align:justify">
+		The <code>@Transactional</code> annotation tells the Spring JPA framework that a database connection should be started. The framework automatically injects 
+		an transaction manager, start a session, and ensures that when we leave this function (and go back to the service layer) it closes the connection and either 
+		commits or rolls back the database transaction/session.
+		<br><br>
+		<i>
+			Important: Prevent commit or rollback within a transaction. It will make maintenance of the application next to impossible. 
+			Leave transaction management to the Spring framework!
+		</i>
+		<br><br>	
+		In the save function, we see that an attempt is made first to fetch a possibly existing person from the database, given that the id value (the primary key 
+		of table Person) in the PersonDTO object is not empty. Because we are inside a transaction (<code>@Transactional</code>), the fetch or newly created Person
+		object is automatically persisted in the session of the transaction. Spring understands that Person is an entity because of the annotation in that class: 
+		<code>@Entity</code>.
+		<br><br>
+		Next, the person object is updated with the values from the DTO (and here it comes) “that we trust”. As explained, data coming from an external source can 
+		not be fully trusted, so we need to be careful what we accept as trusted.
+		<br><br>
+		When the person object has been fully constructed, and updated, it is given to the next layer, the Repository.
+	</p>
+
+	<p style="border:1; border-color:gray; border-style:dotted; background:lightgray; text-align:justify">
+		<i>Entity</i>
+		<br><br>
+		 Before we continue to the repository layer, we quickly explain a few things about an entity object that you will probably not easily get from all the 
+		 JPA tutorials found on the Internet.
+		 <br><br>
+		 The <code>@Version</code>> annotation helps JPA understand that it needs to be used to prevent user concurrency. The version column is updated by one each time an 
+		 update to the table row is done. This means that every time you do an update, a “where”-clause is added that guarantees that you will only update the 
+		 row when the version number corresponds with the version number you have got in your update request. If it fails, a RuntimeException will occur which 
+		 rolls back the transaction.
+		 <br><br>
+		 Foreign key relations are linked using annotations <code>@ManyToOne</code>>, <code>@OneToOne</code>>, and <code>@OneToMany</code>>. Instead of being represented by an id column, it is an actual
+		 object (another table row entity) that can be queried and updated. To keep converting data from an entity to a DTO as simple as possible, adding functions 
+		 in a DTO to map an entity to a DTO, it is worthwhile to consider when to use or not to use <code>@OneToMany</code>>, as it can easily lead to infinite recursions.	
+	</p>
+	<br>
+	<h5 id="h5">2.1.3 PersonRepository.java</h5>
+	<p style="text-align:justify">
+		This class extends a JPA Repository class that manages the basic update, delete, save, and fetch functions. Everything that is not already in the parent class “CrudRepository”, like save(), 
+		can be added here, for instance a function that searches a Person on id, and returns a Person object if person exists, or null if not. Mind you that a “get” would throw a RuntimeException 
+		if the id could not be matched with a row in the Person table.
+		<br><br>
+		In our save example, it will save the entity to the database, and return the “saved” entity, containing a new version number and a value for id in case the record was new (insert into ..).
+		Mind you that the transaction is pending, and the final commit (or rollback) will be done when we return to the service class.		
+	</p>
+
+	<br>
+	<h5 id="h5">2.1.4 ... and back</h5>
+	<p style="text-align:justify">
+		From here we return to the UseCase class that in turn will convert the Entity object to a DTO. For our convenience, the DTO class is given a function to do this conversion for us so we do 
+		not have to repeat ourselves every time we want to communicate with DTOs.
+		<br><br>
+		The reason we convert the entity to a DTO before returning to the service layer may be obvious, but simply put we need the data to be converted back to a JSON with the least amount of data 
+		possible, as all this data has to be pushed over the Internet back to, for instance, a browser.
+		<br><br>
+		Back in the service layer, the object is converted to an HTTP-request and sent back to the calling external program.
+	</p>
+
+	<p style="border:1; border-color:gray; border-style:dotted; background:lightgray; text-align:justify">
+		<i>DTO</i>
+		<br><br>
+		A DTO is nothing more than a data container and should never become stateful like an entity does. A DTO does not have to reflect the entire table row, but for convenience
+		and easy explaining in this tutorial, we did make them represent the entire table row. Mind that for instance “city” in PersonDTO is not called “cityDTO”, as this name is
+		 meaningless to a third party calling the service. However, there is no harm in actually calling it cityDTO, in case you are wondering.
+	</p>
+
+	<p style="text-align:justify">
+		In a nutshell, this is how the back-end code should work according to (part of the) clean architecture, where there is an input/output layer, a business logic layer, and 
+		a data layer that for many developers will remind of the model-view-control design pattern.
+	</p>
+
+	<br>
+	<h4 id="h5">2.2 Front-end</h4>
+	<p style="text-align:justify">
+		Basically, you can use any front-end (driven) software or back-end software to access the Rest calls from the service layer in your backend, but in this example we use 
+		Angular/typescript to create the UI of this application.
+		<br><br>
+		The structure of the app is as follows:
+		<ol>
+			<li><i>app/model</i> - The model objects that match the DTO objects in the back-end</li>
+			<li><i>app/services</i> - The functions that talk to the service layer in the back-end</li>
+			<li><i>app/person</i> - The actual UI that makes use of the models and services</li>
+		</ol>
+		<p style="text-align:justify">
+			Learning about Angular and TypeScript is best done using the tutorials present on the Internet, so we will stick to only explaining this structure.
+		</p>
+		<br><br>
+		The structure of the UI components is as follows:
+		<ol>
+			<li><i>app/person</i> - Contains (at least) the persons list window</li>
+			<li><i>app/person/details</i> - Contains the details of one (selected) person at a time</li>
+			<li><i>app/person/modal</i> - Contains the modal window to add, edit, or delete a person</li>
+		</ol>
+		We start in the component that is responsible for showing us the persons list: app/person/persons.component.ts
+		<br><br>
+		<p style="text-align:justify">
+			in the ngOnInit(), we start by calling the service layer to fetch the list of all persons from the back-end. When this list is returned, it is stored in the components 
+			instance variable persons. Because of how Angular works, it automatically translates this to the corresponding HTML in the .html file (see the templateURL for the filename), 
+			and to keep maintenance low it is best to keep the names of the .ts and .html file (and .scss when you want page specific CSS tricks) the same.
+			<br><br>
+			When we click on one of the persons in the browser, it navigates to function openPersonDetails() which in turn navigates to another component found in the app-routing-module.ts, 
+			in this case that is the persondetail.component.ts, and opens that component in the browser, leaving the list window we were in.
+			<br><br>
+			When we click on the “Add” button however, it will not navigate to another window, but open a modal window, personmodal.component.ts, where you can add a new person if so needed 
+			(and the same for editing or deleting when accessing the modal from the person details window). In this particular case we do not actually leave the persons list window or the 
+			person detail window when modal is opened from there.
+			<br><br>
+			Because Angular is reactive, it will automatically update the info in your browser when the data in your modal is directly connected to the data in, for instance, 
+			the person detail window.
+		</p>
+	</p>
+
+	<br>
+	<h3 id="h3">Final words</h3>
+	<p style="text-align:justify">
+		This tutorial explained how to setup your code to create a very basic website. Of course there are many factors to consider when setting up a website, for instance encryption 
+		(https), (single-)sign-on, performance, reporting, and so on, and so forth, but with the breadcrumbs provided in this document you already have a way of organizing and 
+		maintaining your code for your future website.
+		<br><br>
+		Now get coding … 
+	</p>
+          </div><!-- /.blog-post -->
+
+        </div><!-- /.blog-main -->
+
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+  
+</span>
