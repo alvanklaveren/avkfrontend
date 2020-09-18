@@ -236,14 +236,14 @@ alter table person add version mediumint unsigned default 0;
 		 Before we continue to the repository layer, we quickly explain a few things about an entity object that you will probably not easily get from all the 
 		 JPA tutorials found on the Internet.
 		 <br><br>
-		 The <code>@Version</code>> annotation helps JPA understand that it needs to be used to prevent user concurrency. The version column is updated by one each time an 
+		 The <code>@Version</code> annotation helps JPA understand that it needs to be used to prevent user concurrency. The version column is updated by one each time an 
 		 update to the table row is done. This means that every time you do an update, a “where”-clause is added that guarantees that you will only update the 
 		 row when the version number corresponds with the version number you have got in your update request. If it fails, a RuntimeException will occur which 
 		 rolls back the transaction.
 		 <br><br>
-		 Foreign key relations are linked using annotations <code>@ManyToOne</code>>, <code>@OneToOne</code>>, and <code>@OneToMany</code>>. Instead of being represented by an id column, it is an actual
+		 Foreign key relations are linked using annotations <code>@ManyToOne</code>, <code>@OneToOne</code>, and <code>@OneToMany</code>. Instead of being represented by an id column, it is an actual
 		 object (another table row entity) that can be queried and updated. To keep converting data from an entity to a DTO as simple as possible, adding functions 
-		 in a DTO to map an entity to a DTO, it is worthwhile to consider when to use or not to use <code>@OneToMany</code>>, as it can easily lead to infinite recursions.	
+		 in a DTO to map an entity to a DTO, it is worthwhile to consider when to use or not to use <code>@OneToMany</code>, as it can easily lead to infinite recursions.	
 	</p>
 	<br>
 	<h5 id="h5">2.1.3 PersonRepository.java</h5>
@@ -296,7 +296,6 @@ alter table person add version mediumint unsigned default 0;
 		<p style="text-align:justify">
 			Learning about Angular and TypeScript is best done using the tutorials present on the Internet, so we will stick to only explaining this structure.
 		</p>
-		<br><br>
 		The structure of the UI components is as follows:
 		<ol>
 			<li><i>app/person</i> - Contains (at least) the persons list window</li>
