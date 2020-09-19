@@ -196,8 +196,8 @@ alter table person add version mediumint unsigned default 0;
 		<br><br>
 		<i>Important: Be aware that these autowired classes should never be stateful, so prevent using global or instance variables that would make the object stateful.</i>
 		<br><br>
-		The <code>@CrossOrigin</code> can be ignored for now, but it has to do with preventing Cross Site Scripting hacking attempts, which should be 
-		setup carefully in a production environment.
+		The <code>@CrossOrigin</code> can be ignored for now, but it has to do with resource sharing where you may or may not want more applications than just your frontend 
+		application to be able to access your backen Rest services, which should be setup carefully in a production environment.
 		<br><br>
 		The <code>@RequestBody</code> (or <code>@RequestParam</code>) helps Spring understand that the argument of a function is fetched either from the body 
 		of the HTTP-request, or the URL.
