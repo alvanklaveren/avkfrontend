@@ -105,7 +105,7 @@ From the overview, select the WebApp pod and click on "Add Storage to [your web 
 <img src="./assets/images/openshift-wildfly-16.png" alt="<picture not found>" style="width:80%; border:1px solid black"></img>
 <br><br>
 Because we only created the one MySQL pod, it will automatically select it.<br>
-You can mount it to /<podname> and as volume name use /<db_name>. This way it will be easier to find it again if ever needed. 
+You can mount it to &lt;podname&gt; and as volume name use &lt;db_name&gt;. This way it will be easier to find it again if ever needed. 
 <br><br>
 <img src="./assets/images/openshift-wildfly-17.png" alt="<picture not found>" style="width:80%; border:1px solid black"></img>
 <br><br>
@@ -120,12 +120,12 @@ so the route is allowed to openshift. Why is beyond me, but it works.
 If you want to access the database using a SQL workbench/tool on your local machine, you will have to install the OC application of openshift.<br>
 In a couple of the screenshots in this document, you will see a reference to OC, to command-line connect to your openshift account.<br>
 What you need to do to access the database is:<br>
-<pre><code>
-oc login https://api.starter-us-west-1.openshift.com -u<openshift_username>  -p<openshift_password>
-oc project $lt<name_of_your_project>$gt
-oc get pods #this is just an extra to get the unique id of the MySQL pod. You will need this in the next line
-oc port-forward <id_of_your_mysql_pod> 3300:3306 
-</code></pre>
+<ul>
+  <li><code>oc login https://api.starter-us-west-1.openshift.com -u&lt;openshift_username&gt; -p&lt;openshift_password&gt;</code></li>
+  <li>oc project &lt;name_of_your_project>&gt;</li>
+  <li><code>oc get pods</code> # This is just an extra to get the unique id of the MySQL pod. You will need this in the next line</li>
+  <li><code>port-forward &lt;id_of_your_mysql_pod&gt; 3300:3306 </code></li>
+</ul>
 <br>
 <p style="text-align:justify">
 You are free to choose any other port than 3300. The 3306 however is fixed. When you connect to this database from your tool,<br>

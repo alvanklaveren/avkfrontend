@@ -72,24 +72,24 @@
 		<img src="./assets/images/build-website-5.png" alt="<picture not found>" style="width:30%; border:1px solid black"></img>
 		<br><br>
 		<ol>
-			<li>In the SQL editor window, run the following SQL script:
-<pre><code>
-create table city(id int(5) unsigned not null primary key auto_increment, name varchar(256));
-create table person(id int(5) unsigned not null primary key auto_increment, name varchar(256), street varchar(256), postal_code varchar(16), city_id int(5) unsigned, foreign key (city_id) references city(id));					
-
-insert into city(name) values('Amsterdam');
-insert into city(name) values('London');
-insert into city(name) values('Paris');
-insert into city(name) values('Madrid');
-insert into city(name) values('Rome');
-
-insert into person(name, street, postal_code, city_id) values('Jannie Jansen', 'Abraham Kuyperstraat 9000', '1067 DH', 1);
-insert into person(name, street, postal_code, city_id) values('Joe Smith', 'Oxford Street 9000', 'W1D 1BS', 2);
-commit;
-
-alter table city add version mediumint unsigned default 0;
-alter table person add version mediumint unsigned default 0;
-</code></pre>
+			<li>In the SQL editor window, run the following SQL script:<br>
+				<code>
+				create table city(id int(5) unsigned not null primary key auto_increment, name varchar(256));<br><br>
+				create table person(id int(5) unsigned not null primary key auto_increment, name varchar(256), street varchar(256), postal_code varchar(16), city_id int(5) unsigned, foreign key (city_id) references city(id));<br><br>
+				<br>
+				insert into city(name) values('Amsterdam');<br>
+				insert into city(name) values('London');<br>
+				insert into city(name) values('Paris');<br>
+				insert into city(name) values('Madrid');<br>
+				insert into city(name) values('Rome');<br>
+				<br>
+				insert into person(name, street, postal_code, city_id) values('Jannie Jansen', 'Abraham Kuyperstraat 9000', '1067 DH', 1);<br><br>
+				insert into person(name, street, postal_code, city_id) values('Joe Smith', 'Oxford Street 9000', 'W1D 1BS', 2);<br>
+				commit;<br>
+				<br>
+				alter table city add version mediumint unsigned default 0;<br>
+				alter table person add version mediumint unsigned default 0;<br>
+				</code>
 				<br>
 				The last two instructions are to enable versioning, which helps to control user-concurrency.
 			</li>
