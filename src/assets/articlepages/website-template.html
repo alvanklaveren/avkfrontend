@@ -118,7 +118,7 @@
 				The value for command line enables the debugger in IntelliJ:<br>
 				<code>spring-boot:run "-Drun.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8080 -Dserver.port=8005"</code>
 				<br>
-				Next, start your backend server by pressing the  <img src="./assets/images/build-website-9.png" alt="<picture not found>" style="width:3%; border:1px solid black"></img> icon.
+				Next, start your back-end server by pressing the  <img src="./assets/images/build-website-9.png" alt="<picture not found>" style="width:3%; border:1px solid black"></img> icon.
 				  
 			</li>
 		</ol>
@@ -196,8 +196,8 @@
 		<br><br>
 		<i>Important: Be aware that these autowired classes should never be stateful, so prevent using global or instance variables that would make the object stateful.</i>
 		<br><br>
-		The <code>@CrossOrigin</code> can be ignored for now, but it has to do with resource sharing where you may or may not want more applications than just your frontend 
-		application to be able to access your backend Rest services, which should be setup carefully in a production environment.
+		The <code>@CrossOrigin</code> can be ignored for now, but it has to do with resource sharing where you may or may not want more applications than just your front-end 
+		application to be able to access your back-end Rest services, which should be setup carefully in a production environment.
 		<br><br>
 		The <code>@RequestBody</code> (or <code>@RequestParam</code>) helps Spring understand that the argument of a function is fetched either from the body 
 		of the HTTP-request, or the URL.
@@ -284,7 +284,7 @@
 	<br>
 	<h4 id="h5">2.2 Front-end</h4>
 	<p style="text-align:justify">
-		Basically, you can use any front-end (driven) software or back-end software to access the Rest calls from the service layer in your backend, but in this example we use 
+		Basically, you can use any front-end (driven) software or back-end software to access the Rest calls from the service layer in your back-end, but in this example we use 
 		<a href="https://angular.io/">Angular (TypeScript)</a> to create the UI of this application.
 		<br><br>
 		Learning about Angular and TypeScript is best done using the tutorials present on the Internet, so we will stick to only explaining this structure.
