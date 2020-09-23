@@ -75,7 +75,7 @@
 			<li>In the SQL editor window, run the following SQL script:<br>
 				<code>
 				create table city(id int(5) unsigned not null primary key auto_increment, name varchar(256));<br><br>
-				create table person(id int(5) unsigned not null primary key auto_increment, name varchar(256), street varchar(256), postal_code varchar(16), city_id int(5) unsigned, foreign key (city_id) references city(id));<br><br>
+				create table person(id int(5) unsigned not null primary key auto_increment, name varchar(256), street varchar(256), postal_code varchar(16), city_id int(5) unsigned, foreign key (city_id) references city(id));<br>
 				<br>
 				insert into city(name) values('Amsterdam');<br>
 				insert into city(name) values('London');<br>
@@ -197,7 +197,7 @@
 		<i>Important: Be aware that these autowired classes should never be stateful, so prevent using global or instance variables that would make the object stateful.</i>
 		<br><br>
 		The <code>@CrossOrigin</code> can be ignored for now, but it has to do with resource sharing where you may or may not want more applications than just your frontend 
-		application to be able to access your backen Rest services, which should be setup carefully in a production environment.
+		application to be able to access your backend Rest services, which should be setup carefully in a production environment.
 		<br><br>
 		The <code>@RequestBody</code> (or <code>@RequestParam</code>) helps Spring understand that the argument of a function is fetched either from the body 
 		of the HTTP-request, or the URL.
