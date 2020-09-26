@@ -80,7 +80,7 @@
 					</option>
 				</select> -->
 				<ng-select style="width:150px" [items]="productSortList" bindLabel="description" bindValue="id" [multiple]="false" 
-				[editableSearchTerm]="false" formControlName="productSortId" (change)="onSortChanged()" [clearable]="false"> 
+				[editableSearchTerm]="false" [searchable]="false" formControlName="productSortId" (change)="onSortChanged()" [clearable]="false"> 
 				</ng-select>
 			</div>
 		</form>
