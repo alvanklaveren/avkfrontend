@@ -74,11 +74,14 @@
 			<!-- Sortorder -->
 			<div class="form-group">
 				<label class="col-form-label col-form-label-sm" for="selectsort">{{ 'Sort by' | translate }}&nbsp;</label>
-				<select class="form-control form-control-sm" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
+				<!-- <select class="form-control form-control-sm" id="selectsort" formControlName="productSortId" (change)="onSortChanged()">
 					<option *ngFor="let ps of productSortList" [ngValue]="ps.id">
 						<a class="dropdown-item avkdropdown">{{ ps.description | translate }}</a>
 					</option>
-				</select>
+				</select> -->
+				<ng-select style="width:150px" [items]="productSortList" bindLabel="description" bindValue="id" [multiple]="false" 
+				[editableSearchTerm]="false" formControlName="productSortId" (change)="onSortChanged()" [clearable]="false"> 
+				</ng-select>
 			</div>
 		</form>
 	</div>
