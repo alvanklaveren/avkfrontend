@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ContextService } from '../../services/context.service';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MessageCategory } from 'src/app/models/messagecategory';
-import { ForumService } from 'src/app/services/forum.service';
-import { Message } from 'src/app/models/message';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ForumUser } from 'src/app/models/forumuser';
+import { Message } from 'src/app/models/message';
+import { MessageCategory } from 'src/app/models/messagecategory';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ForumService } from 'src/app/services/forum.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { browser } from 'protractor';
+import { ContextService } from '../../services/context.service';
+import { LoginModalComponent } from './modals/login.modal.component';
 
 @Component({
   selector: 'app-forum',
@@ -36,9 +36,6 @@ export class Forum implements OnInit{
   isMember: boolean = false;
 
   loginForm: FormGroup;
-  forgotPasswordForm: FormGroup;
-
-  forgotPassword = false;
 
    constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
               private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
@@ -50,10 +47,6 @@ export class Forum implements OnInit{
 
     this.contextService.setPageTitle(this, 'Forum');
 
-    this.user = this.tokenStorageService.getUser();
-    this.isAdmin = this.authenticationService.isAdmin();
-    this.isMember = this.authenticationService.isMember();
-
     this.editMessageCategory = null;
 
     this.loginForm = this.formBuilder.group({
@@ -61,16 +54,20 @@ export class Forum implements OnInit{
       password: [null, Validators.required],
     });
 
-    this.forgotPasswordForm = this.formBuilder.group({
-      username: [null, Validators.required],
-    });
+    this.initForum();
+  }
+
+  initForum(){
+    this.user = this.tokenStorageService.getUser();
+    this.isAdmin = this.authenticationService.isAdmin();
+    this.isMember = this.authenticationService.isMember();
 
     if(this.route.snapshot.paramMap.get('codeMessageCategory')) {
       this.codeMessageCategory = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeMessageCategory'));
       this.forumService.getMessageCategory(this.codeMessageCategory).subscribe(res => {
         this.messageCategory = res as MessageCategory;
       });
-  } else {
+    } else {
       this.codeMessageCategory = null;
     }
 
@@ -139,42 +136,33 @@ export class Forum implements OnInit{
     });   
   }
 
-  login(){
-    let lf = this.loginForm.value;
-
-    this.authenticationService.login(lf.username, lf.password).subscribe(async (response) =>{
-      let auth = response.headers.get('authorization');
-      let tokens = JSON.parse(auth);
-      this.authenticationService.saveAccessData(tokens);
-      await this.delay(1000); // it takes a sec to get the data saved to local and session storage
-      this.user = this.tokenStorageService.getUser();
-      this.authenticationService.setUser();
-      window.location.reload();
-    }, (err) => {
-      console.log(err);
-    });  
-  }
-
   logout(){
     this.authenticationService.logout();
-    this.user = this.tokenStorageService.getUser();
-    window.location.reload();
+    this.isAdmin = this.authenticationService.isAdmin();
+    this.isMember = this.authenticationService.isMember();
+
+      // admin needs to refresh the top menu, to remove the configuration cogwheel
+      // TODO: this should be made more pretty, i.e. make show/hide of cogwheel a behavioursubject 
+      // responding to change in user
+        window.location.reload(); 
   }
 
-  emailNewPassword(){
-    let fpForm = this.forgotPasswordForm.value;
+  openLoginModal(){   
 
-    this.forumService.emailNewPassword(fpForm.username).subscribe((res: {result:boolean}) => {
-      if(res.result) {
-        this.forgotPassword = false;
+    let modal = this.modalService.open(LoginModalComponent, {ariaLabelledBy: 'app-login-modal'});
+    modal.result.then((result) => {
+      this.isAdmin = this.authenticationService.isAdmin();
+      this.isMember = this.authenticationService.isMember();
+
+      // admin needs to refresh the top menu, to add the configuration cogwheel
+      // TODO: this should be made more pretty, i.e. make show/hide of cogwheel a behavioursubject 
+      // responding to change in user
+      if(this.isAdmin) {
+        window.location.reload();
       } else {
-        this.forgotPassword = false;
+        this.initForum();
       }
     });
-  }
-
-  delay(ms: number) {
-     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
 }

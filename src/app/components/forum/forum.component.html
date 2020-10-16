@@ -1,32 +1,8 @@
 <body>
-	<!-- Login Form -->
-	<div *ngIf="!user">
-		<form [formGroup]="loginForm" class="form-inline justify-content-end" *ngIf="!forgotPassword">
-			<div class="input-group">
-				<input class="form-control form-control-sm" type="text" formControlName="username" placeholder="{{ 'Username' | translate}}">
-				<input class="form-control form-control-sm" type="password" formControlName="password" placeholder="{{ 'Password' | translate}}">
-				<div class="input-group-append">
-					<button class="btn btn-outline-primary btn-sm" (click)="login()"><i class="fas fa-sign-in-alt"></i>&nbsp;{{ 'Sign In' | translate }}</button>
-				</div>
-			</div>
-		</form>
-
-		<div class="form-inline justify-content-end" *ngIf="!forgotPassword">
-			<a href="javascript:void(0);" (click)="forgotPassword=true">{{ 'Forgot password?' | translate }}</a>
-		</div>
-
-		<form [formGroup]="forgotPasswordForm" class="form-inline justify-content-end" *ngIf="forgotPassword">
-			<div class="input-group">
-				<input class="form-control form-control-sm" type="text" id="username" formControlName="username" placeholder="{{ 'Username' | translate}}">
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary btn-sm" (click)="forgotPassword=false"><i class="fas fa-sign-in-alt"></i>&nbsp;{{ 'Cancel' | translate }}</button>
-					<button class="btn btn-outline-success btn-sm" [disabled]="forgotPasswordForm.invalid" (click)="emailNewPassword()"><i class="fas fa-sign-in-alt"></i>&nbsp;{{ 'Reset' | translate }}</button>
-				</div>
-			</div>
-		</form>
-
+	<div *ngIf="!user" class="form-inline justify-content-end">
+		<button class="btn btn-outline-primary btn-sm" (click)="openLoginModal()">Sign In</button>
 	</div>
-
+	<!-- Logout Form -->
 	<div *ngIf="user" class="form-inline justify-content-end text-secondary">
 		{{ 'Welcome' | translate }} {{ user.displayName }}
 		<button class="btn btn-outline-secondary btn-sm" (click)="logout()"><i class="fas fa-sign-out-alt"></i>&nbsp;{{ 'Sign Out' | translate }}</button>
