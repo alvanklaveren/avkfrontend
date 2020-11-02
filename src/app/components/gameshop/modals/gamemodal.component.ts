@@ -26,7 +26,6 @@ export class GameModalComponent implements OnInit{
 
     askDelete = false;
 
-
     constructor(private modalService: NgbModal, private activeModal: NgbActiveModal,
                 private formBuilder: FormBuilder, private gameShopService: GameShopService) { }
 
@@ -112,7 +111,10 @@ export class GameModalComponent implements OnInit{
 
         this.gameShopService.save(product).subscribe(res => {
             this.product = res as Product;
-            this.activeModal.close();
+            if (this.product.imageHTML == undefined) {
+                this.product.imageHTML = '?';
+            }
+            this.activeModal.close(this.product);
         },
         (err => {
             console.log("Saving failed");

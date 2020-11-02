@@ -238,12 +238,21 @@ export class GameShop implements OnInit{
 
     let modal = this.modalService.open(GameModalComponent, {ariaLabelledBy: 'app-game-modal'});
 
+    let isNew: Boolean = true;
+
     if(product) {
       modal.componentInstance.product = product;
+      isNew = false;
     }
 
     modal.result.then((result) => {
-      product = result as Product;
+      if(isNew){
+        product = result as Product;
+        let replaceProducts: Array<Product> = [];
+        replaceProducts.push(product);
+        replaceProducts.push(...this.products);
+        this.products = replaceProducts;
+      }
       
     }, (reason) => {
       if(reason === 'Deleted') {
@@ -263,7 +272,7 @@ export class GameShop implements OnInit{
     modal.componentInstance.product = product;
 
     modal.result.then((result) => {
-      window.location.reload();
+      this.fetchImages();
     }, (reason) => {
       window.location.reload();
     });
