@@ -11,11 +11,12 @@
             <h2 class="blog-post-title">Start building a website with Spring and Angular using this template</h2>
             <p class="blog-post-meta">September 18, 2020 by <a href="#">Alex</a></p>
 
-			<p style="text-align:justify">Want to build a website in <a href="https://spring.io/">Spring</a> (Java) and 
-				<a href="https://angular.io/">Angular</a> (TypeScript), but don't
-				want to start from scratch figuring out by trial and error how to get something display in your browser?
-				Start here. This article contains a fully functioning, fairly minimalistic, website to give you
-				a playground to start experimenting and learning Java, TypeScript, and web-related stuff like Bootstrap.
+			<p style="text-align:justify">Want to build a website in <a target="_blank" rel="nofollow" href="https://spring.io/">Spring</a> 
+				(Java) and 	<a target="_blank" rel="nofollow" href="https://angular.io/">Angular</a> (TypeScript), but don't
+				want to start from scratch, figuring out how to get something display in your browser by trial and error?
+				Then start here. This article contains a fully functioning, fairly minimalistic, website you can use as
+				a playground to start experimenting and learning Java, TypeScript, and web-related stuff like 
+				<a target="_blank" rel="nofollow" href="https://getbootstrap.com">Bootstrap</a>.
 	        </p>
 
 <hr>
@@ -32,17 +33,17 @@
 	<h3 id="h3">Introduction</h3>
 	<p style="text-align:justify">
 		Welcome to a fast course in website building with Angular (TypeScript) and Spring (Java) using clean architecture 
-		to model our code, and service oriented architecture to enforce the separation of front-end from back-end.
+		to model our code, and a service oriented architecture to enforce the separation of front-end from back-end(s).
 		<br><br>
 		The <a href="../../../assets/documents/WebsiteBuildingCourse.zip">zip</a> file that comes with this document 
-		contains the source code of both front- and back-end. In chapter 1, I will very briefly explain how to setup the database 
-		(including a script to create and populate the tables) and the IDE and source folders, but I expect the reader to do most 
-		of the setup without my help. In chapter 2, I explain more about the architecture of the source code and walk you through 
+		contains the source code of both front- and back-end. In chapter 1, We will start with a brief explanation on how to setup the 
+		database  (including a script to create and populate the tables) and the IDE and source folders, but I expect the reader to do 
+		most of the setup without my help. In chapter 2, I explain more about the architecture of the source code and walk you through 
 		the code explaining some details on "what is what" and how Spring (Boot/JPA) works.
 		<br><br>
-		The web application we are going to “build” allows you to add information on people, where I focus on the three 
+		The web application we are going to “build” allows you to add information on people, where we will focus on the three 
 		things that are 80% of what most web apps do: show a list of entities, go into the details of such an entity, 
-		and the ability to add, delete and update such an entity.
+		and add, delete or update such an entity.
 		<p>The first is a list of persons:</p>
 		<img src="./assets/images/build-website-1.png" alt="<picture not found>" style="width:100%; border:1px solid black"></img>
 		<br><br>
@@ -61,8 +62,10 @@
 	<h4 id="h4">1.1 Prepare Database</h4>
 	<p style="text-align:justify">
 		<ol>
-			<li>Install MySQL</li>
-			<li>Install Dbeaver and connect to MYSQL on localhost</li>
+			<li>Install <a target="_blank" rel="nofollow" href="https://www.mysql.com/downloads/">MySQL</a> or if you do not want to fill in your creditcard info (because Oracle), 
+				you can choose to use the open-source fork of MySQL, <a target="_blank" rel="nofollow" href ="https://mariadb.org/download/">MariaDB</a>.
+			</li>
+			<li>Install <a target="_blank" rel="nofollow" href="https://dbeaver.io/download/">Dbeaver</a> and connect to MYSQL(or MariaDB) on your machine (localhost)</li>
 		</ol>
 		Create new Database and give it a name. In this example I will name it ‘mydb’.
 		<img src="./assets/images/build-website-4.png" alt="<picture not found>" style="width:50%; border:1px solid black"></img>
@@ -100,8 +103,8 @@
 	<h4 id="h4">1.2 Back-end</h4>
 	<p style="text-align:justify">
 		<ol>
-			<li>Install <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html">Java 8 (JRE/JDK)</a> or higher</li>
-			<li>Install a Java IDE. In this article I use <a href="https://www.jetbrains.com/idea/download">IntelliJ Community Edition</a></li>
+			<li>Install <a target="_blank" rel="nofollow" href="https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html">Java 8 (JRE/JDK)</a> or higher</li>
+			<li>Install a Java IDE. In this article I use <a target="_blank" rel="nofollow" href="https://www.jetbrains.com/idea/download">IntelliJ Community Edition</a></li>
 			<li>Open the project found in the zip file. The location I use in this course is C:\MyWeb\Backend</li>
 			<li>Go to file application.properties: Make sure the database, username, and password match your setup. 
 				In this example the application properties look like this:
@@ -127,7 +130,7 @@
 	<br>
 	<h4 id="h4">1.3 Front-end</h4>
 	<p style="text-align:justify">
-		Install <a href="https://www.npmjs.com/get-npm">npm</a>, use commandline to navigate to “C:\MyWeb\Frontend” and type:
+		Install <a target="_blank" rel="nofollow" href="https://www.npmjs.com/get-npm">npm</a>, use commandline to navigate to “C:\MyWeb\Frontend” and type:
 		<ul>
 			<li>npm install @angular/cli -g</li>
 			<li>npm install bootstrap</li>
@@ -135,13 +138,13 @@
 		<br>
 
 		<ol>
-			<li>Install <a href="https://code.visualstudio.com/download">Visual Studio Code</a></li>
+			<li>Install <a target="_blank" rel="nofollow" href="https://code.visualstudio.com/download">Visual Studio Code</a></li>
 			<li>Open the “C:\MyWeb\Frontend” folder in visual code.</li>
 			<li>Open a terminal (DOS shell) in VSCode and type “npm start”.</li>
 		</ol>
 		<br>
 		Your setup is now complete.<br>
-		To open the application go to an internet browser and navigate to <a href="http://localhost:4200">http://localhost:4200</a>
+		To open the application go to an internet browser and navigate to <a target="_blank" rel="nofollow" href="http://localhost:4200">http://localhost:4200</a>
 	</p>
 
 	<br>
@@ -176,10 +179,10 @@
 	<br>
 	<h5 id="h5">2.1.1 PersonService.java</h5>
 	<p style="text-align:justify">
-		In the person service class, I have setup the API which can be used by external programs, which in our example is the front-end application, 
+		In the person service class, I have setup the API that can be used by external programs and in our example is the front-end application, 
 		but you can just as easily access them using <code>“http://localhost:8080/{function}”</code> where {function} is replaced by the request mapping.
 		<br><br>
-		Because we make use of the Spring framework, which you don’t have to fully understand right now, it is best if we start with the @ annotations in 
+		Because we make use of the Spring framework, that you don’t have to fully understand right now, it is best if we start with the @ annotations in 
 		the source code. What we are not going to do is explain how these annotations work.
 		<br><br>
 		The <code>@RestController</code> annotation tells the spring framework that this class is going to talk to the outside world. Because Spring 
@@ -204,14 +207,14 @@
 		<br><br>
 		In the save function, the argument given is a (Person)DTO object, containing data to update either an existing person or add a new one. 
 		Obviously an HTTP-request does not know what a PersonDTO is, and because of the Spring Framework we use, the JSON received is automatically 
-		mapped to a PersonDTO, given that we expect the JSON to contain the necessary data to populate this DTO. Next, the DTO is given to a function 
+		mapped to a PersonDTO, given that we expect the JSON to contain the necessary data to populate this DTO. Next, the DTO is passed on to a function 
 		in the UseCase.
 	</p>
 	<br>
 	<h5 id="h5">2.1.2 PersonUseCase.java</h5>
 	<p style="text-align:justify">
 		The <code>@Transactional</code> annotation tells the Spring JPA framework that a database connection should be started. The framework automatically injects 
-		a transaction manager, start a session, and ensures that when we leave this function (and go back to the service layer) it closes the connection and either 
+		a transaction manager, starts a session, and ensures that when we leave this function (and go back to the service layer) it closes the connection and either 
 		commits or rolls back the database transaction/session.
 		<br><br>
 		<i>
@@ -306,9 +309,9 @@
 		<p style="text-align:justify">
 			in the ngOnInit(), we start by calling the service layer to fetch the list of all persons from the back-end. When this list is returned, it is stored in the component's 
 			instance variable persons. Because of how Angular works, it automatically translates this to the corresponding HTML in the .html file (see the templateURL for the filename), 
-			and to keep maintenance low it is best to keep the names of the .ts and .html file (and .scss when you want to use page-specific <a href="https://css-tricks.com/">CSS Tricks</a>) the same.
+			and to keep maintenance low it is best to keep the names of the .ts and .html file (and .scss when you want to use page-specific <a target="_blank" rel="nofollow" href="https://css-tricks.com/">CSS Tricks</a>) the same.
 			<br><br>
-			When we click on one of the persons in the browser, it navigates to function openPersonDetails() which in turn navigates to another component found in the app-routing-module.ts, 
+			When we click on one of the persons in the browser, it navigates to function openPersonDetails() that in turn navigates to another component found in the app-routing-module.ts, 
 			in this case that is the persondetail.component.ts, and opens that component in the browser, leaving the list window we were in.
 			<br><br>
 			When we click on the “Add” button however, it will not navigate to another window, but open a modal window, personmodal.component.ts, where you can add a new person if so needed 
