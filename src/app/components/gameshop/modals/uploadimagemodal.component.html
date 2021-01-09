@@ -6,7 +6,11 @@
 </div>
 
 <div class="modal-body">
-    <input type="file" (change)="onFileChanged($event)" #fileInput>
+    <input type="file" (change)="onFileChanged($event)" (click)="error = ''" #fileInput>
+</div>
+
+<div>
+    <span *ngIf="error" class="text-danger">{{ error | translate }}</span>
 </div>
 
 <div class="modal-footer">

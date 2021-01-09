@@ -16,6 +16,7 @@ export class UploadImageModalComponent implements OnInit {
     @Input('product') product: Product;
 
     selectedFile: File;
+    error: string;
 
     constructor(private modalService: NgbModal, private activeModal: NgbActiveModal,
                 private gameShopService: GameShopService) { }
@@ -27,7 +28,15 @@ export class UploadImageModalComponent implements OnInit {
 
     uploadImage(){
 
+        this.error = "";
+
         if(!this.selectedFile || !this.product){
+            return;
+        }
+
+        // file size should be less than a 100 kilobyte, to not take up to much space in the database 
+        if(this.selectedFile.size > 102400) {
+            this.error = "Not allowed to upload file. Reason: File size is larger than 100 KB."
             return;
         }
 
