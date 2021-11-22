@@ -28,6 +28,10 @@ export class GameShopService {
     return this.http.get(url, {responseType: 'blob'});
   }
 
+  getProductStatusList(){
+    return this.http.get(environment.backendUrl + 'gameshop/getProductStatusList');
+  }
+
   getProductSortList(){
     return this.http.get(environment.backendUrl + 'gameshop/getProductSortList');
   }
