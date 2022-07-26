@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ForumUser } from 'src/app/models/forumuser';
-import { Message } from 'src/app/models/message';
 import { MessageCategory } from 'src/app/models/messagecategory';
+import { MessageListView } from 'src/app/projections/messagelistview';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ForumService } from 'src/app/services/forum.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -27,7 +27,7 @@ export class Forum implements OnInit{
   messageCategory: MessageCategory;
 
   messageCategories: Array<MessageCategory>;
-  messages: Array<Message>;
+  messages: Array<MessageListView>;
 
   editMessageCategory: MessageCategory;
 
@@ -84,7 +84,7 @@ export class Forum implements OnInit{
       });
     } else {
       this.forumService.getMessagesByCategory(this.codeMessageCategory).subscribe(res =>{
-        this.messages = res as Array<Message>;
+        this.messages = res as Array<MessageListView>;
       });
     }
   }
@@ -117,7 +117,7 @@ export class Forum implements OnInit{
   }
 
   onSelectMessage(message) {
-    let codeCategory = message.messageCategory.code;
+    let codeCategory = message.messageCategoryCode;
     let codeMessage = message.code as number;
     this.router.navigateByUrl("forum/message/" + codeCategory + "/" + codeMessage);
   }
