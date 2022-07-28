@@ -43,7 +43,7 @@
 			</thead>
 			<tbody>
 				<ng-container *ngFor="let messageCategory of messageCategories">
-					<tr *ngIf="editMessageCategory != messageCategory">
+					<tr *ngIf="editMessageCategory != messageCategory" style="cursor:pointer;">
 						<td (click)="onSelectCategory(messageCategory)"> {{ messageCategory.description }} </td>
 						<td *ngIf="isAdmin">
 							<button class="btn btn-sm btn-outline-primary border-0" type="button" (click)="this.editMessageCategory = messageCategory">
@@ -55,7 +55,7 @@
 						</td>
 						<td style="text-align: center;"><span class="badge badge-primary">{{ messageCategory.messageCount }}</span></td>						
 					</tr>
-					<tr *ngIf="editMessageCategory == messageCategory">
+					<tr *ngIf="editMessageCategory == messageCategory" style="cursor:pointer;">
 						<input class="form-control" type="text" [(ngModel)]="messageCategory.description"> 
 						<td>
 							<button class="btn btn-sm btn-outline-danger border-0" type="button" (click)="this.editMessageCategory = null">
@@ -92,8 +92,8 @@
 			</thead>
 			<tbody>
 				<ng-container *ngFor="let message of messages">
-					<tr class="row" (click)="onSelectMessage(message)">
-						<td class="col-2">
+					<tr class="row" (click)="onSelectMessage(message)" style="cursor:pointer;">
+						<td class="col-2" >
 							<small> 
 								{{ message.messageDate | date: 'yyyy/MM/dd' }}
 								<br>  
