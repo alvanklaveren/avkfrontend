@@ -8,6 +8,7 @@ import { ForumMessage } from './components/forum/forum.message.component';
 import { AdministratorPage } from './components/administrator/administrator.component';
 import { GameShopMobile } from './components/gameshop/gameshopmobile.component';
 import { Articles } from './components/articles/articles.component';
+import { PageNotFound } from './pagenotfound.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,6 +27,8 @@ const routes: Routes = [
   { path: 'gameshop', redirectTo: 'gameshop/0/0', pathMatch: 'full' },
   { path: 'gameshop/:codeGameConsole', redirectTo: 'gameshop/:codeGameConsole/0', pathMatch: 'full' },
   { path: 'gameshop/:codeGameConsole/:codeProductType', component: GameShop },
+
+  { path: '**', pathMatch: 'full', component: PageNotFound },
 
   // { path: 'gameshopmobile', redirectTo: 'gameshopmobile/0/0', pathMatch: 'full' },
   // { path: 'gameshopmobile/:codeGameConsole', redirectTo: 'gameshopmobile/:codeGameConsole/0', pathMatch: 'full' },
