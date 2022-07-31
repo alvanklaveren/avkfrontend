@@ -213,6 +213,11 @@ body::-webkit-scrollbar {
     color:#F3F3FC; 
 }
 
+.dark-mode a{
+    background-color:rgba(0, 0, 0, 0.0);
+    color:rgb(247, 205, 19); 
+}
+
 .dark-mode #centerpanel div{
     background-color:#000000;
     color:#FFFFFF; 
@@ -258,8 +263,8 @@ body::-webkit-scrollbar {
     color:#f70b0b; 
 }
 
-.hell-mode #centerpanel a{
-    background-color:#000000;    
+.hell-mode a{
+    background-color:rgba(0, 0, 0, 0.0);
     color:rgb(247, 205, 19); 
 }
 
