@@ -5,6 +5,7 @@ import { GameModalComponent } from './modals/gamemodal.component';
 import { UploadImageModalComponent } from './modals/uploadimagemodal.component';
 import { GameShopMobile } from './gameshopmobile.component';
 import { RatingModalComponent } from './modals/ratingmodal.component';
+import { GameShopRoutingModule } from './gameshop-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { RatingModalComponent } from './modals/ratingmodal.component';
   ],
   imports: [
     SharedModule,
+    GameShopRoutingModule,
   ],
   providers: [],
   bootstrap: [GameModalComponent, UploadImageModalComponent, RatingModalComponent]

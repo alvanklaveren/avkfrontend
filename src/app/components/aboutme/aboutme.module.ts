@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
+import { AboutMeRoutingModule } from './aboutme-routing.module';
 import { AboutMe } from './aboutme.component';
 
 
@@ -9,6 +10,7 @@ import { AboutMe } from './aboutme.component';
   ],
   imports: [
     SharedModule,
+    AboutMeRoutingModule,
   ],
   providers: []
 })

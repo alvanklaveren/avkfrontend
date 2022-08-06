@@ -1,32 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomePage } from './components/homepage/homepage.component';
-import { AboutMe } from './components/aboutme/aboutme.component';
-import { Forum } from './components/forum/forum.component';
-import { GameShop } from './components/gameshop/gameshop.component';
 import { ForumMessage } from './components/forum/forum.message.component';
 import { AdministratorPage } from './components/administrator/administrator.component';
-import { GameShopMobile } from './components/gameshop/gameshopmobile.component';
-import { Articles } from './components/articles/articles.component';
 import { PageNotFound } from './pagenotfound.component';
+import { PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomePage },
-  { path: 'aboutme', component: AboutMe },
+  { path: 'home', loadChildren: () => import('./components/homepage/homepage.module').then(m => m.HomePageModule)},
+  { path: 'aboutme', loadChildren: () => import('./components/aboutme/aboutme.module').then(m => m.AboutMeModule)},
 
   { path: 'articles', redirectTo: 'articles/index', pathMatch: 'full' },
-  { path: 'articles/:articleId', component: Articles },
+  { path: 'articles/:articleId', loadChildren: () => import('./components/articles/articles.module').then(m => m.ArticlesModule)},
 
   { path: 'administrator', component: AdministratorPage },
 
-  { path: 'forum', component: Forum },
-  { path: 'forum/:codeMessageCategory', component: Forum },
+  { path: 'forum', loadChildren: () => import('./components/forum/forum.module').then(m => m.ForumModule)},
+  { path: 'forum/:codeMessageCategory', loadChildren: () => import('./components/forum/forum.module').then(m => m.ForumModule)},
   { path: 'forum/message/:codeMessageCategory/:codeMessage', component: ForumMessage },
 
   { path: 'gameshop', redirectTo: 'gameshop/0/0', pathMatch: 'full' },
   { path: 'gameshop/:codeGameConsole', redirectTo: 'gameshop/:codeGameConsole/0', pathMatch: 'full' },
-  { path: 'gameshop/:codeGameConsole/:codeProductType', component: GameShop },
+  { path: 'gameshop/:codeGameConsole/:codeProductType', loadChildren: () => import('./components/gameshop/gameshop.module').then(m => m.GameShopModule)},
 
   { path: '**', pathMatch: 'full', component: PageNotFound },
 
@@ -37,7 +32,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, 
+    { 
+      relativeLinkResolution: 'legacy',
+      preloadingStrategy: PreloadAllModules
+    })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
