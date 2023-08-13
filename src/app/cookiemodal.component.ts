@@ -17,15 +17,8 @@ export class CookieModalComponent implements OnInit{
                 private contextService: ContextService) { }
 
     ngOnInit(){
-          if(this.selectedIsoA2.toUpperCase() === 'US') {
-            this.cookiemessage = '<b>Cookies</b><br>This site only uses technical cookies that are necessary for this site to function. By continuing ' + 
-            'to use this site you accept the use of these cookies on your device. If you disabled cookies in your browser settings, ' +
-            'this site may not function properly. <a href="http://cookiesandyou.com/" target="_blank">Learn more about cookies.</a></small> ' +
-            '<br><div style="display: flex;justify-content: center;"></div></div>';
-
-            this.okButton = "Understood";
-
-          } else if(this.selectedIsoA2.toUpperCase() === 'NL'){
+      
+          if(this.selectedIsoA2.toUpperCase() === 'NL'){
             this.cookiemessage = '<b>Cookies</b><br>Deze website gebruikt enkel technische cookies die nodig zijn om deze website goed te laten functioneren. ' + 
             'Bij verder gebruik van deze website ben je dus op de hoogte dat dit soort cookies op dit apparaat zullen worden gebruikt. ' +
             'Als je cookies hebt uitgeschakeld in je browser, dan zal deze website mogelijk minder goed functioneren. ' +
@@ -33,8 +26,14 @@ export class CookieModalComponent implements OnInit{
             '<br><div style="display: flex;justify-content: center;"></div></div>';
 
             this.okButton = "Begrepen";
+          } else {
+            this.cookiemessage = '<b>Cookies</b><br>This site only uses technical cookies that are necessary for this site to function. By continuing ' + 
+            'to use this site you accept the use of these cookies on your device. If you disabled cookies in your browser settings, ' +
+            'this site may not function properly. <a href="http://cookiesandyou.com/" target="_blank">Learn more about cookies.</a></small> ' +
+            '<br><div style="display: flex;justify-content: center;"></div></div>';
+
+            this.okButton = "Understood";
           }
-   
     }
 
  
