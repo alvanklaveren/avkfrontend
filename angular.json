@@ -129,5 +129,8 @@
         }
       }
     }},
-  "defaultProject": "avk-fe"
+  "defaultProject": "avk-fe",
+  "cli": {
+    "analytics": false
+  }
 }
