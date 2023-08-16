@@ -128,6 +128,21 @@
 	</p>
 	
 	<p style="text-align:justify">
+		Now for something REALLY important for the angular side of the website.
+		In your <code>etc/nginx/sites-available/default</code> it show the ssl_certificate set:<br>
+		<kbd>ssl_certificate /opt/angular/tomcat.crt </kbd><br>
+		<kbd>ssl_certificate /opt/angular/tomcat.key </kbd><br>
+		You have to make sure you have these files present in your angular root folder <code>opt/angular</code><br>
+		Now to extract those keys (store this to a bash file if you want to):<br>
+		<ol>
+		<li><kbd>keytool -importkeystore -srckeystore keystore.jks -destkeystore keystore.p12 -deststoretype PKCS12 -srcalias tomcat -deststorepass changeit  -destkeypass changeit</kbd></li>
+		<li><kbd>openssl pkcs12 -in keystore.p12 -nokeys -out tomcat.crt</kbd></li>
+		<li><kbd>openssl pkcs12 -in keystore.p12  -nodes -nocerts -out tomcat.key</kbd></li>
+		</ol>
+
+	</p>
+
+	<p style="text-align:justify">
 	A specific detail for alvanklaveren.com is that the wicket webpages need to have the <code>@requireshttps</code> 
 	annotation, and the web.xml has to contain a setup to explain which folders (starting the webroot folder), are exempt from https.
 	For alvanklaveren.com, all webpages are secure, except for the gameshopmobile page, that contains a service to send data to a mobile
