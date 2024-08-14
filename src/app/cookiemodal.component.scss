@@ -1,0 +1,9 @@
+//  /* modal animation */
+.modal-content{
+  animation-name: example;
+  animation-duration: 0s;
+}
+
+@keyframes example {
+  100% {transform: scale(1)}
+}

@@ -5,6 +5,7 @@ import { ContextService } from './services/context.service';
 @Component({
   selector: 'app-cookie-modal',
   templateUrl: './cookiemodal.component.html',
+  styleUrls: ['./cookiemodal.component.scss']
 })
 
 export class CookieModalComponent implements OnInit{
