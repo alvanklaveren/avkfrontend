@@ -94,4 +94,8 @@ export class ForumService {
     return this.http.post(environment.backendUrl + 'forum/emailNewPassword', username);
   }
 
+  testEmail() {
+    return this.http.post(environment.backendUrl + 'forum/testEmail', {});
+  }
+
 }

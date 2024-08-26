@@ -165,4 +165,11 @@ export class Forum implements OnInit{
     });
   }
 
+  testEmail(){
+    this.loading = true;
+    this.forumService.testEmail().subscribe(res => {
+        this.loading = false;
+    });
+  }
+
 }

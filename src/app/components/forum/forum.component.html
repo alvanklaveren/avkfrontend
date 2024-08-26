@@ -6,6 +6,10 @@
 	<div *ngIf="user" class="form-inline justify-content-end text-secondary">
 		{{ 'Welcome' | translate }} {{ user.displayName }}
 		<button class="btn btn-outline-secondary btn-sm" (click)="logout()"><i class="fas fa-sign-out-alt"></i>&nbsp;{{ 'Sign Out' | translate }}</button>
+		<div *ngIf="isAdmin">
+			&nbsp;&nbsp;
+			<button class="btn btn-primary btn -sm" (click)="testEmail()"><i class="fas fa-regular fa-envelope"></i>&nbsp;{{ 'Test Email' | translate }}</button>
+		</div>
 	</div>
 
 	<H1 id="neonText">AVK Forum</H1>
