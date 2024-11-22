@@ -36,7 +36,7 @@ export class AboutMe implements OnInit{
   ngOnInit(){
 
     this.contextService.setPageTitle(this, 'About me');
-    this.downloadCVText = 'Click here to download my Curriculum Vitae';
+    this.downloadCVText = 'Click here to download my resume';
   }
 
 }
