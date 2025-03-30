@@ -38,6 +38,7 @@ export class UserModalComponent implements OnInit{
             displayName: [null, Validators.required],
             emailAddress: [null, Validators.required],
             codeClassification: [null, Validators.required],
+            avatar: [null]
         });
 
         if (this.forumUser) {
@@ -46,6 +47,7 @@ export class UserModalComponent implements OnInit{
                 displayName: this.forumUser.displayName,
                 emailAddress: this.forumUser.emailAddress,
                 codeClassification: this.forumUser.classification.code,
+                avatar: this.forumUser.avatar,
             });
         } else {
         }
@@ -83,6 +85,7 @@ export class UserModalComponent implements OnInit{
         forumUser.displayName = ef.displayName;
         forumUser.emailAddress = ef.emailAddress;
         forumUser.classification = classification;
+        forumUser.avatar = ef.avatar;
 
 
         this.administratorService.saveUser(forumUser).subscribe(res => {
