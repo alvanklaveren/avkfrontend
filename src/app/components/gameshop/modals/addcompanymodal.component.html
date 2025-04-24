@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ 'Add Company' | translate }}&nbsp;...</h4>
+    <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="editForm">
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="name"> {{ 'Name' | translate }}</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="name" formControlName="name">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <div class="btn-group btn-group-toggle" role="group" style="width: auto">
+        <button class="btn btn-outline-secondary" type="button" (click)="onClose()">{{ 'Cancel' | translate }}</button>
+        <button class="btn btn-primary" [disabled]="!editForm.valid" type="button" (click)="onSave()">{{ 'Save' | translate }}</button>
+    </div>
+</div>

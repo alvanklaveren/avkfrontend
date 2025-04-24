@@ -6,6 +6,7 @@ import { UploadImageModalComponent } from './modals/uploadimagemodal.component';
 import { GameShopMobile } from './gameshopmobile.component';
 import { RatingModalComponent } from './modals/ratingmodal.component';
 import { GameShopRoutingModule } from './gameshop-routing.module';
+import { AddCompanyModalComponent } from './modals/addcompanymodal.component';
 
 @NgModule({
   declarations: [
@@ -14,13 +15,14 @@ import { GameShopRoutingModule } from './gameshop-routing.module';
     GameModalComponent,
     UploadImageModalComponent,
     RatingModalComponent,
+    AddCompanyModalComponent
   ],
   imports: [
     SharedModule,
     GameShopRoutingModule,
   ],
   providers: [],
-  bootstrap: [GameModalComponent, UploadImageModalComponent, RatingModalComponent]
+  bootstrap: [GameModalComponent, UploadImageModalComponent, RatingModalComponent, AddCompanyModalComponent]
 })
 
 export class GameShopModule { }

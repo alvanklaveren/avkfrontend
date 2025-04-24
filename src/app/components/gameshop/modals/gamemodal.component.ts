@@ -8,6 +8,8 @@ import { Company } from 'src/app/models/company';
 import { ProductType } from 'src/app/models/producttype';
 import { GameShopService } from 'src/app/services/gameshop.service';
 import { ProductStatus } from 'src/app/models/productStatus';
+import { UserModalComponent } from '../../administrator/modals/usermodal.component';
+import { AddCompanyModalComponent } from './addcompanymodal.component';
 
 @Component({
   selector: 'app-game-modal',
@@ -82,6 +84,15 @@ export class GameModalComponent implements OnInit{
 
         } else {
         }
+    }
+
+    addCompany(){
+     let modal = this.modalService.open(AddCompanyModalComponent, {ariaLabelledBy: 'app-addcompanymodal'});
+     modal.result.then(res => {
+        this.gameShopService.getCompanyList().subscribe(res => {
+            this.companyList = res as Company[];
+        });  
+     });
     }
 
     onDelete(){       
