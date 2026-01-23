@@ -152,7 +152,7 @@
 							<div class="col text-wrap"><b>{{ product.name }}</b></div>
 							<div class="col text-wrap"><small>{{ product.company.description }} ({{ product.year }})</small></div>
 							<div class="col text-wrap"><small>{{ product.gameConsole.description }}</small></div>
-							<div *ngIf="product.price > 0" class="col text-wrap"><small>{{ 'Current Price' | translate }} : € {{ product.price }}</small></div>
+							<div *ngIf="product.price > 0" class="col text-wrap"><small>{{ 'Paid for' | translate }} : € {{ product.price }}</small></div>
 							<div *ngIf="isAdmin" class="col text-wrap"><button class="btn btn-sm btn-outline-secondary" (click)="openRatingModal(product)">{{ 'Add Rating' | translate }}</button></div>
 						</div>
 					</div>
