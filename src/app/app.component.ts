@@ -45,6 +45,7 @@ export class AppComponent implements OnInit{
   menuItems = [
     { id: 0, description: 'Administrator', url: '/administrator', icon: 'fas fa-home', disabled: true },
     { id: 1, description: 'Home', url: '/', icon: 'fas fa-home', disabled: false },
+    { id: 6, description: 'Dailies', url: '/dailies', icon: 'fas fa-newspaper', disabled: false },
     { id: 2, description: 'Forum', url: '/forum', icon: 'fas fa-comments', disabled: false },
     { id: 3, description: 'My Game Collection', url: '/gameshop', icon: 'fas fa-gamepad', disabled: false },
     { id: 4, description: 'Articles', url: '/articles', icon: 'fas fa-newspaper', disabled: false },

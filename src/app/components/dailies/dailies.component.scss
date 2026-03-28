@@ -1,0 +1,43 @@
+#hellogalaxy_light{
+    width:70%; 
+    border:2; 
+    box-shadow:2px 5px 10px #0bcc3b;
+}
+
+#hellogalaxy_dark {
+    width:70%; 
+    border:2; 
+    box-shadow:2px 5px 10px #3120ec;
+}
+
+#hellogalaxy_demon {
+    width:70%; 
+    border:2; 
+    box-shadow:2px 5px 10px #fd4800;
+}
+
+#messagetext{
+    font-family:sans-serif;
+    font-size:100%;
+}
+
+/* Extra Small devices (phones, > 768px) */
+@media only screen and (max-width:767px){   
+    #hellogalaxy_light {
+        width:98%; 
+        border:1; 
+        box-shadow:1px 1px 2px #0bcc3b;
+    }
+
+    #hellogalaxy_dark {
+        width:98%; 
+        border:1; 
+        box-shadow:1px 1px 2px #3120ec;
+    }
+
+    #hellogalaxy_demon {
+        width:98%; 
+        border:1; 
+        box-shadow:1px 1px 2px #fd4800;
+    }
+}
