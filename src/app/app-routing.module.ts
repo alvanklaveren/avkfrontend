@@ -8,7 +8,7 @@ import { PreloadAllModules } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./components/homepage/homepage.module').then(m => m.HomePageModule)},
-  { path: 'dailies', loadChildren: () => import('./components/dailies/dailies.module').then(m => m.DailiesPageModule)},
+  { path: 'dailies', loadChildren: () => import('./components/dailies/dailies.module').then(m => m.DailiesModule)},
   { path: 'aboutme', loadChildren: () => import('./components/aboutme/aboutme.module').then(m => m.AboutMeModule)},
 
   { path: 'articles', redirectTo: 'articles/index', pathMatch: 'full' },

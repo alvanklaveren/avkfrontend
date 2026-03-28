@@ -13,4 +13,4 @@ import { DailiesRoutingModule } from './dailies-routing.module';
   ],
   providers: []
 })
-export class DailiesPageModule { }
+export class DailiesModule { }
