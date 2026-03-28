@@ -18,10 +18,6 @@ export class ForumService {
     return this.http.post(environment.backendUrl + 'forum/getHomePageMessages', { page: page, pageSize: pageSize });
   }
 
-  getDailiesMessages(page:number, pageSize:number) {
-    return this.http.post(environment.backendUrl + 'forum/getDailies', { page: page, pageSize: pageSize });
-  }
-
   getMessageCategories(){
     return this.http.get(environment.backendUrl + 'forum/getMessageCategories');
   }

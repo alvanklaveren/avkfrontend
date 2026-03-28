@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 
 import { ContextService } from '../../services/context.service';
 import { ForumService } from '../../services/forum.service';
+import { DailiesService } from 'src/app/services/dailies.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class Dailies implements OnInit{
   page = 0;
   pageSize = 10;
 
-  constructor(private forumService: ForumService, private httpClient: HttpClient, 
+  constructor(private dailiesService: DailiesService, private httpClient: HttpClient, 
               private title:Title, private contextService:ContextService){ }
 
   ngOnInit(){
@@ -34,7 +35,7 @@ export class Dailies implements OnInit{
 
   getMessageList(){
     this.loading = true;
-    this.forumService.getDailiesMessages(this.page, this.pageSize).subscribe(response => {
+    this.dailiesService.getDailiesMessages(this.page, this.pageSize).subscribe(response => {
       if (scroll && this.messages) {
         this.messages = this.messages.concat(response as Array<Message>);
       } else {
