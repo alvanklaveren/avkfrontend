@@ -28,20 +28,20 @@ export class Dailies implements OnInit{
 
   ngOnInit(){
     this.getMessageList();
-    this.contextService.setPageTitle(this, 'Home');
+    this.contextService.setPageTitle(this, 'Dailies');
 
   }
 
   getMessageList(){
     this.loading = true;
-    this.forumService.getHomepageMessages(this.page, this.pageSize).subscribe(response => {
+    this.forumService.getDailiesMessages(this.page, this.pageSize).subscribe(response => {
       if (scroll && this.messages) {
         this.messages = this.messages.concat(response as Array<Message>);
       } else {
         this.messages = response as Array<Message>;
       }
       this.loading = false;      
-    }); 
+    }, error => this.loading = false); 
   }
 
   onScroll() {
