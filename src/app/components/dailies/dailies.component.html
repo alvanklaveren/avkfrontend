@@ -4,7 +4,7 @@
 		<H1> "Daily Dutch News" Comics (Child Friendly)</H1>
 	</div>
 
-	<div *ngIf="!loading">
+	<div *ngIf="!loading && isAdmin">
 		<button class="btn btn-primary" type="button" (click)="generateDailies()">{{ "Generate Dailies" }}</button>
 	</div>
 
@@ -20,11 +20,11 @@
 						<div class="d-flex flex-row-reverse">
 							<small><span>{{ m.messageDate | date: 'yyyy-MM-dd' }}</span></small>
 						</div>
-						
+
 						<span id="messagetext" [innerHTML]="m.messageText | safe: 'html'"></span>
 					</td>
 				<br>
-			</tr>		
-		</table>  
+			</tr>
+		</table>
 	</div>
 </body>

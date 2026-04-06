@@ -8,6 +8,7 @@ import { ContextService } from '../../services/context.service';
 import { DailiesService } from 'src/app/services/dailies.service';
 
 import { DomSanitizer } from '@angular/platform-browser';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-dailies',
@@ -21,14 +22,17 @@ export class Dailies implements OnInit{
 
   loading = true;
 
+  isAdmin: boolean = false;
+
   page = 0;
-  pageSize = 5;
+  pageSize = 1;
 
   constructor(private dailiesService: DailiesService, private httpClient: HttpClient,
-              private domSanitizer: DomSanitizer,
+              private domSanitizer: DomSanitizer, private authenticationService: AuthenticationService,
               private title:Title, private contextService:ContextService){ }
 
   ngOnInit(){
+    this.isAdmin = this.authenticationService.isAdmin();
     this.getMessageList();
     this.contextService.setPageTitle(this, 'Dailies');
 
