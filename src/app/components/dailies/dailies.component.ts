@@ -49,12 +49,18 @@ export class Dailies implements OnInit{
   }
 
   generateDailies() {
+    this.loading = true;
+    this.dailiesImageUrl = '';
     this.dailiesService.getLatest().subscribe({
       next: (blob: Blob) => {
         const url = URL.createObjectURL(blob);
         this.dailiesImageUrl= this.domSanitizer.bypassSecurityTrustUrl(url);
+        this.loading = false;
       },
-      error: (err) => console.error('Error loading comic:', err)
+      error: (err) => { 
+        console.error('Error loading comic:', err);
+        this.loading = false;
+      }
     });
   }
   
