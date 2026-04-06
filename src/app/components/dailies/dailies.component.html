@@ -4,6 +4,15 @@
 		<H1> "Daily Dutch News" Comics (Child Friendly)</H1>
 	</div>
 
+	<div *ngIf="!loading">
+		<button class="btn btn-primary" type="button" (click)="generateDailies()">{{ "Generate Dailies" }}</button>
+	</div>
+
+	<div *ngIf="loading">
+		<br>
+		<avk-loading></avk-loading>
+	</div>
+
 	<div (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
 		<table class="table table-borderless" *ngIf="messages.length > 0">
 			<tr *ngFor="let m of messages; index as i">
@@ -18,10 +27,4 @@
 			</tr>		
 		</table>  
 	</div>
-	
-	<div *ngIf="loading">
-		<br>
-		<avk-loading></avk-loading>
-	</div>
-
 </body>

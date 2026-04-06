@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Message } from '../models/message';
-import { MessageCategory } from '../models/messagecategory';
-import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DailiesService {
@@ -12,6 +9,16 @@ export class DailiesService {
 
   getDailiesMessages(page:number, pageSize:number) {
     return this.http.post(environment.backendUrl + 'dailies/getDailies', { page: page, pageSize: pageSize });
+  }
+
+  getLatest() {
+    return this.http.get(environment.backendUrl + 'dailies/latest', { responseType: 'blob' });
+  }
+
+
+
+  save(image: []) {
+    return this.http.post(environment.backendUrl + 'dailies/save', { base64Image: image });
   }
 
 }
