@@ -4,6 +4,13 @@
 		<H1> "Daily Dutch News" Comics (Child Friendly)</H1>
 	</div>
 
+	<div>
+		<button class="btn btn-primary-outline" type="button" (click)="generateDailies()">{{ "Generate Dailies" }}</button>
+	</div>
+	<div>
+		<img class="dailiesimg" [src]="dailiesImageUrl" alt="Recent Dailies"/>
+	</div>
+
 	<div (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
 		<table class="table table-borderless" *ngIf="messages.length > 0">
 			<tr *ngFor="let m of messages; index as i">
