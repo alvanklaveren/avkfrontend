@@ -22,7 +22,7 @@ export class Dailies implements OnInit{
   loading = true;
 
   page = 0;
-  pageSize = 10;
+  pageSize = 2;
 
   constructor(private dailiesService: DailiesService, private httpClient: HttpClient, 
               private domSanitizer: DomSanitizer,
@@ -52,12 +52,12 @@ export class Dailies implements OnInit{
       next: (blob: Blob) => {
         const url = URL.createObjectURL(blob);
         this.loading = false;
-        this.ngOnInit();
+        this.getMessageList();
       },
       error: (err) => { 
         console.error('Error loading comic:', err);
         this.loading = false;
-        this.ngOnInit();
+        this.getMessageList();
       }
     });
   }
