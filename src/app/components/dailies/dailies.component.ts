@@ -37,11 +37,7 @@ export class Dailies implements OnInit{
   getMessageList(){
     this.loading = true;
     this.dailiesService.getDailiesMessages(this.page, this.pageSize).subscribe(response => {
-      if (scroll && this.messages) {
-        this.messages = this.messages.concat(response as Array<Message>);
-      } else {
-        this.messages = response as Array<Message>;
-      }
+      this.messages = response as Array<Message>;
       this.loading = false;      
     }, error => this.loading = false); 
   }
