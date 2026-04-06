@@ -19,8 +19,6 @@ export class Dailies implements OnInit{
 
   messages: Message[] = [];
 
-  dailiesImageUrl: SafeUrl;
-
   loading = true;
 
   page = 0;
@@ -50,16 +48,16 @@ export class Dailies implements OnInit{
 
   generateDailies() {
     this.loading = true;
-    this.dailiesImageUrl = '';
     this.dailiesService.getLatest().subscribe({
       next: (blob: Blob) => {
         const url = URL.createObjectURL(blob);
-        this.dailiesImageUrl= this.domSanitizer.bypassSecurityTrustUrl(url);
         this.loading = false;
+        this.ngOnInit();
       },
       error: (err) => { 
         console.error('Error loading comic:', err);
         this.loading = false;
+        this.ngOnInit();
       }
     });
   }

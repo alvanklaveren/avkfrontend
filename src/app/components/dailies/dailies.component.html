@@ -5,10 +5,12 @@
 	</div>
 
 	<div>
-		<button class="btn btn-primary-outline" type="button" (click)="generateDailies()">{{ "Generate Dailies" }}</button>
+		<button class="btn btn-primary" type="button" (click)="generateDailies()">{{ "Generate Dailies" }}</button>
 	</div>
-	<div>
-		<img class="dailiesimg" [src]="dailiesImageUrl" alt="Recent Dailies"/>
+
+	<div *ngIf="loading">
+		<br>
+		<avk-loading></avk-loading>
 	</div>
 
 	<div (scrolled)="onScroll()" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150">
@@ -25,10 +27,4 @@
 			</tr>		
 		</table>  
 	</div>
-	
-	<div *ngIf="loading">
-		<br>
-		<avk-loading></avk-loading>
-	</div>
-
 </body>
