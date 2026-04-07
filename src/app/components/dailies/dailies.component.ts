@@ -9,6 +9,7 @@ import { DailiesService } from 'src/app/services/dailies.service';
 
 import { DomSanitizer } from '@angular/platform-browser';
 import {AuthenticationService} from "../../services/authentication.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dailies',
@@ -29,7 +30,7 @@ export class Dailies implements OnInit{
 
   constructor(private dailiesService: DailiesService, private httpClient: HttpClient,
               private domSanitizer: DomSanitizer, private authenticationService: AuthenticationService,
-              private title:Title, private contextService:ContextService){ }
+              private title:Title, private contextService:ContextService, private router: Router){ }
 
   ngOnInit(){
     this.isAdmin = this.authenticationService.isAdmin();
@@ -62,6 +63,10 @@ export class Dailies implements OnInit{
     });
   }
 
+
+  navigateToDeveloperConsole() {
+    window.location.href="https://console.x.ai";
+  }
 
   onScroll() {
     this.getMessageList();
