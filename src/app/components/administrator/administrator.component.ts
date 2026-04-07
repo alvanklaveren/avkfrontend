@@ -83,15 +83,16 @@ export class AdministratorPage implements OnInit{
 
   acmeAddressConstants: Constants;
   acmeConstants: Constants;
+  xApiKeyConstants: Constants;
 
   users: ForumUser[];
 
-  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, 
+  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient,
     private title:Title, private modalService: NgbModal, private formBuilder: FormBuilder,
     private contextService:ContextService, private authenticationService: AuthenticationService,
     private administratorService: AdministratorService, private gameShopService: GameShopService,
     private translationService: TranslationService){ }
-  
+
   ngOnInit(){
 
     if(!this.authenticationService.isAdmin()){
@@ -102,7 +103,7 @@ export class AdministratorPage implements OnInit{
 
     this.contextService.setPageTitle(this, 'Administrator');
     this.tabpage = this.contextService.toNumber(this.contextService.getSessionGlobal(this.ADMINTABPAGE));
-    if(!this.tabpage){ 
+    if(!this.tabpage){
       this.setTabPage(0);
     }
 
@@ -117,6 +118,7 @@ export class AdministratorPage implements OnInit{
       acme: [null],
       guestAvatar: [null],
       webLogo: [null],
+      xApiKey: [null],
     });
 
     this.administratorService.getConstantById('acme_address').subscribe(res => {
@@ -129,6 +131,11 @@ export class AdministratorPage implements OnInit{
       this.constantsForm.patchValue({ acme: this.acmeConstants.stringValue as string } );
     });
 
+    this.administratorService.getConstantById('x_api_key').subscribe(res => {
+      this.xApiKeyConstants = res as Constants;
+      this.constantsForm.patchValue({ xApiKey: this.xApiKeyConstants.stringValue as string } );
+    });
+
     this.refreshImages();
   }
 
@@ -139,7 +146,7 @@ export class AdministratorPage implements OnInit{
 
   fetchCodeTables(){
     this.codetable = this.contextService.toNumber(this.contextService.getSessionGlobal(this.CODETABLESELECT));
-    if(!this.codetable){ 
+    if(!this.codetable){
       this.codetable = 0;
     }
 
@@ -181,7 +188,7 @@ export class AdministratorPage implements OnInit{
   }
 
   selectCodeTable(codetable: number) {
-        
+
     this.codetable = codetable;
     this.contextService.setSessionGlobal(this.CODETABLESELECT, this.codetable);
     this.page = 0;
@@ -204,7 +211,7 @@ export class AdministratorPage implements OnInit{
       this.administratorService.getConstantsImage(constants.code).subscribe(res => {
         let that = this;
         let reader = new FileReader();
-        reader.readAsDataURL(res); 
+        reader.readAsDataURL(res);
         reader.onloadend = function() {
             let rawImage = reader.result;
             that.guestImage = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:auto; height:40px;"/>';
@@ -218,7 +225,7 @@ export class AdministratorPage implements OnInit{
       this.administratorService.getConstantsImage(constants.code).subscribe(res => {
         let that = this;
         let reader = new FileReader();
-        reader.readAsDataURL(res); 
+        reader.readAsDataURL(res);
         reader.onloadend = function() {
             let rawImage = reader.result;
             that.webLogo = '<img class="col" src="' + rawImage + '" onerror="this.style.display=&#39;block&#39;" alt="missing picture" style="width:auto; height:40px;"/>';
@@ -237,7 +244,7 @@ export class AdministratorPage implements OnInit{
 
   uploadImage(codeConstants: number, file: File){
 
-    if(!file || !codeConstants){ 
+    if(!file || !codeConstants){
         return;
     }
 
@@ -262,20 +269,25 @@ export class AdministratorPage implements OnInit{
   onSaveConstants(){
     let ef = this.constantsForm.value;
     this.acmeAddressConstants.stringValue = ef.acmeAddress;
-    this.acmeConstants.stringValue = ef.acme; 
+    this.acmeConstants.stringValue = ef.acme;
+    this.xApiKeyConstants.stringValue = ef.xApiKey;
 
     this.administratorService.saveConstant(this.acmeConstants).subscribe(res => {
       this.acmeConstants = res as Constants;
 
       this.administratorService.saveConstant(this.acmeAddressConstants).subscribe(res2 => {
         this.acmeAddressConstants = res2 as Constants;
-        window.location.reload();
+
+        this.administratorService.saveConstant(this.xApiKeyConstants).subscribe(res3 => {
+          this.xApiKeyConstants = res3 as Constants;
+          window.location.reload();
+        });
       });
     });
 
   }
 
-  openEditModal(forumUser?){   
+  openEditModal(forumUser?){
     let modal = this.modalService.open(UserModalComponent, {ariaLabelledBy: 'app-user-modal'});
 
     if(forumUser) {
@@ -284,7 +296,7 @@ export class AdministratorPage implements OnInit{
 
     modal.result.then((result) => {
       window.location.reload();
-      
+
     }, (reason) => {
       if(reason === 'Deleted') {
         window.location.reload();
