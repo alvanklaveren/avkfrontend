@@ -84,6 +84,7 @@ export class AdministratorPage implements OnInit{
   acmeAddressConstants: Constants;
   acmeConstants: Constants;
   xApiKeyConstants: Constants;
+  comicsFormulaConstants: Constants;
 
   users: ForumUser[];
 
@@ -119,6 +120,7 @@ export class AdministratorPage implements OnInit{
       guestAvatar: [null],
       webLogo: [null],
       xApiKey: [null],
+      comicsFormula: [null],
     });
 
     this.administratorService.getConstantById('acme_address').subscribe(res => {
@@ -134,6 +136,11 @@ export class AdministratorPage implements OnInit{
     this.administratorService.getConstantById('x_api_key').subscribe(res => {
       this.xApiKeyConstants = res as Constants;
       this.constantsForm.patchValue({ xApiKey: this.xApiKeyConstants.stringValue as string } );
+    });
+
+        this.administratorService.getConstantById('comics').subscribe(res => {
+      this.comicsFormulaConstants = res as Constants;
+      this.constantsForm.patchValue({ comicsFormula: this.comicsFormulaConstants.stringValue as string } );
     });
 
     this.refreshImages();
@@ -271,6 +278,7 @@ export class AdministratorPage implements OnInit{
     this.acmeAddressConstants.stringValue = ef.acmeAddress;
     this.acmeConstants.stringValue = ef.acme;
     this.xApiKeyConstants.stringValue = ef.xApiKey;
+    this.comicsFormulaConstants.stringValue = ef.comicsFormula;
 
     this.administratorService.saveConstant(this.acmeConstants).subscribe(res => {
       this.acmeConstants = res as Constants;
@@ -280,7 +288,12 @@ export class AdministratorPage implements OnInit{
 
         this.administratorService.saveConstant(this.xApiKeyConstants).subscribe(res3 => {
           this.xApiKeyConstants = res3 as Constants;
-          window.location.reload();
+
+          this.administratorService.saveConstant(this.comicsFormulaConstants).subscribe(res4 => {
+            this.comicsFormulaConstants = res4 as Constants;
+
+            window.location.reload();
+          });
         });
       });
     });
