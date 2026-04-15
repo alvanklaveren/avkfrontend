@@ -26,7 +26,7 @@ export class Dailies implements OnInit{
   isAdmin: boolean = false;
 
   page = 0;
-  pageSize = 1;
+  pageSize = 7;
 
   constructor(private dailiesService: DailiesService, private httpClient: HttpClient,
               private domSanitizer: DomSanitizer, private authenticationService: AuthenticationService,
