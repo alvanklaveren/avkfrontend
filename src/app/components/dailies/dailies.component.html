@@ -25,8 +25,8 @@
 		<table class="table table-borderless" *ngIf="messages.length > 0">
 			<tr *ngFor="let m of messages; index as i">
 					<td style="width:100%; text-align:justify; border:2; box-shadow:2px 5px 10px #AAAAAA" valign="top">
-						<div class="d-flex flex-row-reverse">
-							<small><span>{{ m.messageDate | date: 'yyyy-MM-dd' }}</span></small>
+						<div class="d-flex">
+							<b>{{ m.messageDate | date: 'd MMMM yyyy' }}</b>
 						</div>
 
 						<span id="messagetext" [innerHTML]="m.messageText | safe: 'html'"></span>
