@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Dailies } from './dailies.component';
+import { Weeklies } from './weeklies.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: Dailies
+    component: Weeklies
   }
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DailiesRoutingModule { }
+export class WeekliesRoutingModule { }

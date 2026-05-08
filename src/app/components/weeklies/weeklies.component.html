@@ -1,12 +1,12 @@
 <body>
 
 	<div>
-		<H1 id="neonText" class="blog-title">{{ 'Daily Dutch News' | translate }}</H1>
+		<H1 id="neonText" class="blog-title">{{ 'Weekly Dutch News' | translate }}</H1>
 	</div>
 
 	<div *ngIf="!loading && isAdmin">
 		<div>
-			<button class="btn btn-primary" type="button" (click)="generateDailies()">{{ "Generate Dailies" }}</button>
+			<button class="btn btn-primary" type="button" (click)="generateWeeklies()">{{ "Generate Weeklies" }}</button>
 		</div>
 		<div>
 			<button class="btn btn-outline-secondary" type="button" (click)="navigateToDeveloperConsole()">

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Dailies } from './dailies.component';
+import { Weeklies } from './weeklies.component';
 import { SharedModule } from '../shared/shared.module';
-import { DailiesRoutingModule } from './dailies-routing.module';
+import { WeekliesRoutingModule } from './weeklies-routing.module';
 
 @NgModule({
   declarations: [
-    Dailies
+    Weeklies
   ],
   imports: [
     SharedModule,
-    DailiesRoutingModule,
+    WeekliesRoutingModule,
   ],
   providers: []
 })
-export class DailiesModule { }
+export class WeekliesModule { }

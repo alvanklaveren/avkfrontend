@@ -5,19 +5,19 @@ import { Message } from '../../models/message';
 import { SafeUrl, Title } from '@angular/platform-browser';
 
 import { ContextService } from '../../services/context.service';
-import { DailiesService } from 'src/app/services/dailies.service';
+import { WeekliesService } from 'src/app/services/weeklies.service';
 
 import { DomSanitizer } from '@angular/platform-browser';
 import {AuthenticationService} from "../../services/authentication.service";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dailies',
-  templateUrl: './dailies.component.html',
-  styleUrls: ['./dailies.component.scss'],
+  selector: 'app-weeklies',
+  templateUrl: './weeklies.component.html',
+  styleUrls: ['./weeklies.component.scss'],
 })
 
-export class Dailies implements OnInit{
+export class Weeklies implements OnInit{
 
   messages: Message[] = [];
 
@@ -28,28 +28,28 @@ export class Dailies implements OnInit{
   page = 0;
   pageSize = 7;
 
-  constructor(private dailiesService: DailiesService, private httpClient: HttpClient,
+  constructor(private weekliesService: WeekliesService, private httpClient: HttpClient,
               private domSanitizer: DomSanitizer, private authenticationService: AuthenticationService,
               private title:Title, private contextService:ContextService, private router: Router){ }
 
   ngOnInit(){
     this.isAdmin = this.authenticationService.isAdmin();
     this.getMessageList();
-    this.contextService.setPageTitle(this, 'Dailies');
+    this.contextService.setPageTitle(this, 'Weeklies');
 
   }
 
   getMessageList(){
     this.loading = true;
-    this.dailiesService.getDailiesMessages(this.page, this.pageSize).subscribe(response => {
+    this.weekliesService.getWeekliesMessages(this.page, this.pageSize).subscribe(response => {
       this.messages = response as Array<Message>;
       this.loading = false;
     }, error => this.loading = false);
   }
 
-  generateDailies() {
+  generateWeeklies() {
     this.loading = true;
-    this.dailiesService.getLatest().subscribe({
+    this.weekliesService.getLatest().subscribe({
       next: (blob: Blob) => {
         const url = URL.createObjectURL(blob);
         this.loading = false;
