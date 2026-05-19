@@ -306,3 +306,8 @@ body::-webkit-scrollbar {
   }
 
   body{display:block !important}
+
+  input[type="text"] {
+    caret-color: blue;
+    caret-shape: underscore;
+  }
