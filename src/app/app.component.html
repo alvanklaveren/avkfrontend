@@ -30,12 +30,22 @@
 					</div>
 				</a>			
 			</div>
-			<div id ="logo_small">
-			  <a class="navbar-brand" href="/" data-toggle="tooltip" data-placement="top" title="Click to go back to homepage">
-				ALVANKLAVEREN.COM
-				<br>
-			  </a>
-			</div>
+				<div id="logo_small">
+				<a class="navbar-brand d-flex align-items-center" href="/" 
+					data-toggle="tooltip" data-placement="top" 
+					title="Click to go back to homepage">
+					
+					<!-- Logo Image -->
+					<img src="../assets/images/avk_logo_transparant.png" 
+						alt="A.L. van Klaveren Logo" 
+						width="30" 
+						height="30" 
+						class="img-fluid me-2">
+
+					<!-- Logo Text -->
+					<span class="fw-bold fs-4 text-white">ALVANKLAVEREN.COM</span>
+				</a>
+			</div>			
 			<div>
 				<button class="navbar-toggler navbar-toggler-right" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-label="Toggle navigation">
 					 <span class="navbar-toggler-icon"></span>
