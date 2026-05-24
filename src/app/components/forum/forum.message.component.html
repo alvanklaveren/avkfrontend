@@ -78,7 +78,18 @@
 						</div>
 
 						<div class="col">
-							<button class="btn btn-outline-primary" type="button" (click)="onSelectImage()">{{ "Select Image" | translate }}</button>
+							<div *ngIf="!message?.code">
+								<button class="btn btn-outline-primary" type="button" [disabled]="!message?.code" 
+								    (click)="onSelectImage()" title="First save this message and then edit it again to enable Select Image">
+										{{ "Select Image" | translate }}
+								</button>
+							</div>
+							<div *ngIf="message.code > 0">
+								<button class="btn btn-outline-primary" type="button" 
+									    (click)="onSelectImage()" title="Select an image to add to this message">
+										{{ "Select Image" | translate }}
+								</button>
+							</div>
 						</div>
 
 						<div class="col text-right">
