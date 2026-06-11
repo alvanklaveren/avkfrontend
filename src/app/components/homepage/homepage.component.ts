@@ -40,6 +40,7 @@ export class HomePage implements OnInit{
       } else {
         this.messages = response as Array<Message>;
       }
+      this.messages = this.messages.sort((a,b) => new Date(b.messageDate).getTime() - new Date(a.messageDate).getTime());
       this.loading = false;      
     }); 
   }
