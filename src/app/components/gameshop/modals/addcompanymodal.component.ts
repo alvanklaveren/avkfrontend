@@ -30,8 +30,8 @@ export class AddCompanyModalComponent implements OnInit {
 
     onSave(){
         let ef = this.editForm.value;
-        this.gameShopService.addCompany(ef.name).subscribe( res => {
-            this.activeModal.close();
+        this.gameShopService.addCompany(ef.name).subscribe(res => {
+            this.activeModal.close(ef.name);
         }, (err) => {
             this.activeModal.dismiss(err);
         });
