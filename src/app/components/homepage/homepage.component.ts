@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Message } from '../../models/message';
@@ -11,6 +11,7 @@ import { ForumService } from '../../services/forum.service';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./homepage.component.scss'],
 })
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,7 @@ import { ContextService } from '../../services/context.service';
 
 @Component({
   selector: 'app-gameshopmobile',
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './gameshopmobile.component.html',
 })
 

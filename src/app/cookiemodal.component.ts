@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContextService } from './services/context.service';
 
 @Component({
   selector: 'app-cookie-modal',
   templateUrl: './cookiemodal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./cookiemodal.component.scss']
 })
 

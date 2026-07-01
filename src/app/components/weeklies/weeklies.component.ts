@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Message } from '../../models/message';
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-weeklies',
   templateUrl: './weeklies.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./weeklies.component.scss'],
 })
 

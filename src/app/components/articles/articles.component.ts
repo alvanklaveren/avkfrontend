@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 
@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./articles.component.scss'],
 })
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
 import {NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from 'src/app/models/product';
@@ -14,6 +14,7 @@ import { AddCompanyModalComponent } from './addcompanymodal.component';
 @Component({
   selector: 'app-game-modal',
   templateUrl: './gamemodal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./gamemodal.component.scss'],
 })
 

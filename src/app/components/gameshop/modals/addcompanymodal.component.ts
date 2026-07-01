@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Product } from 'src/app/models/product';
@@ -10,6 +10,7 @@ import { RatingUrl } from 'src/app/models/ratingurl';
 @Component({
   selector: 'app-addcompanymodal',
   templateUrl: './addcompanymodal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./addcompanymodal.component.scss'],
 })
 

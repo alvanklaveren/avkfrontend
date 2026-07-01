@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver, ChangeDetectionStrategy } from '@angular/core';
 import { ContextService } from '../../services/context.service';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
@@ -17,6 +17,7 @@ import { ForumUser } from 'src/app/models/forumuser';
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.message.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./forum.message.component.scss'],
 })
 

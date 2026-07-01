@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -13,6 +13,7 @@ import { Translation } from 'src/app/models/translation';
 @Component({
   selector: 'app-codetable-modal',
   templateUrl: './codetablemodal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./codetablemodal.component.scss'],
 })
 

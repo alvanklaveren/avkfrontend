@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GameModalComponent } from './modals/gamemodal.component';
@@ -24,6 +24,7 @@ import { Company } from 'src/app/models/company';
 @Component({
   selector: 'app-gameshop',
   templateUrl: './gameshop.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./gameshop.component.scss'],
 })
 

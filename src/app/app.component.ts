@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContextService } from './services/context.service';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,7 @@ import { CookieModalComponent } from './cookiemodal.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./app.component.scss']
 })
 

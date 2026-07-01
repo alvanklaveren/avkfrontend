@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,6 +26,7 @@ import { TranslationService } from 'src/app/services/translation.service';
 @Component({
   selector: 'app-administratorpage',
   templateUrl: './administrator.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./administrator.component.scss'],
 })
 

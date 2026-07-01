@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
   selector: 'app-pagenotfound',
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './pagenotfound.component.html',
 })
 

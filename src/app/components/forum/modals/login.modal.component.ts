@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Message } from 'src/app/models/message';
 import { ForumService } from 'src/app/services/forum.service';
@@ -10,6 +10,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login.modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./login.modal.component.scss'],
 })
 

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { LoginModalComponent } from './modals/login.modal.component';
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./forum.component.scss'],
 })
 

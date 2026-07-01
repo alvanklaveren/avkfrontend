@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 
@@ -9,6 +9,7 @@ import { ContextService } from '../../services/context.service';
 @Component({
   selector: 'app-aboutme',
   templateUrl: './aboutme.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./aboutme.component.scss'],
 })
 
