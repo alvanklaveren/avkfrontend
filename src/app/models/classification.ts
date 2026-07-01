@@ -1,6 +1,6 @@
 export class Classification {
     code?: number;
-    description: string;
+    description!: string;
     isadmin?: boolean;
     version?: number;
   }

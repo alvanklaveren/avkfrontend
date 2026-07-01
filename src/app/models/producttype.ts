@@ -1,5 +1,5 @@
 export class ProductType {
     code?: number;
-    description: string;
+    description?: string;
     version?: number;
   }

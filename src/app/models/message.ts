@@ -3,13 +3,13 @@ import { ForumUser } from './forumuser';
 
 export class Message {
     code?: number;
-    description: string;
-    messageText: string;
-    messageDate: Date;
-    messageCategory: MessageCategory;
-    forumUser: ForumUser;
+    description!: string;
+    messageText!: string;
+    messageDate!: Date;
+    messageCategory!: MessageCategory;
+    forumUser!: ForumUser;
     message?: Message;
     version?: number;
 
-    preparedMessageText: string;
+    preparedMessageText!: string;
   }

@@ -1,5 +1,5 @@
 export class RatingUrl {
     code?: number;
-    url: string;
+    url?: string;
     version?: number;
   }

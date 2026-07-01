@@ -1,4 +1,4 @@
 export class ProductStatus {
-    id: number;
-    description: string;
+    id?: number;
+    description?: string;
   }

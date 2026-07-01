@@ -5,9 +5,14 @@ import { ForumUser } from '../models/forumuser';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
-const TOKEN_KEY = 'accessToken';
-const REFRESH_KEY = 'refreshToken';
-const USER_KEY = 'auth-user';
+const TOKEN_KEY: string = 'accessToken';
+const REFRESH_KEY: string = 'refreshToken';
+const USER_KEY: string = 'auth-user';
+
+interface TokenPayload {
+  userCode: string;
+  [key: string]: any;
+}
 
 @Injectable({ providedIn: 'root' })
 export class TokenStorageService {
@@ -66,9 +71,9 @@ export class TokenStorageService {
   }
 
   /* User */
-  public saveUserKey(token) {    
+  public saveUserKey(token: string) {    
     let payload = JSON.parse(window.atob(token.split('.')[1]));
-    this.http.post(environment.backendUrl + 'forum/getForumUser', { code: payload.userCode })
+    this.http.post<ForumUser>(environment.backendUrl + 'forum/getForumUser', { code: payload.userCode })
     .subscribe((forumUser: ForumUser) => {
 
       sessionStorage.removeItem(USER_KEY);
@@ -79,7 +84,8 @@ export class TokenStorageService {
   }
 
   public getUser() {
-    return JSON.parse(sessionStorage.getItem(USER_KEY));
+    const userKey = sessionStorage.getItem(USER_KEY);
+    return userKey ? JSON.parse(userKey) : null;
   }
 
 }

@@ -1,5 +1,5 @@
 export class Company {
     code?: number;
-    description: string;
+    description!: string;
     version?: number;
   }

@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 
 import { GameShopService } from '../../services/gameshop.service';
 import { ContextService } from '../../services/context.service';
+import { ProductMobileDTO } from '../../models/productmobiledto';
 
 @Component({
   selector: 'app-gameshopmobile',
@@ -20,31 +21,21 @@ export class GameShopMobile implements OnInit{
               private contextService:ContextService, private gameShopService: GameShopService){ 
   }
 
-  products: ProductMobileDTO[];
+  products: ProductMobileDTO[] = [];
   pageContent: any;
 
   ngOnInit(){
 
-    let codeGameConsole = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeGameConsole'));
-    let codeProductType = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeProductType'));
-    let description = this.route.snapshot.paramMap.get('description');
+    const codeGameConsole = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeGameConsole') ?? '') ?? 0;
+    const codeProductType = this.contextService.toNumber(this.route.snapshot.paramMap.get('codeProductType') ?? '') ?? 0;
+    const description = this.route.snapshot.paramMap.get('description') ?? '';
 
     this.contextService.setPageTitle(this, 'Gameshop Mobile');
     this.gameShopService.getGameShopMobile(codeGameConsole, codeProductType, description).subscribe(res => {
-      this.products = res as Array<ProductMobileDTO>;
+      this.products = res;
       // this.pageContent = JSON.stringify(this.products, null, 1);
     });
   }
   
-}
-
-class ProductMobileDTO{
-  code: number;
-  name: string;
-  description: string;
-  gameConsole: string;
-  productType: string;
-  company: string;
-  productImage: number[];
 }
 

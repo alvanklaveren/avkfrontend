@@ -3,6 +3,14 @@ import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
+import { ProductMobileDTO } from '../models/productmobiledto';
+
+// Request payload interfaces
+interface ProductListRequest { codeGameConsole: number; codeProductType: number; page: number; pageSize: number; sortId?: number; }
+interface SearchRequest { productName: string; page: number; pageSize: number; }
+interface GameShopMobilePath { codeGameConsole: number; codeProductType: number; description?: string }
+interface SaveProductRatingRequest { codeProduct: number; codeRatingUrl: string; rating: number }
+interface UploadImageAltRequest { codeProduct: number; fileContent: string }
 
 @Injectable({ providedIn: 'root' })
 export class GameShopService {
@@ -74,9 +82,9 @@ export class GameShopService {
 
   getGameShopMobile(codeGameConsole: number, codeProductType: number, description?: string){
     if(!description){
-      return this.http.get(environment.backendUrl + 'gameshop/gameshopmobile/' + codeGameConsole + '/' + codeProductType); 
+      return this.http.get<ProductMobileDTO[]>(environment.backendUrl + 'gameshop/gameshopmobile/' + codeGameConsole + '/' + codeProductType); 
     } else {
-      return this.http.get(environment.backendUrl + 'gameshop/gameshopmobile/' + codeGameConsole + '/' + codeProductType + '/' + description); 
+      return this.http.get<ProductMobileDTO[]>(environment.backendUrl + 'gameshop/gameshopmobile/' + codeGameConsole + '/' + codeProductType + '/' + description); 
     }
   }
 
@@ -94,11 +102,11 @@ export class GameShopService {
     return this.http.request(req);
   }
 
-  uploadImageAlt(codeProduct: number, fileContent) {
+  uploadImageAlt(codeProduct: number, fileContent: string) {
     // for some reason, sending a multipartfile is not working.. god knows why. 
     // but it started to go wrong when I added jwt auth filters in spring.
     // the below will work (sends a base64 formatted string and decodes on backend)
-    return this.http.post(environment.backendUrl + 'gameshop/uploadImageAlt', {codeProduct: codeProduct, fileContent: btoa(fileContent)});
+    return this.http.post<any>(environment.backendUrl + 'gameshop/uploadImageAlt', {codeProduct: codeProduct, fileContent: btoa(fileContent)});
     
   }
 

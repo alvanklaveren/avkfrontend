@@ -54,7 +54,7 @@ export class ContextService {
       return false; 
     }    
 
-    let existingCookieDate = moment(cookie);
+    let existingCookieDate = moment.utc(cookie);
     if(existingCookieDate == null || existingCookieDate == undefined) { return false; }
 
     if(moment.utc().subtract(AGREED_TO_COOKIE_ALIVE_DAYS, 'days').isAfter(existingCookieDate)){
@@ -75,23 +75,23 @@ export class ContextService {
     return this.translationService.translate(original, isoA2);
   }
 
-  public setSessionGlobal(key, value){
+  public setSessionGlobal(key: string, value: string | number){
     sessionStorage.removeItem(key);
-    sessionStorage.setItem(key, value);  
+    sessionStorage.setItem(key, String(value));  
     return this;
   }
 
-  public getSessionGlobal(key){
+  public getSessionGlobal(key: string){
     return sessionStorage.getItem(key);
   }
 
-  public setLocalGlobal(key, value){
+  public setLocalGlobal(key: string, value: string){
     localStorage.removeItem(key);
     localStorage.setItem(key, value);  
     return this;
   }
 
-  public getLocalGlobal(key){
+  public getLocalGlobal(key: string){
     return localStorage.getItem(key);
   }
 

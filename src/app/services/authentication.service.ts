@@ -21,8 +21,8 @@ interface IAccessData {
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService implements AuthService {
 
-  public user = new BehaviorSubject(null);
-  public tokenExpired = new BehaviorSubject(null);
+  public user = new BehaviorSubject<ForumUser | null>(null);
+  public tokenExpired = new BehaviorSubject<boolean | null>(null);
 
   private admin = false;
 
@@ -49,7 +49,7 @@ export class AuthenticationService implements AuthService {
     let sessionUser = this.tokenStorageService.getUser();
 
     if (sessionUser) {
-      this.http.post(environment.backendUrl + 'forum/getForumUser', { code: sessionUser.code }).subscribe((forumUser: ForumUser) => {
+      this.http.post<ForumUser>(environment.backendUrl + 'forum/getForumUser', { code: sessionUser.code }).subscribe((forumUser: ForumUser) => {
         let user = Object.assign(new ForumUser(), forumUser);
 
         this.admin = this.hasRole(user, 'ROLE_ADMIN');
@@ -84,13 +84,13 @@ export class AuthenticationService implements AuthService {
    * Function, that should perform refresh token verifyTokenRequest
    * @description Should be successfully completed so interceptor
    * can execute pending requests or retry original one
-   * @returns {Observable<object>}
+   * @returns {Observable<IAccessData>}
    */
-  public refreshToken(): Observable<object> {
+  public refreshToken(): Observable<IAccessData> {
     return this.tokenStorageService
       .getRefreshToken().pipe(
         switchMap((refreshToken: string) => {
-          return this.http.post(environment.backendUrl + 'refresh', refreshToken );
+          return this.http.post<IAccessData>(environment.backendUrl + 'refresh', refreshToken );
         }),
         tap(this.saveAccessData.bind(this)),
         catchError((err) => {
@@ -191,7 +191,7 @@ export class AuthenticationService implements AuthService {
     return this.http.post(environment.backendUrl + '/user/emailNewPassword', { emailAddress: emailAddress }, { observe: 'response' });
   }
 
-  public hasRole(forumUser: ForumUser, role) {
+  public hasRole(forumUser: ForumUser, role: string) {
     if (forumUser.classification.description === role) {
       return true;
     } else {
@@ -199,7 +199,7 @@ export class AuthenticationService implements AuthService {
     }
   }
 
-  sleep(ms) {
+  sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 

@@ -5,16 +5,16 @@ import { ProductRating } from './productrating';
 
 export class Product {
     code?: number;
-    name: string;
-    description: string;
-    year: number;
-    productStatus: number;
-    price: number;
-    gameConsole: GameConsole;
-    productType: ProductType;
-    company: Company;
+    name!: string;
+    description!: string;
+    year!: number;
+    productStatus!: number;
+    price!: number;
+    gameConsole!: GameConsole;
+    productType!: ProductType;
+    company!: Company;
     product: any;
-    productRatings: [ProductRating];
-    imageHTML: string;
+    productRatings!: [ProductRating];
+    imageHTML!: string;
     version?: number;
   }
