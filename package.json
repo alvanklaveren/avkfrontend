@@ -47,7 +47,7 @@
     "zone.js": "~0.16.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^22.0.5",
+    "@angular-devkit/build-angular": "^19.2.8",
     "@angular/cli": "^22.0.5",
     "@angular/compiler-cli": "^22.0.4",
     "@angular/language-service": "^22.0.4",
@@ -63,7 +63,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "protractor": "^3.3.0",
+    "protractor": "^7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~6.0.3"
@@ -79,8 +79,13 @@
     "@scarf/scarf@0.1.5": true,
     "core-js@3.49.0": true,
     "esbuild@0.28.1": true,
-    "lmdb@3.5.4": true,
     "msgpackr-extract@3.0.4": true,
-    "ngx-infinite-scroll@8.0.2": true
-  }
+    "ngx-infinite-scroll@8.0.2": true,
+    "lmdb@3.5.1": true
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.",
+  "main": "karma.conf.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
