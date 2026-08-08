@@ -57,7 +57,7 @@
 				<!-- Edit primary message -->
 				<div *ngIf="editMessage">
 					<div>
-						Styles **text**: <b>text</b> *text*: <i>text</i> `text`: <span style="background:#DDD">text</span>
+            Styles **text**: <b>text</b> *text*: <i>text</i> `text`: <span style="background:#DDD">text</span> !!test!!: <a style="font-size: 20px;">test </a>
 						[h:https://www.alvanklaveren.com;my website] = <a href="https://www.alvanklaveren.com">my website</a>
 					</div>
 					<div class="row">
@@ -79,13 +79,13 @@
 
 						<div class="col">
 							<div *ngIf="!message?.code">
-								<button class="btn btn-outline-primary" type="button" [disabled]="!message?.code" 
+								<button class="btn btn-outline-primary" type="button" [disabled]="!message?.code"
 								    (click)="onSelectImage()" title="First save this message and then edit it again to enable Select Image">
 										{{ "Select Image" | translate }}
 								</button>
 							</div>
 							<div *ngIf="message.code > 0">
-								<button class="btn btn-outline-primary" type="button" 
+								<button class="btn btn-outline-primary" type="button"
 									    (click)="onSelectImage()" title="Select an image to add to this message">
 										{{ "Select Image" | translate }}
 								</button>
@@ -109,7 +109,7 @@
 								<button class="btn btn-success" type="button" (click)="onDelete()">{{ "Delete" | translate }}</button>
 							</div>
 						</div>
-					</div>		
+					</div>
 				</div>
 				<br>
 
@@ -124,9 +124,9 @@
 								<img class="userimg" [src]="avatarUrl + message.forumUser.code" alt=""/>
 								<span class="username"> {{ message.forumUser.displayName }} </span>
 							</div>
-						</div>	
+						</div>
 					</div>
-				</div>				
+				</div>
 
 				<hr>
 
@@ -173,9 +173,9 @@
 									<img class="replyuserimg" [src]="avatarUrl + reply.forumUser.code" alt="no"/>
 									<span class="username"> {{ reply.forumUser.displayName }} </span>
 								</div>
-							</div>	
+							</div>
 						</div>
-					</div>	
+					</div>
 
 					<div class="row" *ngIf="editReplyMessage == reply">
 						<div class="col text-left" *ngIf="!askReplyDelete">
@@ -183,8 +183,8 @@
 								<i class="far fa-trash-alt"></i>
 							</button>
 						</div>
-			
-						<div class="col text-right" *ngIf="!askReplyDelete">			
+
+						<div class="col text-right" *ngIf="!askReplyDelete">
 							<div class="btn-group btn-group-toggle" role="group" style="width: auto">
 								<button class="btn btn-outline-secondary" type="button" (click)="onCancelEditReplyMessage()">{{ "Cancel" | translate }}</button>
 								<button class="btn btn-primary" type="button" (click)="onReplySave(reply)">
@@ -201,7 +201,7 @@
 									<button class="btn btn-success" type="button" (click)="onReplyDelete(reply)">{{ "Delete" | translate }}</button>
 								</div>
 							</div>
-						</div>		
+						</div>
 					</div>
 
 				</div>
