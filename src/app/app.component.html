@@ -3,56 +3,47 @@
 		<nav class="navbar navbar-expand-lg navbar-dark" id="topmenu">
 
 			<div id ="logo_big">
-				<a class="navbar-brand d-flex align-items-center gap-3" href="/" 
-				data-toggle="tooltip" 
-				data-placement="bottom" 
+				<a class="navbar-brand d-flex align-items-center gap-3" href="/"
+				data-toggle="tooltip"
+				data-placement="bottom"
 				title="A. L. van Klaveren - Software Engineer">
-					
+
 					<!-- Logo -->
-					<img src="../assets/images/avk_logo_transparant.png" 
-						alt="A.L. van Klaveren Logo" 
-						width="38" 
-						height="38" 
+					<img src="../assets/images/avk_logo_transparant.png"
+						alt="A.L. van Klaveren Logo"
+						width="38"
+						height="38"
 						class="img-fluid">
 
 					<!-- Main Text -->
 					<div class="d-flex flex-column">
 						<span class="fw-bold fs-4 text-white">ALVANKLAVEREN.COM</span>
 					</div>
-					<div>
-						&nbsp;
-					</div>
-					<!-- Domain Extensions -->
-					<div class="d-flex flex-column ms-2 border-start border-light ps-3" style="font-size: 0.45rem; line-height: 1.1;">
-						<span>.ORG</span>
-						<span>.NET</span>
-						<span>.NL</span>
-					</div>
-				</a>			
+				</a>
 			</div>
 				<div id="logo_small">
-				<a class="navbar-brand d-flex align-items-center" href="/" 
-					data-toggle="tooltip" data-placement="top" 
+				<a class="navbar-brand d-flex align-items-center" href="/"
+					data-toggle="tooltip" data-placement="top"
 					title="Click to go back to homepage">
-					
+
 					<!-- Logo Image -->
-					<img src="../assets/images/avk_logo_transparant.png" 
-						alt="A.L. van Klaveren Logo" 
-						width="30" 
-						height="30" 
+					<img src="../assets/images/avk_logo_transparant.png"
+						alt="A.L. van Klaveren Logo"
+						width="30"
+						height="30"
 						class="img-fluid me-2">
 
 					<!-- Logo Text -->
 					<span class="fw-bold fs-4 text-white">ALVANKLAVEREN.COM</span>
 				</a>
-			</div>			
+			</div>
 			<div>
 				<button class="navbar-toggler navbar-toggler-right" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-label="Toggle navigation">
 					 <span class="navbar-toggler-icon"></span>
 				</button>
-			</div>    
-		  
-		  
+			</div>
+
+
 			<div class="collapse navbar-collapse justify-content-end" [ngbCollapse]="isMenuCollapsed" id="navbarSupportedContent">
 				<ul class="navbar-nav align-items-end" id="menuItems">
 					<li class="nav-item" *ngFor="let menuItem of menuItems">
@@ -61,12 +52,12 @@
 					</li>
 				</ul>
 			</div>
-		</nav>  
-		
+		</nav>
+
   	</div>
-  
+
 	<br><br><br>
-	
+
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-2" id="basepanelleft">
@@ -74,11 +65,11 @@
 					<img src="./assets/images/me.png" alt="me" width="85%" class="rounded-circle"/>
 				</div>
 			</div>
-			
+
 			<div class="col" id="centerpanel">
 
 				<div><small><br/></small></div>
-	
+
 				<div>
 					<div *ngFor="let theme of avkThemes" class="btn-group btn-group-sm" role="group" aria-label="Select Theme" data-toggle="tooltip" data-placement="top" title="Click to select theme">
 						<button *ngIf="theme.id === selectedTheme" type="button" class="btn btn-outline-secondary active" style="cursor:pointer;">
@@ -87,8 +78,8 @@
 						<button *ngIf="theme.id !== selectedTheme" (click)="setTheme(theme.id)" type="button" class="btn btn-outline-secondary" style="cursor:pointer;">
 							<i class="{{ theme.icon }}" aria-hidden="true"></i> {{ theme.description | translate }}
 						</button>
-					</div>  
-					
+					</div>
+
 					<div style="float:right;">
 						<div ngbDropdown class="d-inline-block col-auto">
 							<button ngbDropdownToggle class="btn btn-sm" type="button" id="dropDownLanguage">
@@ -118,10 +109,10 @@
 				</div>
 
 				<div><a style="font-size:4; text-align:center"><br></a></div>
-							
+
 				<router-outlet></router-outlet>
 			</div>
-			
+
 			<div class="col-2" id="basepanelright">
 				<div id="basepanelright">
 					<h4>{{ aboutText | translate }}</h4>
@@ -131,11 +122,11 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div style="clear:both"> </div>
-		
+
 			<br><hr>
-		
+
 		</div>
 	</div>
 
